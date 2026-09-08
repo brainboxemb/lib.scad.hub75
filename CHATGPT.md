@@ -148,3 +148,18 @@ For named design/render views:
 - expose one `hub75_p5_64x32_panel_view_id(view)` conversion function;
 - do not create one accessor function per constant;
 - do not duplicate numeric view IDs in the render adapter.
+
+## Design image framing
+
+Generated design images are part of the explanation, not merely proof that a
+view renders.
+
+For small HUB75 features:
+- use exact `vpt`/`vpd` cameras centred on the feature;
+- do not auto-fit the full 159.7 × 319.71 mm panel for a 3–14 mm detail;
+- show a local construction sequence first, then an overview where repetition
+  or placement matters;
+- use thin design-only sections when a depth/profile view would otherwise
+  collapse into an edge-on line;
+- inspect the generated build images after camera/design changes.
+

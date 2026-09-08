@@ -937,20 +937,55 @@ module _hub75_p5_64x32_panel_geometry(
 
     // Central relief in the top and bottom edge of each electronics bay.
     // The STEP does not use a constant straight rail here: the normal rail
-    // width is 10.75 mm and locally narrows to 7.75 mm.  The 3 mm change is
-    // connected with 45-degree transitions.
-    module bay_end_relief_2d(z_edge, direction=1) {
+    // width is 10.75 mm and locally narrows to 7.75 mm. The 3 mm difference
+    // is decomposed into a narrow centre strip plus two 45-degree transition
+    // triangles. The production model and the design views share these helpers.
+    module bay_end_narrow_relief_2d(z_edge, direction=1) {
         d = rear_frame_end_step_depth;
         half_narrow = rear_frame_end_narrow_length/2;
         cx = width/2;
 
         if(d > 0)
             polygon([
-                [cx-half_narrow-d, z_edge],
-                [cx-half_narrow,   z_edge + direction*d],
-                [cx+half_narrow,   z_edge + direction*d],
-                [cx+half_narrow+d, z_edge]
+                [cx-half_narrow, z_edge],
+                [cx-half_narrow, z_edge + direction*d],
+                [cx+half_narrow, z_edge + direction*d],
+                [cx+half_narrow, z_edge]
             ]);
+    }
+
+
+    module bay_end_transition_relief_2d(
+        z_edge,
+        direction=1,
+        side="left"
+    ) {
+        d = rear_frame_end_step_depth;
+        half_narrow = rear_frame_end_narrow_length/2;
+        cx = width/2;
+
+        if(d > 0)
+            if(side == "left")
+                polygon([
+                    [cx-half_narrow-d, z_edge],
+                    [cx-half_narrow,   z_edge + direction*d],
+                    [cx-half_narrow,   z_edge]
+                ]);
+            else
+                polygon([
+                    [cx+half_narrow,   z_edge],
+                    [cx+half_narrow,   z_edge + direction*d],
+                    [cx+half_narrow+d, z_edge]
+                ]);
+    }
+
+
+    module bay_end_relief_2d(z_edge, direction=1) {
+        union() {
+            bay_end_transition_relief_2d(z_edge, direction, "left");
+            bay_end_narrow_relief_2d(z_edge, direction);
+            bay_end_transition_relief_2d(z_edge, direction, "right");
+        }
     }
 
 
@@ -1719,6 +1754,25 @@ module _hub75_p5_64x32_panel_geometry(
                 cube([width, 0.18, height]);
     }
 
+
+    // Thin X slice used only for design/profile explanation.
+    module design_x_section(x, thickness=0.45) {
+        intersection() {
+            children();
+
+            translate([
+                x-thickness/2,
+                -1,
+                0
+            ])
+                cube([
+                    thickness,
+                    max_depth_value + 8,
+                    height
+                ]);
+        }
+    }
+
     module design_nominal_outline() {
         t = 0.55;
         y = mounting_plane_y_value + 1.3;
@@ -1798,7 +1852,7 @@ module _hub75_p5_64x32_panel_geometry(
                             hole_z_positions[zi]
                         ])
                             rotate([-90,0,0])
-                                cylinder(h=0.35,d=5.0,$fn=40);
+                                cylinder(h=0.35,d=8.0,$fn=40);
     }
 
     module design_mounting_relief(x, z) {
@@ -2069,16 +2123,12 @@ module _hub75_p5_64x32_panel_geometry(
 
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_NARROW_END_WIDTH) {
             design_frame_context();
-            color(DESIGN_NEW)
+            color(DESIGN_CUT)
                 design_thin_2d()
-                    translate([
-                        width/2-rear_frame_end_narrow_length/2,
-                        0
-                    ])
-                        square([
-                            rear_frame_end_narrow_length,
-                            rear_frame_end_narrow_width
-                        ]);
+                    bay_end_narrow_relief_2d(
+                        opening_z_min[0],
+                        -1
+                    );
 
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_NARROW_END_LENGTH) {
             design_frame_context();
@@ -2097,13 +2147,21 @@ module _hub75_p5_64x32_panel_geometry(
             design_frame_context();
             color(DESIGN_CUT)
                 design_thin_2d()
-                    bay_end_relief_2d(opening_z_min[0],-1);
+                    bay_end_transition_relief_2d(
+                        opening_z_min[0],
+                        -1,
+                        "left"
+                    );
 
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_NARROW_TRANSITION_RIGHT) {
             design_frame_context();
             color(DESIGN_CUT)
                 design_thin_2d()
-                    bay_end_relief_2d(opening_z_min[0],-1);
+                    bay_end_transition_relief_2d(
+                        opening_z_min[0],
+                        -1,
+                        "right"
+                    );
 
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_NARROW_PROFILE_COMPLETE) {
             design_front_context();
@@ -2341,32 +2399,47 @@ module _hub75_p5_64x32_panel_geometry(
             design_plane_y(mounting_plane_y_value, DESIGN_NEW);
 
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_TAPER_PROFILE) {
-            design_front_context();
-            color(DESIGN_NEW)
-                tapered_outer_blank(
-                    rear_frame_start_y,
-                    mounting_plane_y_value,
-                    0,
-                    rear_outer_inset_actual
-                );
+            design_x_section(0) {
+                color(DESIGN_EXISTING)
+                    front_mask_shape();
+
+                color(DESIGN_EXISTING)
+                    pcb_layer_shape();
+
+                color(DESIGN_NEW)
+                    tapered_outer_blank(
+                        rear_frame_start_y,
+                        mounting_plane_y_value,
+                        0,
+                        rear_outer_inset_actual
+                    );
+            }
 
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_REAR_RAIL_PROFILE) {
-            design_rear_structure_context();
-            color(DESIGN_NEW)
-                design_thin_2d()
-                    rear_frame_web_2d(rear_outer_inset_actual);
+            design_x_section(
+                -width/2 + rear_frame_side_width/2
+            )
+                rear_frame_structure();
 
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_CONNECTOR_CLEARANCE_PROFILE) {
-            design_rear_structure_context();
+            design_x_section(0) {
+                color(DESIGN_EXISTING)
+                    front_mask_shape();
+
+                color(DESIGN_EXISTING)
+                    pcb_layer_shape();
+
+                rear_frame_structure();
+            }
+
             design_connector_box(data_connector_z_bottom);
-            design_connector_box(data_connector_z_top);
-            design_power_box();
 
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_FINAL_REAR) {
             panel_final_local();
 
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_FINAL_PROFILE) {
-            panel_final_local();
+            design_x_section(0)
+                panel_final_local();
 
         } else {
             assert(false,str("Unknown HUB75 design view id: ",view));
