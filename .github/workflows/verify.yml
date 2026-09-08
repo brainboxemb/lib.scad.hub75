@@ -1,0 +1,16 @@
+name: Verify HUB75 library
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  packages: read
+
+jobs:
+  verify:
+    uses: brainboxemb/tool.scad-project/.github/workflows/project-verify.yml@v0.4.4
