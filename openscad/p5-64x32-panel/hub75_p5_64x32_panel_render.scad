@@ -1,8 +1,7 @@
 // File: hub75_p5_64x32_panel_render.scad
 //   Design-render adapter for the HUB75 P5 64 x 32 panel reference component.
 //
-// FileSummary:
-//   Creates the default panel object and delegates stable named views to the
+// FileSummary: Creates the default panel object and delegates stable named views to the
 //   conversion function in hub75_p5_64x32_panel.scad.
 //
 // This file deliberately contains no view table, numeric IDs or panel geometry.
