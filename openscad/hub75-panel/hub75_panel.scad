@@ -36,6 +36,14 @@ HUB75_PANEL_VIEW_TABLE = [
     [HUB75_PANEL_VIEW_VERIFICATION, "PDF verification"],
     [HUB75_PANEL_VIEW_PROFILE,      "Profile"]
 ];
+function hub75_panel_view_final() = 0;
+function hub75_panel_view_front() = 1;
+function hub75_panel_view_rear() = 2;
+function hub75_panel_view_structure() = 3;
+function hub75_panel_view_connectors() = 4;
+function hub75_panel_view_verification() = 5;
+function hub75_panel_view_profile() = 6;
+
 
 // Function: hub75_panel_create()
 // Usage:
@@ -441,6 +449,7 @@ module _hub75_panel_geometry(
     reinforcement_bushing_inner_recess_value = panel.reinforcement_bushing_inner_recess;
     reinforcement_bushing_hole_diameter_value = panel.reinforcement_bushing_hole_diameter;
     reinforcement_bushing_hole_depth_value = panel.reinforcement_bushing_hole_depth;
+    reinforcement_bushing_inner_depth = panel.reinforcement_bushing_inner_depth;
     reinforcement_disc_offset_value = panel.reinforcement_disc_offset;
     locator_pin_diameter_value = panel.locator_pin_diameter;
     locator_pin_protrusion_value = panel.locator_pin_protrusion;

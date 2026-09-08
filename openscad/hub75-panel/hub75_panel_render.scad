@@ -8,13 +8,13 @@ $fn = 48;
 use <hub75_panel.scad>
 
 function _hub75_panel_design_view_id(view) =
-    view == "front"        ? HUB75_PANEL_VIEW_FRONT :
-    view == "rear"         ? HUB75_PANEL_VIEW_REAR :
-    view == "structure"    ? HUB75_PANEL_VIEW_STRUCTURE :
-    view == "connectors"   ? HUB75_PANEL_VIEW_CONNECTORS :
-    view == "verification" ? HUB75_PANEL_VIEW_VERIFICATION :
-    view == "profile"      ? HUB75_PANEL_VIEW_PROFILE :
-    HUB75_PANEL_VIEW_FINAL;
+    view == "front"        ? hub75_panel_view_front() :
+    view == "rear"         ? hub75_panel_view_rear() :
+    view == "structure"    ? hub75_panel_view_structure() :
+    view == "connectors"   ? hub75_panel_view_connectors() :
+    view == "verification" ? hub75_panel_view_verification() :
+    view == "profile"      ? hub75_panel_view_profile() :
+    hub75_panel_view_final();
 
 // Module: hub75_panel_design()
 // Usage:

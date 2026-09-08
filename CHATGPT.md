@@ -83,3 +83,13 @@ Branches:
 
 Root bootstrap/update scripts are canonical copies from `tool.scad-project`
 and must remain Python-free.
+
+## OpenSCAD use-boundary rule
+
+`use <...>` imports modules and functions, but file-level variables are not a
+public cross-file API. Values needed by render adapters must therefore be
+exposed through functions or defined locally.
+
+For HUB75 design views use the public `hub75_panel_view_*()` functions rather
+than `HUB75_PANEL_VIEW_*` variables across a `use` boundary.
+
