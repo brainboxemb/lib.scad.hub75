@@ -40,6 +40,10 @@ next = that red volume is subtracted or added as described in the text
 Overview images are kept only where the position of several repeated features
 is the point of the step.
 
+Design renders are generated at **1600 × 1200 px**. Many relevant features are
+only 2.5–14 mm across; the earlier 640 × 480 output lost too much information
+even when the camera was aimed correctly.
+
 The render adapter is intentionally small. It only maps names to numeric view
 IDs. All design rendering happens inside `hub75_p5_64x32_panel.scad`, where the renderer
 can call the same private helpers that build the real panel.
@@ -563,6 +567,30 @@ vpd: 150
 -->
 
 
+
+## Rear-frame construction states
+
+The rear-frame implementation now exposes real intermediate production states:
+
+```text
+rear_frame_base()
+        ↓  subtract rear-face recess
+rear_frame_after_recess()
+        ↓  subtract mounting-tube reliefs
+rear_frame_after_mounting_reliefs()
+        ↓  add Ø8.50 mounting tubes
+rear_frame_with_mounting_tubes()
+        ↓  cut reinforcement recesses + blind holes
+rear_frame_after_reinforcement_cuts()
+        ↓  add locator pins
+rear_frame_structure()
+```
+
+For each design step, **gray is the state immediately before the current
+operation**. Red is only the volume introduced or removed by that operation.
+This corrects an important problem in the previous build: several features were
+already present in the completed gray context underneath their red highlight.
+
 ## 8. Rear-face recess
 
 The rear rail face is recessed by `rear_recess_depth`. This is **not one large
@@ -774,6 +802,20 @@ vpr: [90, 0, 0]
 
 ## 10. Mounting tubes, reliefs and screw cuts
 
+The gray state deliberately changes through this sequence:
+
+```text
+mounting relief
+    gray = frame after rear recess
+
+mounting tube
+    gray = frame after mounting reliefs
+
+mounting hole
+    gray = assembled panel before the final through-hole cut
+```
+
+
 The three `single` images stay on the lower-left mounting centre and explain
 three separate operations:
 
@@ -921,6 +963,11 @@ vpd: 95
 
 
 ## 12. Reinforcement bushing construction
+
+For the Ø10 recess and Ø2.5 blind-hole views, the gray state contains the Ø14
+reinforcement material and mounting tubes but **does not already contain those
+cuts**.
+
 
 These four images are close-ups of one representative feature:
 

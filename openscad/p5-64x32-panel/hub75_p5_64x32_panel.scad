@@ -1330,59 +1330,80 @@ module _hub75_p5_64x32_panel_geometry(
     }
 
 
-    module rear_frame_structure() {
-        // Smooth frame body up to the mounting plane. The rear-facing strips
-        // are recessed slightly, leaving a raised border around each rail.
-        //
-        // A shallow circular relief is ALWAYS cut around each mounting tube.
-        // Without this, the Ø8.50 mm cylinder merges flush into the rectangular
-        // frame and its rear outline appears square. The tube itself remains a
-        // true cylinder.
-        color(body_color)
-            difference() {
-                union() {
-                    rear_frame_core_3d();
-                    reinforcement_bushing_solids();
-                }
+    // Rear-frame construction states. These are normal production helpers:
+    // the final geometry is composed from them and the design renderer can
+    // stop at the state immediately before the operation being explained.
+    module rear_frame_base() {
+        union() {
+            rear_frame_core_3d();
+            reinforcement_bushing_solids();
+        }
+    }
 
-                if(show_rear_recess && rear_recess_depth_actual > 0)
-                    rear_extrude_from_to(
-                        mounting_plane_y_value
-                            - rear_recess_depth_actual,
-                        mounting_plane_y_value + 0.05
-                    )
-                        rear_recess_2d();
 
-                if(mounting_tube_relief_depth_value > 0
-                   && mounting_tube_relief_clearance_value > 0)
-                    rear_extrude_from_to(
-                        mounting_plane_y_value
-                            - mounting_tube_relief_depth_value,
-                        mounting_plane_y_value + 0.05
-                    )
-                        for(x=hole_x_positions)
-                            for(z=hole_z_positions)
-                                translate([x, z])
-                                    circle(
-                                        d=mounting_tube_outer_diameter_value
-                                            + 2*mounting_tube_relief_clearance_value,
-                                        $fn=64
-                                    );
+    module rear_frame_after_recess() {
+        difference() {
+            rear_frame_base();
 
-                // Recess and blind-hole cuts for the flush reinforcement rings.
-                reinforcement_bushing_cuts();
-            }
+            if(show_rear_recess && rear_recess_depth_actual > 0)
+                rear_extrude_from_to(
+                    mounting_plane_y_value - rear_recess_depth_actual,
+                    mounting_plane_y_value + 0.05
+                )
+                    rear_recess_2d();
+        }
+    }
 
-        // Add the Ø8.50 mm cylindrical tubes back after the relief cut. Their
-        // rear faces therefore stand proud of the local recess and read as
-        // round, including at the corner mounting positions.
-        color(body_color)
+
+    module mounting_tube_relief_cutters() {
+        if(mounting_tube_relief_depth_value > 0
+           && mounting_tube_relief_clearance_value > 0)
+            rear_extrude_from_to(
+                mounting_plane_y_value - mounting_tube_relief_depth_value,
+                mounting_plane_y_value + 0.05
+            )
+                for(x=hole_x_positions)
+                    for(z=hole_z_positions)
+                        translate([x, z])
+                            circle(
+                                d=mounting_tube_outer_diameter_value
+                                    + 2*mounting_tube_relief_clearance_value,
+                                $fn=64
+                            );
+    }
+
+
+    module rear_frame_after_mounting_reliefs() {
+        difference() {
+            rear_frame_after_recess();
+            mounting_tube_relief_cutters();
+        }
+    }
+
+
+    module rear_frame_with_mounting_tubes() {
+        union() {
+            rear_frame_after_mounting_reliefs();
+
             for(x=hole_x_positions)
                 for(z=hole_z_positions)
                     mounting_tube(x, z);
+        }
+    }
 
-        // Two PDF-dimensioned locating pins are added last so they remain
-        // fully proud of the recessed rail surface.
+
+    module rear_frame_after_reinforcement_cuts() {
+        difference() {
+            rear_frame_with_mounting_tubes();
+            reinforcement_bushing_cuts();
+        }
+    }
+
+
+    module rear_frame_structure() {
+        color(body_color)
+            rear_frame_after_reinforcement_cuts();
+
         color(body_color)
             for(pos=locator_pin_positions)
                 locator_pin(pos[0], pos[1]);
@@ -1719,13 +1740,57 @@ module _hub75_p5_64x32_panel_geometry(
             rear_frame_core_3d();
     }
 
+    module design_rear_context_base() {
+        if(show_front_layers)
+            design_front_context();
+
+        color(DESIGN_EXISTING)
+            rear_frame_base();
+    }
+
+
+    module design_rear_context_after_recess() {
+        if(show_front_layers)
+            design_front_context();
+
+        color(DESIGN_EXISTING)
+            rear_frame_after_recess();
+    }
+
+
+    module design_rear_context_after_mounting_reliefs() {
+        if(show_front_layers)
+            design_front_context();
+
+        color(DESIGN_EXISTING)
+            rear_frame_after_mounting_reliefs();
+    }
+
+
+    module design_rear_context_with_mounting_tubes() {
+        if(show_front_layers)
+            design_front_context();
+
+        color(DESIGN_EXISTING)
+            rear_frame_with_mounting_tubes();
+    }
+
+
+    module design_rear_context_after_reinforcement_cuts() {
+        if(show_front_layers)
+            design_front_context();
+
+        color(DESIGN_EXISTING)
+            rear_frame_after_reinforcement_cuts();
+    }
+
+
     module design_rear_structure_context() {
         if(show_front_layers)
             design_front_context();
 
-        // The normal private construction module is reused. The outer module
-        // colors are already neutral in design-render mode.
-        rear_frame_structure();
+        color(DESIGN_EXISTING)
+            rear_frame_structure();
     }
 
     module design_full_context() {
@@ -2171,49 +2236,50 @@ module _hub75_p5_64x32_panel_geometry(
 
         // 137..147: rear recess construction
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_RECESS_SIDE_LEFT) {
-            design_rear_structure_context();
+            design_rear_context_base();
             design_recess_part_3d()
                 rear_side_recess_2d("left");
 
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_RECESS_SIDE_RIGHT) {
-            design_rear_structure_context();
+            design_rear_context_base();
             design_recess_part_3d()
                 rear_side_recess_2d("right");
 
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_RECESS_BOTTOM) {
-            design_rear_structure_context();
+            design_rear_context_base();
             design_recess_part_3d()
                 rear_end_recess_2d("bottom");
 
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_RECESS_TOP) {
-            design_rear_structure_context();
+            design_rear_context_base();
             design_recess_part_3d()
                 rear_end_recess_2d("top");
 
         } else if(view >= HUB75_P5_64X32_PANEL_VIEW_RECESS_CROSSBAR_1 && view <= HUB75_P5_64X32_PANEL_VIEW_RECESS_CROSSBAR_3) {
-            design_rear_structure_context();
+            design_rear_context_base();
             design_recess_part_3d()
                 rear_crossbar_recess_2d(view-HUB75_P5_64X32_PANEL_VIEW_RECESS_CROSSBAR_1);
 
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_RECESS_BUSHING_PROTECTION) {
-            design_rear_structure_context();
+            design_rear_context_base();
             color(DESIGN_NEW)
                 design_thin_2d()
                     reinforcement_bushing_footprints_2d();
 
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_REAR_RECESS_2D) {
-            design_rear_structure_context();
+            design_rear_context_base();
             color(DESIGN_CUT)
                 design_thin_2d()
                     rear_recess_2d();
 
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_REAR_RECESS_3D) {
-            design_rear_structure_context();
+            design_rear_context_base();
             design_recess_part_3d()
                 rear_recess_2d();
 
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_REAR_AFTER_RECESS) {
-            rear_frame_structure();
+            color(DESIGN_NEW)
+                rear_frame_after_recess();
 
         // 148..159: mounting coordinates, tubes, reliefs and final holes
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_MOUNTING_COLUMN_LEFT) {
@@ -2241,23 +2307,23 @@ module _hub75_p5_64x32_panel_geometry(
             design_mounting_positions("all");
 
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_MOUNTING_TUBE_SINGLE) {
-            design_rear_structure_context();
+            design_rear_context_after_mounting_reliefs();
             color(DESIGN_NEW)
                 mounting_tube(hole_x_positions[0],hole_z_positions[0]);
 
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_MOUNTING_TUBES) {
-            design_rear_structure_context();
+            design_rear_context_after_mounting_reliefs();
             color(DESIGN_NEW)
                 for(x=hole_x_positions)
                     for(z=hole_z_positions)
                         mounting_tube(x,z);
 
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_MOUNTING_RELIEF_SINGLE) {
-            design_rear_structure_context();
+            design_rear_context_after_recess();
             design_mounting_relief(hole_x_positions[0],hole_z_positions[0]);
 
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_MOUNTING_RELIEFS) {
-            design_rear_structure_context();
+            design_rear_context_after_recess();
             for(x=hole_x_positions)
                 for(z=hole_z_positions)
                     design_mounting_relief(x,z);
@@ -2282,19 +2348,20 @@ module _hub75_p5_64x32_panel_geometry(
                 reinforcement_bushing_solids();
 
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_REINFORCEMENT_INNER_RECESS) {
-            design_rear_structure_context();
+            design_rear_context_with_mounting_tubes();
             design_reinforcement_inner_recess();
 
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_REINFORCEMENT_BLIND_HOLE) {
-            design_rear_structure_context();
+            design_rear_context_with_mounting_tubes();
             design_reinforcement_blind_hole();
 
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_REINFORCEMENT_FINISHED) {
-            rear_frame_structure();
+            color(DESIGN_NEW)
+                rear_frame_after_reinforcement_cuts();
 
         // 170..172: locating pins
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_LOCATOR_UPPER_LEFT) {
-            design_rear_structure_context();
+            design_rear_context_after_reinforcement_cuts();
             color(DESIGN_NEW)
                 locator_pin(
                     locator_pin_positions[0][0],
@@ -2302,7 +2369,7 @@ module _hub75_p5_64x32_panel_geometry(
                 );
 
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_LOCATOR_LOWER_RIGHT) {
-            design_rear_structure_context();
+            design_rear_context_after_reinforcement_cuts();
             color(DESIGN_NEW)
                 locator_pin(
                     locator_pin_positions[1][0],
@@ -2310,7 +2377,7 @@ module _hub75_p5_64x32_panel_geometry(
                 );
 
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_LOCATOR_PINS) {
-            design_rear_structure_context();
+            design_rear_context_after_reinforcement_cuts();
             color(DESIGN_NEW)
                 for(pos=locator_pin_positions)
                     locator_pin(pos[0],pos[1]);

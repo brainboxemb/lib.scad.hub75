@@ -163,3 +163,20 @@ For small HUB75 features:
   collapse into an edge-on line;
 - inspect the generated build images after camera/design changes.
 
+## Rear-frame staged design context
+
+Do not use completed `rear_frame_structure()` as the gray context for an
+operation that is already part of that final geometry.
+
+Use the production states:
+- `rear_frame_base()`;
+- `rear_frame_after_recess()`;
+- `rear_frame_after_mounting_reliefs()`;
+- `rear_frame_with_mounting_tubes()`;
+- `rear_frame_after_reinforcement_cuts()`;
+- `rear_frame_structure()`.
+
+A design view uses the state immediately before the highlighted operation.
+
+Default HUB75 design-render resolution: 1600 × 1200 px.
+
