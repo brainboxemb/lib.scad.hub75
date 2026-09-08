@@ -2,12 +2,18 @@
 
 Reusable OpenSCAD reference geometry for HUB75 LED matrix hardware.
 
-The first component is the portrait-oriented HUB75 P5 64 × 32 panel model:
+## Quick links
+
+- [HUB75 panel design source](openscad/p5-64x32-panel/design/design.md)
+- [Generated HUB75 panel design documentation](https://github.com/brainboxemb/lib.scad.hub75/blob/build/design/project/openscad/p5-64x32-panel/design/design.md)
+- [HUB75 panel OpenSCAD source](openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad)
+
+The first component is the portrait-oriented HUB75 P5 64 × 32 pixel panel (nominal 320 × 160 mm) model:
 
 ```text
-openscad/hub75-panel/
-├── hub75_panel.scad
-├── hub75_panel_render.scad
+openscad/p5-64x32-panel/
+├── hub75_p5_64x32_panel.scad
+├── hub75_p5_64x32_panel_render.scad
 └── design/
     └── design.md
 ```
@@ -17,11 +23,11 @@ openscad/hub75-panel/
 The library uses the OpenSCAD object model:
 
 ```scad
-use <openscad/hub75-panel/hub75_panel.scad>
+use <openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad>
 
-panel = hub75_panel_create();
+panel = hub75_p5_64x32_panel_create();
 
-hub75_panel_build(panel);
+hub75_p5_64x32_panel_build(panel);
 ```
 
 Mechanical information belongs to the object. Consumers should use the object
@@ -30,10 +36,10 @@ or object-based accessor functions instead of duplicating panel dimensions.
 Examples:
 
 ```scad
-hub75_panel_width(panel);
-hub75_panel_height(panel);
-hub75_panel_hole_x_positions_centered(panel);
-hub75_panel_rear_grid_gap_x(panel);
+hub75_p5_64x32_panel_width(panel);
+hub75_p5_64x32_panel_height(panel);
+hub75_p5_64x32_panel_hole_x_positions_centered(panel);
+hub75_p5_64x32_panel_rear_grid_gap_x(panel);
 hub75_rear_side_rail_width_at_mounting_plane(panel);
 ```
 
@@ -60,11 +66,26 @@ approximations remain distinguished in the design documentation.
 
 ## Design documentation
 
+The HUB75 panel design document follows the actual OpenSCAD construction code
+with **90 generated design views**. Fine-grained cutters, profiles, recesses,
+mounting features and reference geometry are shown as separate code-oriented
+steps rather than only as final-model camera views.
+
+
 Source documentation lives at:
 
-```text
-openscad/hub75-panel/design/design.md
-```
+- [openscad/p5-64x32-panel/design/design.md](openscad/p5-64x32-panel/design/design.md)
+
+After CI generates the design renders, the readable generated version is
+published on the `build` branch:
+
+- [Generated HUB75 panel design documentation](https://github.com/brainboxemb/lib.scad.hub75/blob/build/design/project/openscad/p5-64x32-panel/design/design.md)
+
+The design document is the engineering description of the component. It covers
+the source/authority of dimensions, coordinate system, object model, physical
+versus nominal dimensions, front stack, rear taper, bay/frame construction,
+mounting tubes, reinforcement bushings, locator pins, connectors, verification
+overlay and mating-plane rules.
 
 It declares generated views for:
 
@@ -81,7 +102,7 @@ not on `main`.
 
 ## Verification
 
-`test/hub75_panel_api.scad` exercises the public object API, validates key
+`test/hub75_p5_64x32_panel_api.scad` exercises the public object API, validates key
 derived values and builds the complete panel.
 
 Generated functional evidence is published separately to the

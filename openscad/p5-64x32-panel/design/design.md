@@ -1,0 +1,1029 @@
+# HUB75 P5 64 × 32 panel — OpenSCAD design
+
+<!-- scad-render-defaults
+engine: openscad
+source: hub75_p5_64x32_panel_render.scad
+module: hub75_p5_64x32_panel_design
+vpr: [68, 0, 32]
+-->
+
+## Goal
+
+This document follows the **actual construction code** of the reusable HUB75
+panel model.
+
+The same rule used by `lib.scad.clamps` applies here:
+
+```text
+gray geometry
+    geometry that already exists at this point
+
+red geometry
+    geometry introduced by this code step
+
+transparent red volume
+    material/cutter that is being removed
+```
+
+The render adapter is intentionally small. It only maps names to numeric view
+IDs. All design rendering happens inside `hub75_p5_64x32_panel.scad`, where the renderer
+can call the same private helpers that build the real panel.
+
+This panel is much more complicated than the tube clamp, so this design
+document intentionally contains many small images rather than a few large
+"finished model" views.
+
+<!-- scad-render
+view: final
+-->
+
+
+## 1. Physical and nominal envelope
+
+The physical body and the nominal placement grid are deliberately separate:
+
+```scad
+width = 159.70;
+height = 319.71;
+
+reference_width = 160.00;
+reference_height = 320.00;
+```
+
+### Physical panel envelope
+
+The first image is only the real physical front envelope.
+
+<!-- scad-render
+view: physical-envelope
+vpr: [90, 0, 0]
+-->
+
+
+### Nominal 160 × 320 placement cell
+
+The red outline adds the nominal assembly cell around the physical panel.
+
+<!-- scad-render
+view: nominal-envelope
+vpr: [90, 0, 0]
+-->
+
+
+### X placement clearance
+
+```scad
+hub75_p5_64x32_panel_grid_gap_x(panel);
+```
+
+<!-- scad-render
+view: grid-gap-x
+vpr: [90, 0, 0]
+-->
+
+
+### Z placement clearance
+
+```scad
+hub75_p5_64x32_panel_grid_gap_z(panel);
+```
+
+<!-- scad-render
+view: grid-gap-z
+vpr: [90, 0, 0]
+-->
+
+
+## 2. Front stack
+
+The front is built from two explicit solids rather than one anonymous depth.
+
+### Front mask
+
+```scad
+module front_mask_shape() {
+    cube([width, front_mask_depth_value, height]);
+}
+```
+
+<!-- scad-render
+view: front-mask
+-->
+
+
+### Front-mask depth plane
+
+The red plane marks the back of the front mask.
+
+<!-- scad-render
+view: front-mask-depth
+vpr: [90, 0, 90]
+-->
+
+
+### PCB layer
+
+```scad
+module pcb_layer_shape() {
+    translate([0, front_mask_depth_value, 0])
+        cube([width, pcb_thickness_value, height]);
+}
+```
+
+<!-- scad-render
+view: pcb-layer
+-->
+
+
+### PCB rear plane
+
+The rear housing starts at `front_mask_depth + pcb_thickness`.
+
+<!-- scad-render
+view: pcb-back-plane
+vpr: [90, 0, 90]
+-->
+
+
+### Completed front stack
+
+Gray is the mask; red is the PCB added by the second construction step.
+
+<!-- scad-render
+view: front-stack
+-->
+
+
+## 3. Rear housing envelope and taper
+
+The STEP-derived housing begins behind the PCB and tapers continuously to the
+rear mounting plane.
+
+### Rear-housing start plane
+
+<!-- scad-render
+view: rear-start-plane
+vpr: [90, 0, 90]
+-->
+
+
+### Rear depth
+
+The first plane is the PCB back; the second is the 14.50 mm mounting plane.
+
+<!-- scad-render
+view: rear-depth
+vpr: [90, 0, 90]
+-->
+
+
+### Front footprint of the taper
+
+<!-- scad-render
+view: taper-front-footprint
+vpr: [90, 0, 0]
+-->
+
+
+### Rear footprint of the taper
+
+<!-- scad-render
+view: taper-rear-footprint
+vpr: [90, 0, 0]
+-->
+
+
+### Tapered outer blank
+
+The actual blank is created by:
+
+```scad
+tapered_outer_blank(
+    rear_frame_start_y,
+    mounting_plane_y_value,
+    0,
+    rear_outer_inset_actual
+);
+```
+
+<!-- scad-render
+view: taper-body
+-->
+
+
+### Rear inset in X
+
+<!-- scad-render
+view: taper-inset-x
+vpr: [90, 0, 0]
+-->
+
+
+### Rear inset in Z
+
+<!-- scad-render
+view: taper-inset-z
+vpr: [90, 0, 0]
+-->
+
+
+## 4. Basic rear-frame dimensions
+
+Before openings are cut, the object derives the widths that later define the
+remaining rails.
+
+### Side rail width
+
+<!-- scad-render
+view: side-rail-width
+vpr: [90, 0, 0]
+-->
+
+
+### End rail width
+
+<!-- scad-render
+view: end-rail-width
+vpr: [90, 0, 0]
+-->
+
+
+### Crossbar width
+
+<!-- scad-render
+view: crossbar-width
+vpr: [90, 0, 0]
+-->
+
+
+### Three crossbar positions
+
+```scad
+rear_crossbar_z = [
+    scale_z(rear_crossbar_1_ref),
+    scale_z(rear_crossbar_2_ref),
+    scale_z(rear_crossbar_3_ref)
+];
+```
+
+<!-- scad-render
+view: crossbar-positions
+vpr: [90, 0, 0]
+-->
+
+
+## 5. Four electronics bay openings
+
+The frame is not constructed by adding individual rails. Instead a tapered
+outer solid is created first and the four bay volumes are subtracted.
+
+The reusable cutter is:
+
+```scad
+module rear_opening_2d(i, include_reliefs=true) {
+    rounded_rect_2d(...);
+
+    if(include_reliefs) {
+        bay_end_relief_2d(z0, -1);
+        bay_end_relief_2d(z1,  1);
+    }
+}
+```
+
+### Bay 1 basic rounded opening
+
+<!-- scad-render
+view: bay-1
+vpr: [90, 0, 0]
+-->
+
+
+### Bay 2
+
+<!-- scad-render
+view: bay-2
+vpr: [90, 0, 0]
+-->
+
+
+### Bay 3
+
+<!-- scad-render
+view: bay-3
+vpr: [90, 0, 0]
+-->
+
+
+### Bay 4
+
+<!-- scad-render
+view: bay-4
+vpr: [90, 0, 0]
+-->
+
+
+### Rounded-corner geometry
+
+The rounded opening itself is generated by `rounded_rect_2d()`.
+
+<!-- scad-render
+view: bay-rounded-corner
+vpr: [90, 0, 0]
+-->
+
+
+### Bottom edge relief
+
+The stepped rail starts by extending the opening locally into one adjacent
+rail.
+
+<!-- scad-render
+view: bay-bottom-relief
+vpr: [90, 0, 0]
+-->
+
+
+### Top edge relief
+
+The same helper is mirrored by the `direction` argument.
+
+<!-- scad-render
+view: bay-top-relief
+vpr: [90, 0, 0]
+-->
+
+
+### Combined four-bay cutter
+
+```scad
+module rear_openings_2d() {
+    for(i=[0:3])
+        rear_opening_2d(i);
+}
+```
+
+<!-- scad-render
+view: rear-openings
+vpr: [90, 0, 0]
+-->
+
+
+## 6. From solid web to rear frame
+
+### Solid rear web before bay subtraction
+
+<!-- scad-render
+view: rear-web-solid
+vpr: [90, 0, 0]
+-->
+
+
+### 2D frame web after subtraction
+
+```scad
+difference() {
+    square([width, height]);
+    rear_openings_2d();
+}
+```
+
+<!-- scad-render
+view: rear-web-cut
+vpr: [90, 0, 0]
+-->
+
+
+### 3D tapered frame core
+
+The outer wall tapers, but the bay walls remain vertical:
+
+```scad
+difference() {
+    tapered_outer_blank(...);
+    rear_extrude_from_to(...)
+        rear_openings_2d();
+}
+```
+
+<!-- scad-render
+view: rear-frame-core
+-->
+
+
+## 7. Narrow stepped end-rail profile
+
+The STEP reference shows that each bay edge is not a constant straight rail.
+
+```text
+normal end rail   10.75 mm
+narrow section     7.75 mm
+difference          3.00 mm
+```
+
+### Narrow width
+
+<!-- scad-render
+view: narrow-end-width
+vpr: [90, 0, 0]
+-->
+
+
+### Narrow-section length
+
+<!-- scad-render
+view: narrow-end-length
+vpr: [90, 0, 0]
+-->
+
+
+### First 45° transition
+
+`bay_end_relief_2d()` uses the width difference as the transition depth.
+
+<!-- scad-render
+view: narrow-transition-left
+vpr: [90, 0, 0]
+-->
+
+
+### Mirrored transition
+
+<!-- scad-render
+view: narrow-transition-right
+vpr: [90, 0, 0]
+-->
+
+
+### Completed stepped profile
+
+<!-- scad-render
+view: narrow-profile-complete
+vpr: [90, 0, 0]
+-->
+
+
+## 8. Rear-face recess
+
+The rail face is then recessed shallowly. The implementation is deliberately
+split into real reusable helpers so the design images directly correspond to
+the production Boolean geometry.
+
+### Left side recess
+
+```scad
+rear_side_recess_2d("left");
+```
+
+<!-- scad-render
+view: recess-side-left
+vpr: [90, 0, 0]
+-->
+
+
+### Right side recess
+
+<!-- scad-render
+view: recess-side-right
+vpr: [90, 0, 0]
+-->
+
+
+### Bottom end recess
+
+```scad
+rear_end_recess_2d("bottom");
+```
+
+<!-- scad-render
+view: recess-bottom
+vpr: [90, 0, 0]
+-->
+
+
+### Top end recess
+
+<!-- scad-render
+view: recess-top
+vpr: [90, 0, 0]
+-->
+
+
+### Crossbar 1 recess
+
+The crossbar recess is intersected with the **actual stepped web**, not a
+straight rectangle.
+
+<!-- scad-render
+view: recess-crossbar-1
+vpr: [90, 0, 0]
+-->
+
+
+### Crossbar 2 recess
+
+<!-- scad-render
+view: recess-crossbar-2
+vpr: [90, 0, 0]
+-->
+
+
+### Crossbar 3 recess
+
+<!-- scad-render
+view: recess-crossbar-3
+vpr: [90, 0, 0]
+-->
+
+
+### Reinforcement footprints protected from the recess
+
+The six Ø14 footprints are subtracted from the recess cutter:
+
+```scad
+difference() {
+    rear_recess_raw_2d();
+    reinforcement_bushing_footprints_2d();
+}
+```
+
+<!-- scad-render
+view: recess-bushing-protection
+vpr: [90, 0, 0]
+-->
+
+
+### Final 2D recess cutter
+
+<!-- scad-render
+view: rear-recess-2d
+vpr: [90, 0, 0]
+-->
+
+
+### Recess cutter extruded into 3D
+
+<!-- scad-render
+view: rear-recess-3d
+-->
+
+
+### Rear frame after recess
+
+<!-- scad-render
+view: rear-after-recess
+-->
+
+
+## 9. Drawing-derived mounting layout
+
+The six mounting centres come directly from the drawing. They are deliberately
+not scaled with the STEP-derived structural geometry.
+
+### Left column
+
+<!-- scad-render
+view: mounting-column-left
+vpr: [90, 0, 0]
+-->
+
+
+### Right column
+
+<!-- scad-render
+view: mounting-column-right
+vpr: [90, 0, 0]
+-->
+
+
+### Bottom row
+
+<!-- scad-render
+view: mounting-row-bottom
+vpr: [90, 0, 0]
+-->
+
+
+### Middle row
+
+<!-- scad-render
+view: mounting-row-middle
+vpr: [90, 0, 0]
+-->
+
+
+### Top row
+
+<!-- scad-render
+view: mounting-row-top
+vpr: [90, 0, 0]
+-->
+
+
+### All six centres
+
+```scad
+for(x=hole_x_positions)
+    for(z=hole_z_positions)
+        ...
+```
+
+<!-- scad-render
+view: mounting-centres
+vpr: [90, 0, 0]
+-->
+
+
+## 10. Mounting tubes, reliefs and screw cuts
+
+The mounting feature is built in three distinct operations. Keeping them
+separate is important for understanding why the rear outline stays round.
+
+### One Ø8.50 mounting tube
+
+```scad
+mounting_tube(x, z);
+```
+
+<!-- scad-render
+view: mounting-tube-single
+-->
+
+
+### All mounting tubes
+
+<!-- scad-render
+view: mounting-tubes
+-->
+
+
+### One circular rail relief
+
+The local rail is recessed around the tube before the tube is added back.
+
+<!-- scad-render
+view: mounting-relief-single
+-->
+
+
+### All six rail reliefs
+
+<!-- scad-render
+view: mounting-reliefs
+-->
+
+
+### One Ø3 mounting-hole cutter
+
+<!-- scad-render
+view: mounting-hole-single
+-->
+
+
+### Six through-hole cutters
+
+The final through holes are one Boolean operation through the complete panel:
+
+```scad
+difference() {
+    panel_solid_before_mounting_holes();
+    mounting_hole_cutters();
+}
+```
+
+<!-- scad-render
+view: mounting-holes
+-->
+
+
+## 11. Reinforcement bushing positions
+
+These Ø14 features are separate from the Ø8.50 mounting tubes. Their placement
+is intentionally asymmetric in the middle pair.
+
+### Bottom-left
+
+<!-- scad-render
+view: reinforcement-bottom-left
+vpr: [90, 0, 0]
+-->
+
+
+### Bottom-right
+
+<!-- scad-render
+view: reinforcement-bottom-right
+vpr: [90, 0, 0]
+-->
+
+
+### Middle-left
+
+<!-- scad-render
+view: reinforcement-middle-left
+vpr: [90, 0, 0]
+-->
+
+
+### Middle-right
+
+<!-- scad-render
+view: reinforcement-middle-right
+vpr: [90, 0, 0]
+-->
+
+
+### Top-left
+
+<!-- scad-render
+view: reinforcement-top-left
+vpr: [90, 0, 0]
+-->
+
+
+### Top-right
+
+<!-- scad-render
+view: reinforcement-top-right
+vpr: [90, 0, 0]
+-->
+
+
+## 12. Reinforcement bushing construction
+
+### Solid Ø14 retained material
+
+The bushing solids are added before recess/cut operations so bay subtraction
+does not destroy them.
+
+<!-- scad-render
+view: reinforcement-solids
+-->
+
+
+### Ø10 inner recess
+
+<!-- scad-render
+view: reinforcement-inner-recess
+-->
+
+
+### Ø2.5 blind hole
+
+<!-- scad-render
+view: reinforcement-blind-hole
+-->
+
+
+### Finished reinforcement geometry
+
+The rear face remains flush with the mounting plane.
+
+<!-- scad-render
+view: reinforcement-finished
+-->
+
+
+## 13. Locator pins
+
+The two Ø3 × 3 mm locator pins come from explicit drawing dimensions.
+
+### Upper-left locator
+
+<!-- scad-render
+view: locator-upper-left
+-->
+
+
+### Lower-right locator
+
+<!-- scad-render
+view: locator-lower-right
+-->
+
+
+### Both locator pins
+
+```scad
+for(pos=locator_pin_positions)
+    locator_pin(pos[0], pos[1]);
+```
+
+<!-- scad-render
+view: locator-pins
+-->
+
+
+## 14. Connector reference volumes
+
+The connector models are clearance references rather than detailed electrical
+models.
+
+### Bottom HUB75 data connector
+
+<!-- scad-render
+view: data-connector-bottom
+-->
+
+
+### Top HUB75 data connector
+
+<!-- scad-render
+view: data-connector-top
+-->
+
+
+### Data connector pair
+
+<!-- scad-render
+view: data-connectors
+-->
+
+
+### Power connector
+
+The power connector remains explicitly approximate because the dimensional
+drawing does not locate it.
+
+<!-- scad-render
+view: power-connector
+-->
+
+
+## 15. Orientation markers
+
+The PCB arrows are visual/orientation references, not mechanical dimensions.
+
+### Bay 1 down arrow
+
+<!-- scad-render
+view: orientation-bay-1
+vpr: [90, 0, 0]
+-->
+
+
+### Bay 2 right arrow
+
+<!-- scad-render
+view: orientation-bay-2
+vpr: [90, 0, 0]
+-->
+
+
+### Bay 4 down + right arrows
+
+<!-- scad-render
+view: orientation-bay-4
+vpr: [90, 0, 0]
+-->
+
+
+### Complete orientation layout
+
+<!-- scad-render
+view: orientation-all
+vpr: [90, 0, 0]
+-->
+
+
+## 16. Drawing verification
+
+The verification sequence deliberately uses only drawing-supported geometry.
+
+### Physical envelope
+
+<!-- scad-render
+view: verification-envelope
+vpr: [90, 0, 0]
+-->
+
+
+### Six mounting centres
+
+<!-- scad-render
+view: verification-mounting
+vpr: [90, 0, 0]
+-->
+
+
+### Two locator centres
+
+<!-- scad-render
+view: verification-locators
+vpr: [90, 0, 0]
+-->
+
+
+## 17. Mating and profile checks
+
+These views are not new construction operations. They make the interfaces used
+by future couplers/enclosures explicit after the build sequence is understood.
+
+### Rear mounting plane
+
+```scad
+hub75_p5_64x32_panel_mounting_plane_y(panel);
+```
+
+<!-- scad-render
+view: rear-mating-plane
+vpr: [90, 0, 90]
+-->
+
+
+### Taper profile
+
+<!-- scad-render
+view: taper-profile
+vpr: [90, 0, 90]
+-->
+
+
+### Rear rail profile
+
+<!-- scad-render
+view: rear-rail-profile
+vpr: [90, 0, 0]
+-->
+
+
+### Connector clearance profile
+
+<!-- scad-render
+view: connector-clearance-profile
+vpr: [90, 0, 90]
+-->
+
+
+### Final rear reference
+
+<!-- scad-render
+view: final-rear
+vpr: [90, 0, 0]
+-->
+
+
+### Final side/profile reference
+
+<!-- scad-render
+view: final-profile
+vpr: [90, 0, 90]
+-->
+
+
+## 18. Public API
+
+The public consumer remains small:
+
+```scad
+use <hub75_p5_64x32_panel.scad>
+
+panel = hub75_p5_64x32_panel_create();
+
+hub75_p5_64x32_panel_build(panel);
+```
+
+The design infrastructure does not create a second public model API. It exists
+only to expose the construction code in documentation.
+
+The public object remains the single source for dimensions and derived mating
+information.
+
+## Design-render architecture
+
+The documentation entry point stays deliberately small:
+
+```scad
+module hub75_p5_64x32_panel_design(view = "final") {
+    panel = hub75_p5_64x32_panel_create();
+
+    hub75_p5_64x32_panel_render(
+        panel,
+        view = hub75_p5_64x32_panel_view_id(view)
+    );
+}
+```
+
+The authoritative constants and one name-to-ID conversion function both live
+in `hub75_p5_64x32_panel.scad`:
+
+```scad
+HUB75_P5_64X32_PANEL_VIEW_FINAL = 0;
+HUB75_P5_64X32_PANEL_VIEW_PHYSICAL_ENVELOPE = 101;
+HUB75_P5_64X32_PANEL_VIEW_REAR_FRAME_CORE = 131;
+HUB75_P5_64X32_PANEL_VIEW_MOUNTING_TUBES = 155;
+
+function hub75_p5_64x32_panel_view_id(view) =
+    view == "final" ? HUB75_P5_64X32_PANEL_VIEW_FINAL :
+    view == "physical-envelope" ? HUB75_P5_64X32_PANEL_VIEW_PHYSICAL_ENVELOPE :
+    view == "rear-frame-core" ? HUB75_P5_64X32_PANEL_VIEW_REAR_FRAME_CORE :
+    view == "mounting-tubes" ? HUB75_P5_64X32_PANEL_VIEW_MOUNTING_TUBES :
+    ...
+    HUB75_P5_64X32_PANEL_VIEW_FINAL;
+```
+
+OpenSCAD `use <...>` does not import file-level constants. Keeping the
+conversion function in the implementation file avoids both duplicated numeric
+IDs and one accessor function per constant.
+
+The repository remains generic (`lib.scad.hub75`), while this component is
+explicitly specific to a P5, 64 × 32 pixel, nominal 320 × 160 mm HUB75 panel.
