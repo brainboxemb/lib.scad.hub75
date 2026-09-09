@@ -69,7 +69,7 @@ Generated PNG/STL files do not belong on `main`.
 
 Pin `tool.scad-project` at `tools/tool.scad-project`.
 
-Current intended tool ref: `v0.4.4`.
+Current intended tool ref: `v0.6.1`.
 
 Use thin reusable GitHub workflow callers.
 

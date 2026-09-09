@@ -104,7 +104,7 @@ Generated functional evidence is published separately to the
 
 ## Project tooling
 
-This repository pins `tool.scad-project` v0.4.4:
+This repository pins `tool.scad-project` v0.6.1:
 
 ```yaml
 tooling:
@@ -112,7 +112,7 @@ tooling:
     type: git-submodule
     url: https://github.com/brainboxemb/tool.scad-project.git
     path: tools/tool.scad-project
-    ref: v0.4.4
+    ref: v0.6.1
 ```
 
 Bootstrap and repository updates are Python-free:
