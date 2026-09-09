@@ -6,6 +6,10 @@ on:
       - chatgpt/design-doc-iteration
   workflow_dispatch:
 
+concurrency:
+  group: hub75-dev-iteration
+  cancel-in-progress: true
+
 permissions:
   contents: write
   packages: read
