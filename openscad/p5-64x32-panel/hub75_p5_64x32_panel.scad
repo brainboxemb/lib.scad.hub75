@@ -1278,13 +1278,9 @@ module _hub75_p5_64x32_panel_geometry(
     }
 
 
-    module reinforcement_bushing_cuts() {
-        // The Ø14 reinforcement feature is NOT an added boss. The rear rail
-        // itself remains flush at the nominal mounting plane because its Ø14
-        // footprint is excluded from rear_recess_2d(). Only the inner recess
-        // and blind hole are cut from that retained rail material here.
-        for(pos=reinforcement_bushing_positions) {
-            // Ø10 recess, 2.5 mm deep from the rear mounting plane.
+    module reinforcement_bushing_inner_recess_cuts() {
+        // Ø10 recess, 2.5 mm deep from the rear mounting plane.
+        for(pos=reinforcement_bushing_positions)
             translate([
                 pos[0],
                 mounting_plane_y_value - reinforcement_bushing_inner_recess_value,
@@ -1296,8 +1292,12 @@ module _hub75_p5_64x32_panel_geometry(
                         d=reinforcement_bushing_inner_diameter_value,
                         $fn=64
                     );
+    }
 
-            // Ø2.5 blind hole, 10 mm deeper from the recess floor.
+
+    module reinforcement_bushing_blind_hole_cuts() {
+        // Ø2.5 blind hole, 10 mm deeper from the recess floor.
+        for(pos=reinforcement_bushing_positions)
             translate([
                 pos[0],
                 mounting_plane_y_value
@@ -1311,7 +1311,16 @@ module _hub75_p5_64x32_panel_geometry(
                         d=reinforcement_bushing_hole_diameter_value,
                         $fn=48
                     );
-        }
+    }
+
+
+    module reinforcement_bushing_cuts() {
+        // The Ø14 reinforcement feature is NOT an added boss. The rear rail
+        // itself remains flush at the nominal mounting plane because its Ø14
+        // footprint is excluded from rear_recess_2d(). Only the inner recess
+        // and blind hole are cut from that retained rail material here.
+        reinforcement_bushing_inner_recess_cuts();
+        reinforcement_bushing_blind_hole_cuts();
     }
 
 
@@ -1810,6 +1819,18 @@ module _hub75_p5_64x32_panel_geometry(
     }
 
 
+    module design_rear_context_after_reinforcement_inner_recess() {
+        if(show_front_layers)
+            design_front_context();
+
+        color(DESIGN_EXISTING)
+            difference() {
+                rear_frame_with_mounting_tubes();
+                reinforcement_bushing_inner_recess_cuts();
+            }
+    }
+
+
     module design_rear_context_after_reinforcement_cuts() {
         if(show_front_layers)
             design_front_context();
@@ -1993,36 +2014,12 @@ module _hub75_p5_64x32_panel_geometry(
 
     module design_reinforcement_inner_recess() {
         color(DESIGN_CUT)
-            for(pos=reinforcement_bushing_positions)
-                translate([
-                    pos[0],
-                    mounting_plane_y_value-reinforcement_bushing_inner_recess_value,
-                    pos[1]
-                ])
-                    rotate([-90,0,0])
-                        cylinder(
-                            h=reinforcement_bushing_inner_recess_value+0.02,
-                            d=reinforcement_bushing_inner_diameter_value,
-                            $fn=64
-                        );
+            reinforcement_bushing_inner_recess_cuts();
     }
 
     module design_reinforcement_blind_hole() {
         color(DESIGN_CUT)
-            for(pos=reinforcement_bushing_positions)
-                translate([
-                    pos[0],
-                    mounting_plane_y_value
-                        - reinforcement_bushing_inner_recess_value
-                        - reinforcement_bushing_hole_depth_value,
-                    pos[1]
-                ])
-                    rotate([-90,0,0])
-                        cylinder(
-                            h=reinforcement_bushing_hole_depth_value+0.02,
-                            d=reinforcement_bushing_hole_diameter_value,
-                            $fn=48
-                        );
+            reinforcement_bushing_blind_hole_cuts();
     }
 
     module design_connector_box(z) {
@@ -2386,7 +2383,9 @@ module _hub75_p5_64x32_panel_geometry(
             design_reinforcement_inner_recess();
 
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_REINFORCEMENT_BLIND_HOLE) {
-            design_rear_context_with_mounting_tubes();
+            // Show the real state after the Ø10 recess so the deeper Ø2.5
+            // cutter is visible instead of being hidden inside uncut material.
+            design_rear_context_after_reinforcement_inner_recess();
             design_reinforcement_blind_hole();
 
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_REINFORCEMENT_FINISHED) {
