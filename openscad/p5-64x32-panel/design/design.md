@@ -226,6 +226,8 @@ The next four steps explain what is inside that union.
 The basic opening is a rounded rectangle spanning between the two long side
 rails.
 
+The call from the bay constructor is:
+
 ```scad
 rounded_rect_2d(
     rear_frame_side_width,
@@ -234,6 +236,31 @@ rounded_rect_2d(
     opening_h,
     rear_opening_corner_radius
 );
+```
+
+The rounded rectangle itself is not a magic primitive. It is made by shrinking
+a normal square by the corner radius and then expanding it again with
+`offset(r=rr)`:
+
+```scad
+module rounded_rect_2d(x, z, w, h, r) {
+    rr = min(r, min(w, h) / 2 - 0.01);
+
+    translate([x + rr, z + rr])
+        offset(r = rr)
+            square([
+                max(0.02, w - 2 * rr),
+                max(0.02, h - 2 * rr)
+            ]);
+}
+```
+
+So this step is literally:
+
+```text
+smaller sharp rectangle
+        ↓ offset outward by corner radius
+rounded bay-opening rectangle
 ```
 
 **View:** `bay-rounded-corner`
