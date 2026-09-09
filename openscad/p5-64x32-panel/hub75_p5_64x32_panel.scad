@@ -491,6 +491,12 @@ function hub75_p5_64x32_panel_mounting_tube_outer_diameter(panel) =
 function hub75_p5_64x32_panel_mounting_tube_protrusion(panel) =
     panel.mounting_tube_protrusion;
 
+function hub75_p5_64x32_panel_locator_pin_diameter(panel) =
+    panel.locator_pin_diameter;
+
+function hub75_p5_64x32_panel_locator_pin_protrusion(panel) =
+    panel.locator_pin_protrusion;
+
 function hub75_p5_64x32_panel_reinforcement_bushing_outer_diameter(panel) =
     panel.reinforcement_bushing_outer_diameter;
 
