@@ -9,40 +9,39 @@ vpr: [68, 0, 32]
 
 ## Purpose
 
-This document explains how the **physical model is constructed**.
+This document explains **how the model is actually constructed**.
 
-It is written for a reader who does not need to know OpenSCAD. The order is
-deliberate:
+The intended reader does not need to know OpenSCAD in advance. Every meaningful
+construction operation is therefore presented in the same order as the model:
 
 ```text
-physical part
-→ what it does
-→ what changes geometrically
-→ a useful image
-→ the relevant code
+existing physical geometry
+        ↓
+one addition or subtraction
+        ↓
+image of that operation
+        ↓
+the production code that performs it
 ```
 
-A render only belongs in this document when it helps explain the construction.
-The renderer itself contains additional diagnostic views for development; those
-do not all need to appear here.
+This follows the same principle as the tube-clamp design documentation: do not
+jump from “rough idea” to “finished result”. Show the intermediate operations
+that explain where the shape comes from.
 
 For construction images:
 
 ```text
 gray = geometry that already exists before the step
-red  = the addition, cutter or feature being discussed
+red  = geometry being added, or the cutter being subtracted
 ```
 
-A completed state returns to a neutral colour.
+A completed state returns to neutral gray.
 
 ## First orient yourself
 
-The panel is shown in portrait orientation in this library.
+The library stores the panel in portrait orientation.
 
 ### Front
-
-The front is the flat LED side. There is intentionally little mechanical detail
-here; most of the model complexity is on the rear.
 
 **View:** `front`
 
@@ -51,13 +50,9 @@ view: front
 vpr: [90, 0, 0]
 -->
 
+The front is the flat LED side.
+
 ### Rear
-
-The rear overview is the reference image for the rest of this document. It
-shows the four large electronics bays, the frame around them, mounting
-locations and connector reference geometry.
-
-When a later close-up becomes hard to place, return to this image first.
 
 **View:** `rear`
 
@@ -66,49 +61,351 @@ view: rear
 vpr: [90, 0, 180]
 -->
 
-## 1. Front body
+Keep this overview in mind while following the individual construction steps
+below.
 
-The front of the model is simple compared with the rear. It is represented by
-two thin layers:
+## Complete construction order
+
+The rear model is built in this order:
 
 ```text
-front mask / LED-side body
-        +
-PCB layer immediately behind it
+front mask
+    ↓
+PCB layer
+    ↓
+tapered rear blank
+    ↓
+construct one bay opening shape
+    ↓
+repeat that opening four times
+    ↓
+subtract all four openings
+    ↓
+add the six reinforcement solids
+    ↓
+subtract the shallow rear recess
+    ↓
+subtract mounting-tube reliefs
+    ↓
+add six mounting tubes
+    ↓
+cut reinforcement recesses
+    ↓
+cut reinforcement blind holes
+    ↓
+add locator pins
+    ↓
+add connector reference geometry
+    ↓
+complete panel
 ```
 
-The important design decision is not the exact OpenSCAD operation, but that the
-rear housing starts **behind both layers** rather than at the visible front
-surface.
+The sections below follow this order.
 
-The production helpers are:
+---
+
+## 1. Front mask
+
+The first physical layer is the flat front body.
 
 ```scad
-front_mask_shape();
-pcb_layer_shape();
+module front_mask_shape() {
+    translate([0, 0, 0])
+        cube([
+            width,
+            front_mask_depth_value,
+            height
+        ]);
+}
 ```
 
-There is no separate render here for a "depth plane". A plane marking an
-internal coordinate is useful for debugging but does not make this physical
-construction easier to understand.
+**View:** `front-mask`
 
-## 2. Rear frame
+<!-- scad-render
+view: front-mask
+vpr: [68, 0, 32]
+-->
 
-The rear housing starts as a tapered outer body. Four large openings are then
-removed from it, leaving the outer rails and three crossbars.
+Nothing mechanical has been added at the rear yet.
 
-Conceptually:
+## 2. PCB layer
 
-```text
-tapered rear body
-    ↓ remove four electronics bays
-outer side rails + end rails + three crossbars
+The PCB is placed directly behind the front mask.
+
+```scad
+module pcb_layer_shape() {
+    translate([0, front_mask_depth_value, 0])
+        cube([
+            width,
+            pcb_thickness_value,
+            height
+        ]);
+}
 ```
 
-### Rear frame after the four bay openings
+**View:** `front-stack`
 
-This image shows the resulting structural frame before the later recesses,
-mounting features and locator pins are added.
+<!-- scad-render
+view: front-stack
+vpr: [68, 0, 32]
+-->
+
+In this image the existing front mask is gray and the PCB layer being added is
+red.
+
+---
+
+# Rear housing
+
+## 3. Start with the complete tapered rear blank
+
+Before any electronics bays are cut, the rear housing is one solid tapered
+volume.
+
+The front edge of this rear housing uses the full panel footprint. At the rear
+mounting plane the outside perimeter is inset by 1.25 mm per side.
+
+```scad
+tapered_outer_blank(
+    rear_frame_start_y,
+    mounting_plane_y_value,
+    0,
+    rear_outer_inset_actual
+);
+```
+
+Internally that helper creates one polyhedron from the front and rear
+rectangular footprints.
+
+**View:** `taper-body`
+
+<!-- scad-render
+view: taper-body
+vpr: [68, 0, 32]
+-->
+
+The important point is that the taper belongs to the **outside wall only**.
+The bay walls are created separately by subtraction.
+
+---
+
+# Constructing one electronics-bay opening
+
+The four large holes are not simple rectangles. Each bay cutter is built from a
+rounded main rectangle plus local stepped reliefs at its top and bottom edges.
+
+The code for one complete opening is:
+
+```scad
+module rear_opening_2d(i, include_reliefs=true) {
+    z0 = opening_z_min[i];
+    z1 = opening_z_max[i];
+    opening_h = z1 - z0;
+
+    union() {
+        rounded_rect_2d(
+            rear_frame_side_width,
+            z0,
+            width - 2 * rear_frame_side_width,
+            opening_h,
+            rear_opening_corner_radius
+        );
+
+        if(include_reliefs) {
+            bay_end_relief_2d(z0, -1);
+            bay_end_relief_2d(z1,  1);
+        }
+    }
+}
+```
+
+The next four steps explain what is inside that union.
+
+## 4. Main rounded bay opening
+
+The basic opening is a rounded rectangle spanning between the two long side
+rails.
+
+```scad
+rounded_rect_2d(
+    rear_frame_side_width,
+    z0,
+    width - 2 * rear_frame_side_width,
+    opening_h,
+    rear_opening_corner_radius
+);
+```
+
+**View:** `bay-rounded-corner`
+
+<!-- scad-render
+view: bay-rounded-corner
+vpr: [90, 0, 0]
+-->
+
+At this stage there is no stepped/narrow section yet.
+
+## 5. Central narrow relief
+
+At each end of a bay, the rail becomes locally narrower in the centre. The
+central part of that relief is a rectangle.
+
+```scad
+module bay_end_narrow_relief_2d(z_edge, direction=1) {
+    d = rear_frame_end_step_depth;
+    half_narrow = rear_frame_end_narrow_length / 2;
+    cx = width / 2;
+
+    polygon([
+        [cx-half_narrow, z_edge],
+        [cx-half_narrow, z_edge + direction*d],
+        [cx+half_narrow, z_edge + direction*d],
+        [cx+half_narrow, z_edge]
+    ]);
+}
+```
+
+**View:** `narrow-end-width`
+
+<!-- scad-render
+view: narrow-end-width
+vpr: [90, 0, 0]
+-->
+
+This is not an extra solid. It is part of the **opening cutter**, so this red
+area will eventually be removed from the rear housing.
+
+## 6. Left transition into the narrow relief
+
+The narrow central cut does not start with a square shoulder. A triangular
+transition connects it to the normal-width bay edge.
+
+```scad
+polygon([
+    [cx-half_narrow-d, z_edge],
+    [cx-half_narrow,   z_edge + direction*d],
+    [cx-half_narrow,   z_edge]
+]);
+```
+
+**View:** `narrow-transition-left`
+
+<!-- scad-render
+view: narrow-transition-left
+vpr: [90, 0, 0]
+-->
+
+## 7. Right transition into the narrow relief
+
+The other side is mirrored:
+
+```scad
+polygon([
+    [cx+half_narrow,   z_edge],
+    [cx+half_narrow,   z_edge + direction*d],
+    [cx+half_narrow+d, z_edge]
+]);
+```
+
+**View:** `narrow-transition-right`
+
+<!-- scad-render
+view: narrow-transition-right
+vpr: [90, 0, 0]
+-->
+
+## 8. Combine the three end-relief pieces
+
+The two triangular transitions and the central rectangle are united into one
+end-relief cutter:
+
+```scad
+module bay_end_relief_2d(z_edge, direction=1) {
+    union() {
+        bay_end_transition_relief_2d(z_edge, direction, "left");
+        bay_end_narrow_relief_2d(z_edge, direction);
+        bay_end_transition_relief_2d(z_edge, direction, "right");
+    }
+}
+```
+
+The same operation is applied at the bottom and top edge of the bay, with the
+direction reversed.
+
+**View:** `bay-bottom-relief`
+
+<!-- scad-render
+view: bay-bottom-relief
+vpr: [90, 0, 0]
+-->
+
+## 9. Complete one bay cutter
+
+The rounded rectangle and both end reliefs now form one complete bay-opening
+shape.
+
+```scad
+union() {
+    rounded_rect_2d(...);
+    bay_end_relief_2d(z0, -1);
+    bay_end_relief_2d(z1,  1);
+}
+```
+
+**View:** `bay-1`
+
+<!-- scad-render
+view: bay-1
+vpr: [90, 0, 0]
+-->
+
+This complete red shape is the material that will be removed for one
+electronics bay.
+
+## 10. Repeat the bay cutter four times
+
+All four openings are generated from the same construction:
+
+```scad
+module rear_openings_2d() {
+    for(i=[0:3])
+        rear_opening_2d(i);
+}
+```
+
+**View:** `rear-openings`
+
+<!-- scad-render
+view: rear-openings
+vpr: [90, 0, 0]
+-->
+
+This explains where the three crossbars come from: they are simply the material
+left **between** adjacent bay cutters.
+
+## 11. Subtract the four openings from the tapered blank
+
+Now the four complete 2D cutters are extruded through the rear housing and
+subtracted.
+
+```scad
+module rear_frame_core_3d() {
+    difference() {
+        tapered_outer_blank(
+            rear_frame_start_y,
+            mounting_plane_y_value,
+            0,
+            rear_outer_inset_actual
+        );
+
+        rear_extrude_from_to(
+            rear_frame_start_y - 0.05,
+            mounting_plane_y_value + 0.05
+        )
+            rear_openings_2d();
+    }
+}
+```
 
 **View:** `rear-frame-core`
 
@@ -117,58 +414,131 @@ view: rear-frame-core
 vpr: [90, 0, 0]
 -->
 
-The production construction is a Boolean subtraction:
+At this point the main rear frame exists: two side rails, top/bottom rails and
+three crossbars.
+
+---
+
+# Reinforcement base geometry
+
+## 12. Add the six Ø14 reinforcement solids
+
+Six cylindrical reinforcement volumes are added beside the mounting positions.
+
+They are circular toward the bay/interior side, but they must **not** bulge
+through the outside wall. Therefore the cylinders are clipped by the same
+tapered outer envelope used for the housing:
 
 ```scad
-difference() {
-    tapered_outer_blank(...);
-    rear_extrude_from_to(...)
-        rear_openings_2d();
+module reinforcement_bushing_solids() {
+    intersection() {
+        union()
+            for(pos=reinforcement_bushing_positions)
+                translate([
+                    pos[0],
+                    mounting_plane_y_value
+                        - reinforcement_bushing_inner_depth,
+                    pos[1]
+                ])
+                    rotate([-90, 0, 0])
+                        cylinder(
+                            h = reinforcement_bushing_inner_depth,
+                            d = reinforcement_bushing_outer_diameter_value
+                        );
+
+        tapered_outer_blank(
+            rear_frame_start_y,
+            mounting_plane_y_value,
+            0,
+            rear_outer_inset_actual
+        );
+    }
 }
 ```
 
-In plain language: make the full rear body first, then cut the four large
-electronics spaces out of it.
+**View:** `reinforcement-solids`
 
-### Stepped bay edges
+<!-- scad-render
+view: reinforcement-solids
+vpr: [68, 0, 212]
+vpt: [-72.0, 10, -141.0]
+vpd: 100
+-->
 
-The top and bottom edge of a bay is not a constant-width straight rail. The STEP
-reference shows a narrower centre section with a short transition at each side.
+The inner reinforcement stays round. The outside surface follows the smooth
+panel wall.
 
-```text
-normal rail width   10.75 mm
-narrow section       7.75 mm
-difference            3.00 mm
+The base rear structure is therefore:
+
+```scad
+module rear_frame_base() {
+    union() {
+        rear_frame_core_3d();
+        reinforcement_bushing_solids();
+    }
+}
 ```
 
-The code constructs that local shape from three pieces:
+---
 
-```text
-left transition + central narrow relief + right transition
+# Rear-face recess
+
+## 13. Construct the shallow recess cutter
+
+The rear-face recess is itself assembled from several strips:
+
+```scad
+module rear_recess_raw_2d() {
+    union() {
+        rear_side_recess_2d("left");
+        rear_side_recess_2d("right");
+
+        rear_end_recess_2d("bottom");
+        rear_end_recess_2d("top");
+
+        for(i=[0:2])
+            rear_crossbar_recess_2d(i);
+    }
+}
 ```
 
-The renderer still exposes the individual transition views for debugging, but
-they are intentionally not shown here: in the previous documentation they
-looked like isolated grey fragments and added more confusion than explanation.
+The six reinforcement footprints are then excluded from that cutter:
 
-## 3. Rear-face recess
+```scad
+module rear_recess_2d() {
+    difference() {
+        rear_recess_raw_2d();
+        reinforcement_bushing_footprints_2d();
+    }
+}
+```
 
-The rear-facing surface of the frame is not all at one level. A shallow recess
-is removed from much of the rail surface.
+**View:** `rear-recess-3d`
 
-The recess follows:
+<!-- scad-render
+view: rear-recess-3d
+vpr: [68, 0, 212]
+-->
 
-- both long side rails;
-- the top and bottom rails;
-- all three crossbars.
+The red geometry is the shallow material to remove.
 
-Six circular reinforcement areas are deliberately protected so they remain at
-the original mounting-plane height.
+## 14. Subtract the rear-face recess
 
-### Completed frame after the recess
+The cutter is extruded only through the shallow recess depth:
 
-This is the useful construction result: the main frame already exists and the
-shallow rear-face recess has been removed.
+```scad
+module rear_frame_after_recess() {
+    difference() {
+        rear_frame_base();
+
+        rear_extrude_from_to(
+            mounting_plane_y_value - rear_recess_depth_actual,
+            mounting_plane_y_value + 0.05
+        )
+            rear_recess_2d();
+    }
+}
+```
 
 **View:** `rear-after-recess`
 
@@ -179,57 +549,54 @@ vpt: [-72.0, 10, -141.0]
 vpd: 130
 -->
 
-The protected circular areas are important because later reinforcement features
-depend on that unrecessed material.
+The circular reinforcement lands remain unrecessed.
 
-The production state is made by subtracting the composed recess cutter from the
-rear-frame base:
+---
+
+# Mounting tubes
+
+## 15. Remove local relief around each mounting tube
+
+Before the tubes are added, a small circular relief is cut into the rail around
+each mounting position.
 
 ```scad
-module rear_frame_after_recess() {
-    difference() {
-        rear_frame_base();
-
-        rear_extrude_from_to(...)
-            rear_recess_2d();
-    }
+module mounting_tube_relief_cutters() {
+    rear_extrude_from_to(
+        mounting_plane_y_value - mounting_tube_relief_depth_value,
+        mounting_plane_y_value + 0.05
+    )
+        for(x=hole_x_positions)
+            for(z=hole_z_positions)
+                translate([x, z])
+                    circle(
+                        d = mounting_tube_outer_diameter_value
+                            + 2 * mounting_tube_relief_clearance_value
+                    );
 }
 ```
 
-The important part is the `difference()`: the already-built frame is the
-starting solid, and `rear_recess_2d()` describes the shallow material that is
-removed.
-
-## 4. Mounting system
-
-The drawing defines six mounting centres: two columns by three rows.
-
-### Six repeated mounting positions
-
-Rather than showing abstract centre markers, this overview shows the actual
-mounting tubes repeated at the six drawing-derived positions.
-
-**View:** `mounting-tubes`
+**View:** `mounting-relief-single`
 
 <!-- scad-render
-view: mounting-tubes
+view: mounting-relief-single
 vpr: [68, 0, 212]
+vpt: [-72.0, 10, -152.0]
+vpd: 90
 -->
 
-At every position the model performs three related operations:
+Production state:
 
-```text
-local rail relief
-      ↓
-Ø8.50 mounting tube
-      ↓
-Ø3 screw hole
+```scad
+difference() {
+    rear_frame_after_recess();
+    mounting_tube_relief_cutters();
+}
 ```
 
-### One mounting tube
+## 16. Add one Ø8.50 mounting tube
 
-This close-up is the representative mounting position. The existing frame is
-gray; the Ø8.50 tube being added is red.
+A tube is then added at the relieved position.
 
 **View:** `mounting-tube-single`
 
@@ -240,25 +607,7 @@ vpt: [-72.0, 10, -152.0]
 vpd: 90
 -->
 
-The same tube construction is repeated at all six drawing-derived centres.
-
-The repetition is literal in the production code:
-
-```scad
-for(x = hole_x_positions)
-    for(z = hole_z_positions)
-        mounting_tube(x, z);
-```
-
-`hole_x_positions` supplies the two columns and `hole_z_positions` the three
-rows. Combining both loops creates the six physical mounting locations.
-
-### Screw hole through the mounting position
-
-The red cylinder is the material removed for the screw path.
-
-The tube itself is constructed as a hollow cylinder: an outer cylinder is made,
-then the Ø3 mm screw path is subtracted from it.
+The tube itself is produced as an outer cylinder minus the Ø3 screw path:
 
 ```scad
 module mounting_tube(x, z) {
@@ -282,87 +631,48 @@ module mounting_tube(x, z) {
 }
 ```
 
-So physically: **make the Ø8.50 tube, then bore the Ø3 screw hole through it**.
+## 17. Repeat the tube at all six positions
 
-**View:** `mounting-hole-single`
-
-<!-- scad-render
-view: mounting-hole-single
-vpr: [65, 0, 35]
-vpt: [-72.0, 10, -152.0]
-vpd: 85
--->
-
-## 5. Reinforcement beside the mounting points
-
-The Ø14 reinforcement feature is **not the same thing as the Ø8.50 mounting
-tube**. It is nearby and supplies extra material around the mounting area.
-
-Its construction is easier to understand as one representative feature rather
-than six nearly identical position images.
-
-### Reinforcement material
-
-The red geometry is the Ø14 reinforcement material added to the already-built
-rear frame.
-
-The solid reinforcement geometry is generated at each configured position:
+Two X positions × three Z positions gives six tubes:
 
 ```scad
-for(pos = reinforcement_bushing_positions)
-    translate([
-        pos[0],
-        mounting_plane_y_value - reinforcement_bushing_inner_depth,
-        pos[1]
-    ])
-        rotate([-90, 0, 0])
-            cylinder(
-                h = reinforcement_bushing_inner_depth,
-                d = reinforcement_bushing_outer_diameter_value
-            );
+for(x=hole_x_positions)
+    for(z=hole_z_positions)
+        mounting_tube(x, z);
 ```
 
-That is the Ø14 reinforcement volume before its inner cuts are made.
+**View:** `mounting-tubes`
 
-One extra geometric rule matters here: the reinforcement may remain round on
-the **inside/bay side**, but it must not bulge through the outside wall. The
-production code therefore clips the cylinders with the same tapered outer
-housing envelope:
+<!-- scad-render
+view: mounting-tubes
+vpr: [68, 0, 212]
+-->
+
+The production state is:
 
 ```scad
-intersection() {
-    union()
-        for(pos = reinforcement_bushing_positions)
-            reinforcement_bushing_cylinder(pos);
+module rear_frame_with_mounting_tubes() {
+    union() {
+        rear_frame_after_mounting_reliefs();
 
-    tapered_outer_blank(
-        rear_frame_start_y,
-        mounting_plane_y_value,
-        0,
-        rear_outer_inset_actual
-    );
+        for(x=hole_x_positions)
+            for(z=hole_z_positions)
+                mounting_tube(x, z);
+    }
 }
 ```
 
-So the inside keeps the circular reinforcement shape, while the outside follows
-the continuous tapered panel wall exactly.
+---
 
-**View:** `reinforcement-solids`
+# Reinforcement cuts
 
-<!-- scad-render
-view: reinforcement-solids
-vpr: [68, 0, 212]
-vpt: [-72.0, 10, -141.0]
-vpd: 100
--->
+## 18. Cut the Ø10 reinforcement recess
 
-### Inner recess
-
-A Ø10 recess is then removed from that reinforcement feature.
+The shallow Ø10 recess is cut into each Ø14 reinforcement area.
 
 ```scad
 module reinforcement_bushing_inner_recess_cuts() {
-    for(pos = reinforcement_bushing_positions)
+    for(pos=reinforcement_bushing_positions)
         translate([
             pos[0],
             mounting_plane_y_value
@@ -377,9 +687,6 @@ module reinforcement_bushing_inner_recess_cuts() {
 }
 ```
 
-This cutter starts at the rear mounting face and removes only the shallow Ø10
-part.
-
 **View:** `reinforcement-inner-recess`
 
 <!-- scad-render
@@ -389,13 +696,14 @@ vpt: [-72.0, 10, -141.0]
 vpd: 100
 -->
 
-### Blind hole
+## 19. Cut the deeper Ø2.5 blind hole
 
-A smaller Ø2.5 blind hole continues deeper into the feature.
+The second cutter starts below the Ø10 recess floor and continues deeper into
+the reinforcement.
 
 ```scad
 module reinforcement_bushing_blind_hole_cuts() {
-    for(pos = reinforcement_bushing_positions)
+    for(pos=reinforcement_bushing_positions)
         translate([
             pos[0],
             mounting_plane_y_value
@@ -411,9 +719,6 @@ module reinforcement_bushing_blind_hole_cuts() {
 }
 ```
 
-The position starts below the Ø10 recess floor, which is why this becomes a
-blind hole rather than another through-opening.
-
 **View:** `reinforcement-blind-hole`
 
 <!-- scad-render
@@ -423,19 +728,24 @@ vpt: [-72.0, 10, -141.0]
 vpd: 100
 -->
 
-The important geometry to check here is the relationship between the
-reinforcement feature and the neighbouring mounting tube.
+Both cuts are combined in the production geometry:
 
-## 6. Locator pins
+```scad
+module rear_frame_after_reinforcement_cuts() {
+    difference() {
+        rear_frame_with_mounting_tubes();
+        reinforcement_bushing_cuts();
+    }
+}
+```
 
-Two small Ø3 × 3 mm pins project from the rear. They are explicit physical
-features from the drawing, not visual markers.
+---
 
-### One locator pin
+# Locator pins
 
-This close-up shows the actual pin protruding from the rear surface.
+## 20. Add the locator pins
 
-The production helper is intentionally simple:
+Each locator is a Ø3 cylinder standing 3 mm proud of the rear mounting plane.
 
 ```scad
 module locator_pin(x, z) {
@@ -448,9 +758,6 @@ module locator_pin(x, z) {
 }
 ```
 
-In other words: place a Ø3 cylinder on the rear mounting plane and let it
-project 3 mm outward.
-
 **View:** `locator-upper-left`
 
 <!-- scad-render
@@ -460,24 +767,25 @@ vpt: [-75, 10, 110]
 vpd: 95
 -->
 
-### Second locator position
+Both pins are added after all reinforcement cuts:
 
-The second locator pin is on the opposite diagonal side of the rear. The full
-panel overview at the start already shows their relationship, so a second
-full-panel locator render is not repeated here.
+```scad
+module rear_frame_structure() {
+    rear_frame_after_reinforcement_cuts();
 
-## 7. Connector reference geometry
+    for(pos=locator_pin_positions)
+        locator_pin(pos[0], pos[1]);
+}
+```
 
-The connector shapes are **clearance/reference volumes**. They are not detailed
-electrical connector CAD.
+---
 
-That distinction matters when this panel model is later used to design an
-enclosure or coupler: the space occupied by a connector matters more than its
-small cosmetic details.
+# Connector reference geometry
 
-### One HUB75 data connector
+## 21. Add the HUB75 connector clearance boxes
 
-The connector is modelled as a simple clearance box:
+The data connectors are represented as simple clearance boxes because the
+mechanical occupied volume matters more here than cosmetic connector detail.
 
 ```scad
 translate([
@@ -492,9 +800,6 @@ translate([
     ]);
 ```
 
-The box is intentionally simpler than the real connector; its job is to reserve
-the mechanical space that an enclosure must keep clear.
-
 **View:** `data-connector-bottom`
 
 <!-- scad-render
@@ -504,7 +809,7 @@ vpt: [0, 10, -113.5]
 vpd: 135
 -->
 
-### Both data connector positions
+Both positions use the same helper.
 
 **View:** `data-connectors`
 
@@ -513,13 +818,10 @@ view: data-connectors
 vpr: [68, 0, 212]
 -->
 
-### Power connector reference
+## 22. Add the power-connector clearance box
 
-The power connector position remains approximate because the dimensional
-drawing does not locate it authoritatively.
-
-It uses the same principle as the data connector: a simple box is placed at the
-approximate measured/reference position.
+The power connector uses the same clearance-volume principle. Its position is
+approximate because the supplied drawing does not locate it authoritatively.
 
 ```scad
 translate([
@@ -543,37 +845,39 @@ vpt: [-26.949, 10, -31.971]
 vpd: 130
 -->
 
-## 8. Return to the complete rear
+---
 
-At this point, return to the **Rear** overview at the start of the document.
+# 23. Complete rear structure
 
-The purpose is comparison: after following the construction steps, the four
-bays, mounting tubes, reinforcement areas, locator pins and connector locations
-should now be recognisable as parts of one physical object.
+At this point the model has passed through the same physical sequence as the
+production code:
 
-A second "final rear" render is intentionally not repeated here. In the earlier
-documentation it added another nearly identical image without adding new
-understanding.
+```text
+tapered blank
+− four composed bay cutters
++ clipped reinforcement solids
+− rear-face recess
+− six tube reliefs
++ six mounting tubes
+− reinforcement recesses/blind holes
++ locator pins
++ connector reference volumes
+```
 
-## What is deliberately not in this document?
+Return to the rear overview at the start of this document and compare it with
+the individual construction steps above.
 
-Several renderer views remain available in the OpenSCAD Customizer for
-debugging, including:
+## Debug and reference views
 
-- individual X/Z placement-gap visualisations;
-- internal depth planes;
-- every individual bay cutter;
-- every individual reinforcement position;
-- drawing-verification overlays;
-- experimental profile/section views.
+The OpenSCAD renderer still exposes additional views for diagnosing dimensions,
+placement, verification overlays and internal construction planes.
 
-They are useful tools, but they do not automatically belong in the design
-narrative.
+Those views remain useful in the Customizer, but the design walkthrough is
+reserved for views that correspond to a meaningful construction operation.
 
 Usage, nominal placement dimensions, coordinate conventions and the interactive
-render-view selector are documented in the source file
-`openscad/p5-64x32-panel/manual.md`.
+render-view selector are documented in:
 
-The generated build currently publishes the design walkthrough itself, not that
-separate source manual, so this text deliberately does not create a broken
-relative link from the generated build branch.
+```text
+openscad/p5-64x32-panel/manual.md
+```
