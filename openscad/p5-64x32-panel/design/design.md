@@ -383,4 +383,9 @@ They are useful tools, but they do not automatically belong in the design
 narrative.
 
 Usage, nominal placement dimensions, coordinate conventions and the interactive
-render-view selector belong in [../manual.md](../manual.md).
+render-view selector are documented in the source file
+`openscad/p5-64x32-panel/manual.md`.
+
+The generated build currently publishes the design walkthrough itself, not that
+separate source manual, so this text deliberately does not create a broken
+relative link from the generated build branch.
