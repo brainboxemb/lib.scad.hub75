@@ -1258,23 +1258,33 @@ module _hub75_p5_64x32_panel_geometry(
 
 
     module reinforcement_bushing_solids() {
-        // True Ø14 cylindrical bushings.  Their rear/outside face ends exactly
-        // at the nominal mounting plane, while the cylinder continues inward
-        // into the panel.  Adding these before the recess/hole cuts prevents
-        // the bay-opening subtraction from clipping away the inner half of the
-        // bushing.
-        for(pos=reinforcement_bushing_positions)
-            translate([
-                pos[0],
-                mounting_plane_y_value - reinforcement_bushing_inner_depth,
-                pos[1]
-            ])
-                rotate([-90, 0, 0])
-                    cylinder(
-                        h=reinforcement_bushing_inner_depth,
-                        d=reinforcement_bushing_outer_diameter_value,
-                        $fn=64
-                    );
+        // The reinforcement is circular on the bay/interior side, but it is
+        // NOT allowed to bulge through the panel's outside wall.  Build the
+        // Ø14 cylinders first, then clip them with the same tapered external
+        // envelope that defines the rear housing.  This keeps the inner
+        // reinforcement shape while making the outer wall continuous/flush.
+        intersection() {
+            union()
+                for(pos=reinforcement_bushing_positions)
+                    translate([
+                        pos[0],
+                        mounting_plane_y_value - reinforcement_bushing_inner_depth,
+                        pos[1]
+                    ])
+                        rotate([-90, 0, 0])
+                            cylinder(
+                                h=reinforcement_bushing_inner_depth,
+                                d=reinforcement_bushing_outer_diameter_value,
+                                $fn=64
+                            );
+
+            tapered_outer_blank(
+                rear_frame_start_y,
+                mounting_plane_y_value,
+                0,
+                rear_outer_inset_actual
+            );
+        }
     }
 
 
