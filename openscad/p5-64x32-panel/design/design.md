@@ -174,7 +174,9 @@ shallow rear-face recess has been removed.
 
 <!-- scad-render
 view: rear-after-recess
-vpr: [68, 0, 32]
+vpr: [68, 0, 212]
+vpt: [-72.0, 10, -141.0]
+vpd: 130
 -->
 
 The protected circular areas are important because later reinforcement features
@@ -353,21 +355,17 @@ vpt: [-26.949, 10, -31.971]
 vpd: 130
 -->
 
-## 8. Completed rear
+## 8. Return to the complete rear
 
-At this point the reader has seen the major physical operations that create the
-rear structure.
+At this point, return to the **Rear** overview at the start of the document.
 
-**View:** `final-rear`
+The purpose is comparison: after following the construction steps, the four
+bays, mounting tubes, reinforcement areas, locator pins and connector locations
+should now be recognisable as parts of one physical object.
 
-<!-- scad-render
-view: final-rear
-vpr: [90, 0, 0]
--->
-
-The purpose of this final image is comparison: after following the construction
-steps, the completed rear should now be recognisable rather than appearing as
-an unexplained collection of details.
+A second "final rear" render is intentionally not repeated here. In the earlier
+documentation it added another nearly identical image without adding new
+understanding.
 
 ## What is deliberately not in this document?
 
