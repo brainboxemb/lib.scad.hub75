@@ -120,9 +120,13 @@ Follow the same architecture as `lib.scad.clamps`:
 - design views reuse the same private helpers as the production build;
 - do not implement a second copy of panel geometry in the render adapter.
 
-This panel intentionally uses many fine-grained design images. A complex
-Boolean/helper sequence should be explained with multiple generated images
-rather than collapsed into one generic "rear frame" or "mounting" picture.
+The renderer may expose many fine-grained diagnostic views, but design.md
+should use only the subset that improves understanding. Do not create or keep a
+render in the narrative merely because a helper or intermediate coordinate
+exists.
+
+Prefer one useful overview plus representative close-ups over a catalogue of
+nearly identical views.
 
 
 
@@ -209,3 +213,28 @@ acts as a C-style integrity check.
 Access a numeric row through `hub75_p5_64x32_panel_view_entry()`, which asserts
 that `VIEW_TABLE[view][0] == view`. Stable documentation names are converted
 through the same table; do not maintain a second long conditional mapping.
+
+
+## Design versus manual/reference
+
+Keep two concerns separate:
+
+- `design/design.md` explains how the physical geometry is constructed;
+- `manual.md` explains usage, placement/reference dimensions, object accessors
+  and the interactive Customizer/render views.
+
+Physical versus nominal placement dimensions do not need multiple generated
+design images unless an image genuinely improves understanding.
+
+Internal coordinate/depth planes are normally debug views, not design-document
+content.
+
+Every generated image used in design.md must have the stable view name written
+next to it, for example:
+
+```markdown
+**View:** `mounting-tube-single`
+```
+
+This lets a reader select the same view in the OpenSCAD Customizer when
+investigating a problem.
