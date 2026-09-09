@@ -1,4 +1,4 @@
-name: Build HUB75 library
+name: Build
 
 on:
   push:
@@ -15,6 +15,9 @@ permissions:
 
 jobs:
   build:
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
     uses: brainboxemb/tool.scad-project/.github/workflows/project-build.yml@v0.6.1
     with:
       artifact_name: lib-scad-hub75-build
