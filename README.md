@@ -5,6 +5,7 @@ Reusable OpenSCAD reference geometry for HUB75 LED matrix hardware.
 ## Quick links
 
 - [HUB75 panel design source](openscad/p5-64x32-panel/design/design.md)
+- [HUB75 panel manual/reference](openscad/p5-64x32-panel/manual.md)
 - [Generated HUB75 panel design documentation](https://github.com/brainboxemb/lib.scad.hub75/blob/build/design/project/openscad/p5-64x32-panel/design/design.md)
 - [HUB75 panel OpenSCAD source](openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad)
 
@@ -66,10 +67,14 @@ approximations remain distinguished in the design documentation.
 
 ## Design documentation
 
-The HUB75 panel design document follows the actual OpenSCAD construction code
-with **90 generated design views**. Fine-grained cutters, profiles, recesses,
-mounting features and reference geometry are shown as separate code-oriented
-steps rather than only as final-model camera views.
+The HUB75 panel design document explains the physical construction for a reader
+who does not need to know OpenSCAD. It uses a deliberately small set of
+generated views: only images that add explanatory value belong in the
+walkthrough. Additional technical/debug views remain available through the
+OpenSCAD Customizer.
+
+Usage, placement/reference dimensions and interactive render-view selection are
+kept separately in the panel manual.
 
 
 Source documentation lives at:
@@ -81,21 +86,10 @@ published on the `build` branch:
 
 - [Generated HUB75 panel design documentation](https://github.com/brainboxemb/lib.scad.hub75/blob/build/design/project/openscad/p5-64x32-panel/design/design.md)
 
-The design document is the engineering description of the component. It covers
-the source/authority of dimensions, coordinate system, object model, physical
-versus nominal dimensions, front stack, rear taper, bay/frame construction,
-mounting tubes, reinforcement bushings, locator pins, connectors, verification
-overlay and mating-plane rules.
-
-It declares generated views for:
-
-- final model;
-- front;
-- rear;
-- rear structure;
-- connectors;
-- drawing verification;
-- profile/mating plane.
+The design document is the engineering description of the component. It starts
+with recognisable front/rear views and then explains the rear frame, recess,
+mounting features, reinforcement, locator pins and connector reference geometry
+in physical terms before showing supporting code.
 
 Generated images belong below `bld/design/` and on the mutable `build` branch,
 not on `main`.
