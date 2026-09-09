@@ -78,6 +78,10 @@ hub75_p5_64x32_panel_rear_opening_corner_radius(panel);
 hub75_p5_64x32_panel_mounting_tube_outer_diameter(panel);
 hub75_p5_64x32_panel_mounting_tube_protrusion(panel);
 hub75_p5_64x32_panel_reinforcement_bushing_outer_diameter(panel);
+hub75_p5_64x32_panel_reinforcement_bushing_recess_diameter(panel);
+hub75_p5_64x32_panel_reinforcement_bushing_recess_depth(panel);
+hub75_p5_64x32_panel_reinforcement_bushing_hole_diameter(panel);
+hub75_p5_64x32_panel_reinforcement_bushing_hole_depth(panel);
 hub75_p5_64x32_panel_reinforcement_bushing_offset(panel);
 ```
 

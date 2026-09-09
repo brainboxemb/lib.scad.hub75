@@ -42,6 +42,30 @@ assert(
     ) < 0.001
 );
 assert(
+    abs(
+        hub75_p5_64x32_panel_reinforcement_bushing_recess_diameter(panel)
+        - 10.0
+    ) < 0.001
+);
+assert(
+    abs(
+        hub75_p5_64x32_panel_reinforcement_bushing_recess_depth(panel)
+        - 2.5
+    ) < 0.001
+);
+assert(
+    abs(
+        hub75_p5_64x32_panel_reinforcement_bushing_hole_diameter(panel)
+        - 2.5
+    ) < 0.001
+);
+assert(
+    abs(
+        hub75_p5_64x32_panel_reinforcement_bushing_hole_depth(panel)
+        - 10.0
+    ) < 0.001
+);
+assert(
     abs(hub75_p5_64x32_panel_reinforcement_bushing_offset(panel) - 11.0)
     < 0.001
 );

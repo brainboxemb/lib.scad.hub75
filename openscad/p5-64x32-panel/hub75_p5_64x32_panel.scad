@@ -494,6 +494,18 @@ function hub75_p5_64x32_panel_mounting_tube_protrusion(panel) =
 function hub75_p5_64x32_panel_reinforcement_bushing_outer_diameter(panel) =
     panel.reinforcement_bushing_outer_diameter;
 
+function hub75_p5_64x32_panel_reinforcement_bushing_recess_diameter(panel) =
+    panel.reinforcement_bushing_inner_diameter;
+
+function hub75_p5_64x32_panel_reinforcement_bushing_recess_depth(panel) =
+    panel.reinforcement_bushing_inner_recess;
+
+function hub75_p5_64x32_panel_reinforcement_bushing_hole_diameter(panel) =
+    panel.reinforcement_bushing_hole_diameter;
+
+function hub75_p5_64x32_panel_reinforcement_bushing_hole_depth(panel) =
+    panel.reinforcement_bushing_hole_depth;
+
 function hub75_p5_64x32_panel_reinforcement_bushing_offset(panel) =
     panel.reinforcement_disc_offset;
 
