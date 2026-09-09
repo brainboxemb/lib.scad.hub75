@@ -2074,7 +2074,7 @@ module _hub75_p5_64x32_panel_geometry(
             design_nominal_outline();
             design_z_grid_gap();
 
-        // 105..109: front stack
+        // Front stack
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_FRONT_MASK) {
             color(DESIGN_NEW) front_mask_shape();
 
@@ -2094,7 +2094,7 @@ module _hub75_p5_64x32_panel_geometry(
             color(DESIGN_EXISTING_SOLID) front_mask_shape();
             color(DESIGN_NEW) pcb_layer_shape();
 
-        // 110..116: rear envelope/taper
+        // Rear envelope and taper
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_REAR_START_PLANE) {
             design_front_context();
             design_plane_y(rear_frame_start_y, DESIGN_NEW);
@@ -2136,7 +2136,7 @@ module _hub75_p5_64x32_panel_geometry(
                     translate([0,0])
                         square([width,rear_outer_inset_actual]);
 
-        // 117..120: frame dimensions
+        // Frame dimensions
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_SIDE_RAIL_WIDTH) {
             design_frame_context();
             color(DESIGN_NEW)
@@ -2164,7 +2164,7 @@ module _hub75_p5_64x32_panel_geometry(
                         translate([0,zc-rear_frame_crossbar_width/2])
                             square([width,rear_frame_crossbar_width]);
 
-        // 121..129: bay opening construction
+        // Bay opening construction
         } else if(view >= HUB75_P5_64X32_PANEL_VIEW_BAY_1 && view <= HUB75_P5_64X32_PANEL_VIEW_BAY_4) {
             design_frame_context();
             design_bay(view-HUB75_P5_64X32_PANEL_VIEW_BAY_1,false);
@@ -2205,7 +2205,7 @@ module _hub75_p5_64x32_panel_geometry(
                 design_thin_2d()
                     square([width,height]);
 
-        // 130..136: resulting web/core and stepped end profile
+        // Resulting web/core and stepped end profile
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_REAR_WEB_CUT) {
             design_front_context();
             color(DESIGN_NEW)
@@ -2266,7 +2266,7 @@ module _hub75_p5_64x32_panel_geometry(
                 design_thin_2d()
                     rear_frame_web_2d();
 
-        // 137..147: rear recess construction
+        // Rear recess construction
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_RECESS_SIDE_LEFT) {
             design_rear_context_base();
             design_recess_part_3d()
@@ -2313,7 +2313,7 @@ module _hub75_p5_64x32_panel_geometry(
             color(DESIGN_EXISTING)
                 rear_frame_after_recess();
 
-        // 148..159: mounting coordinates, tubes, reliefs and final holes
+        // Mounting coordinates, tubes, reliefs and final holes
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_MOUNTING_COLUMN_LEFT) {
             design_rear_structure_context();
             design_mounting_positions("left");
@@ -2369,7 +2369,7 @@ module _hub75_p5_64x32_panel_geometry(
             color(DESIGN_CUT)
                 mounting_hole_cutters();
 
-        // 160..169: reinforcement bushing construction
+        // Reinforcement bushing construction
         } else if(view >= HUB75_P5_64X32_PANEL_VIEW_REINFORCEMENT_BOTTOM_LEFT && view <= HUB75_P5_64X32_PANEL_VIEW_REINFORCEMENT_TOP_RIGHT) {
             design_rear_structure_context();
             design_reinforcement_position(view-HUB75_P5_64X32_PANEL_VIEW_REINFORCEMENT_BOTTOM_LEFT);
@@ -2393,7 +2393,7 @@ module _hub75_p5_64x32_panel_geometry(
             color(DESIGN_EXISTING)
                 rear_frame_after_reinforcement_cuts();
 
-        // 170..172: locating pins
+        // Locating pins
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_LOCATOR_UPPER_LEFT) {
             design_rear_context_after_reinforcement_cuts();
             color(DESIGN_NEW)
@@ -2416,7 +2416,7 @@ module _hub75_p5_64x32_panel_geometry(
                 for(pos=locator_pin_positions)
                     locator_pin(pos[0],pos[1]);
 
-        // 173..180: connectors and orientation
+        // Connectors and orientation
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_DATA_CONNECTOR_BOTTOM) {
             design_rear_structure_context();
             design_connector_box(data_connector_z_bottom);
@@ -2471,7 +2471,7 @@ module _hub75_p5_64x32_panel_geometry(
             design_rear_structure_context();
             orientation_arrows();
 
-        // 181..183: drawing verification broken into its three concepts
+        // Drawing verification broken into its three concepts
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_VERIFICATION_ENVELOPE) {
             design_rear_structure_context();
             color(DESIGN_NEW)
@@ -2494,7 +2494,7 @@ module _hub75_p5_64x32_panel_geometry(
                         rotate([-90,0,0])
                             cylinder(h=0.3,d=5,$fn=40);
 
-        // 184..189: mating/profile/final checking views
+        // Mating/profile/final checking views
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_REAR_MATING_PLANE) {
             design_full_context();
             design_plane_y(mounting_plane_y_value, DESIGN_NEW);
