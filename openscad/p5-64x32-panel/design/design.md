@@ -182,6 +182,24 @@ vpd: 130
 The protected circular areas are important because later reinforcement features
 depend on that unrecessed material.
 
+The production state is made by subtracting the composed recess cutter from the
+rear-frame base:
+
+```scad
+module rear_frame_after_recess() {
+    difference() {
+        rear_frame_base();
+
+        rear_extrude_from_to(...)
+            rear_recess_2d();
+    }
+}
+```
+
+The important part is the `difference()`: the already-built frame is the
+starting solid, and `rear_recess_2d()` describes the shallow material that is
+removed.
+
 ## 4. Mounting system
 
 The drawing defines six mounting centres: two columns by three rows.
@@ -224,9 +242,47 @@ vpd: 90
 
 The same tube construction is repeated at all six drawing-derived centres.
 
+The repetition is literal in the production code:
+
+```scad
+for(x = hole_x_positions)
+    for(z = hole_z_positions)
+        mounting_tube(x, z);
+```
+
+`hole_x_positions` supplies the two columns and `hole_z_positions` the three
+rows. Combining both loops creates the six physical mounting locations.
+
 ### Screw hole through the mounting position
 
 The red cylinder is the material removed for the screw path.
+
+The tube itself is constructed as a hollow cylinder: an outer cylinder is made,
+then the Ø3 mm screw path is subtracted from it.
+
+```scad
+module mounting_tube(x, z) {
+    difference() {
+        translate([x, rear_frame_start_y, z])
+            rotate([-90, 0, 0])
+                cylinder(
+                    h = mounting_plane_y_value
+                        - rear_frame_start_y
+                        + mounting_tube_protrusion_value,
+                    d = mounting_tube_outer_diameter_value
+                );
+
+        translate([x, -0.5, z])
+            rotate([-90, 0, 0])
+                cylinder(
+                    h = max_depth_value + 1.0,
+                    d = hole_diameter_value
+                );
+    }
+}
+```
+
+So physically: **make the Ø8.50 tube, then bore the Ø3 screw hole through it**.
 
 **View:** `mounting-hole-single`
 
@@ -250,6 +306,24 @@ than six nearly identical position images.
 The red geometry is the Ø14 reinforcement material added to the already-built
 rear frame.
 
+The solid reinforcement geometry is generated at each configured position:
+
+```scad
+for(pos = reinforcement_bushing_positions)
+    translate([
+        pos[0],
+        mounting_plane_y_value - reinforcement_bushing_inner_depth,
+        pos[1]
+    ])
+        rotate([-90, 0, 0])
+            cylinder(
+                h = reinforcement_bushing_inner_depth,
+                d = reinforcement_bushing_outer_diameter_value
+            );
+```
+
+That is the physical Ø14 cylindrical volume before its inner cuts are made.
+
 **View:** `reinforcement-solids`
 
 <!-- scad-render
@@ -263,6 +337,26 @@ vpd: 100
 
 A Ø10 recess is then removed from that reinforcement feature.
 
+```scad
+module reinforcement_bushing_inner_recess_cuts() {
+    for(pos = reinforcement_bushing_positions)
+        translate([
+            pos[0],
+            mounting_plane_y_value
+                - reinforcement_bushing_inner_recess_value,
+            pos[1]
+        ])
+            rotate([-90, 0, 0])
+                cylinder(
+                    h = reinforcement_bushing_inner_recess_value + 0.02,
+                    d = reinforcement_bushing_inner_diameter_value
+                );
+}
+```
+
+This cutter starts at the rear mounting face and removes only the shallow Ø10
+part.
+
 **View:** `reinforcement-inner-recess`
 
 <!-- scad-render
@@ -275,6 +369,27 @@ vpd: 100
 ### Blind hole
 
 A smaller Ø2.5 blind hole continues deeper into the feature.
+
+```scad
+module reinforcement_bushing_blind_hole_cuts() {
+    for(pos = reinforcement_bushing_positions)
+        translate([
+            pos[0],
+            mounting_plane_y_value
+                - reinforcement_bushing_inner_recess_value
+                - reinforcement_bushing_hole_depth_value,
+            pos[1]
+        ])
+            rotate([-90, 0, 0])
+                cylinder(
+                    h = reinforcement_bushing_hole_depth_value + 0.02,
+                    d = reinforcement_bushing_hole_diameter_value
+                );
+}
+```
+
+The position starts below the Ø10 recess floor, which is why this becomes a
+blind hole rather than another through-opening.
 
 **View:** `reinforcement-blind-hole`
 
@@ -296,6 +411,22 @@ features from the drawing, not visual markers.
 ### One locator pin
 
 This close-up shows the actual pin protruding from the rear surface.
+
+The production helper is intentionally simple:
+
+```scad
+module locator_pin(x, z) {
+    translate([x, mounting_plane_y_value, z])
+        rotate([-90, 0, 0])
+            cylinder(
+                h = locator_pin_protrusion_value,
+                d = locator_pin_diameter_value
+            );
+}
+```
+
+In other words: place a Ø3 cylinder on the rear mounting plane and let it
+project 3 mm outward.
 
 **View:** `locator-upper-left`
 
@@ -323,6 +454,24 @@ small cosmetic details.
 
 ### One HUB75 data connector
 
+The connector is modelled as a simple clearance box:
+
+```scad
+translate([
+    data_connector_x - data_connector_width / 2,
+    data_connector_front_y_value,
+    z - data_connector_height / 2
+])
+    cube([
+        data_connector_width,
+        data_connector_depth_value,
+        data_connector_height
+    ]);
+```
+
+The box is intentionally simpler than the real connector; its job is to reserve
+the mechanical space that an enclosure must keep clear.
+
 **View:** `data-connector-bottom`
 
 <!-- scad-render
@@ -345,6 +494,22 @@ vpr: [68, 0, 212]
 
 The power connector position remains approximate because the dimensional
 drawing does not locate it authoritatively.
+
+It uses the same principle as the data connector: a simple box is placed at the
+approximate measured/reference position.
+
+```scad
+translate([
+    power_connector_x - power_connector_width_value / 2,
+    pcb_back_y + 1.0,
+    power_connector_z - power_connector_height_value / 2
+])
+    cube([
+        power_connector_width_value,
+        power_connector_depth_value,
+        power_connector_height_value
+    ]);
+```
 
 **View:** `power-connector`
 
