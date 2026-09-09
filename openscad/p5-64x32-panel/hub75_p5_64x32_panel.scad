@@ -2213,8 +2213,9 @@ module _hub75_p5_64x32_panel_geometry(
                     rear_frame_web_2d();
 
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_REAR_FRAME_CORE) {
-            design_front_context();
-            color(DESIGN_NEW)
+            // This is a completed structural state, not the current cutter.
+            // Show the frame itself without the front stack hiding it.
+            color(DESIGN_EXISTING)
                 rear_frame_core_3d();
 
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_NARROW_END_WIDTH) {
