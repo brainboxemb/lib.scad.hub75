@@ -3,7 +3,9 @@ name: Build HUB75 library
 on:
   push:
     branches:
-      - main
+      - "**"
+    tags:
+      - "v*"
   pull_request:
   workflow_dispatch:
 
@@ -13,6 +15,6 @@ permissions:
 
 jobs:
   build:
-    uses: brainboxemb/tool.scad-project/.github/workflows/project-build.yml@v0.4.4
+    uses: brainboxemb/tool.scad-project/.github/workflows/project-build.yml@v0.5.0
     with:
       artifact_name: lib-scad-hub75-build
