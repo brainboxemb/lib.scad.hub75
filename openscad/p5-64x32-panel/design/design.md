@@ -268,8 +268,8 @@ rounded bay-opening rectangle
 <!-- scad-render
 view: bay-rounded-corner
 vpr: [68, 0, 212]
-vpt: [-68, 10, -120]
-vpd: 62
+vpt: [-67, 10, -149]
+vpd: 58
 size: [760, 560]
 -->
 
