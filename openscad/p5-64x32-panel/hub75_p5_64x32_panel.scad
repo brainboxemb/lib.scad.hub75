@@ -1108,28 +1108,30 @@ module _hub75_p5_64x32_panel_geometry(
 
     module rear_end_recess_2d(end="bottom") {
         end_margin = rear_end_recess_margin;
-        r = rear_recess_corner_radius;
         outer_inset = rear_outer_inset_actual;
+        end_band_h = rear_frame_end_width - outer_inset;
+        end_band_w = width - 2*rear_frame_side_width;
 
-        end_recess_h =
-            rear_frame_end_width
-            - outer_inset
-            - 2*end_margin;
+        // Follow the ACTUAL stepped end-rail contour instead of recessing a
+        // plain rectangle.  The bay-end narrowing changes the inner edge of
+        // the top/bottom rail; offsetting that real profile keeps a continuous
+        // rim on both the outside edge and the stepped inside edge.
+        if(end_band_w > 0 && end_band_h > 0 && end_margin > 0)
+            offset(delta=-end_margin)
+                intersection() {
+                    rear_frame_web_2d(outer_inset);
 
-        end_recess_w =
-            width
-            - 2*rear_frame_side_width;
-
-        if(end_recess_w > 0 && end_recess_h > 0)
-            rounded_rect_2d(
-                rear_frame_side_width,
-                end == "bottom"
-                    ? outer_inset + end_margin
-                    : height - rear_frame_end_width + end_margin,
-                end_recess_w,
-                end_recess_h,
-                r
-            );
+                    translate([
+                        rear_frame_side_width,
+                        end == "bottom"
+                            ? outer_inset
+                            : height - rear_frame_end_width
+                    ])
+                        square([
+                            end_band_w,
+                            end_band_h
+                        ]);
+                }
     }
 
 
