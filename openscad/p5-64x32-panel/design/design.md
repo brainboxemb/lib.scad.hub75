@@ -147,7 +147,7 @@ module pcb_layer_shape() {
 
 <!-- scad-render
 view: front-stack
-vpr: [68, 0, 32]
+vpr: [68, 0, 212]
 -->
 
 In this image the existing front mask is gray and the PCB layer being added is
@@ -181,7 +181,7 @@ rectangular footprints.
 
 <!-- scad-render
 view: taper-body
-vpr: [68, 0, 32]
+vpr: [68, 0, 212]
 -->
 
 The important point is that the taper belongs to the **outside wall only**.
@@ -240,7 +240,7 @@ rounded_rect_2d(
 
 <!-- scad-render
 view: bay-rounded-corner
-vpr: [90, 0, 0]
+vpr: [90, 0, 180]
 -->
 
 At this stage there is no stepped/narrow section yet.
@@ -269,7 +269,7 @@ module bay_end_narrow_relief_2d(z_edge, direction=1) {
 
 <!-- scad-render
 view: narrow-end-width
-vpr: [90, 0, 0]
+vpr: [90, 0, 180]
 -->
 
 This is not an extra solid. It is part of the **opening cutter**, so this red
@@ -292,7 +292,7 @@ polygon([
 
 <!-- scad-render
 view: narrow-transition-left
-vpr: [90, 0, 0]
+vpr: [90, 0, 180]
 -->
 
 ## 7. Right transition into the narrow relief
@@ -311,7 +311,7 @@ polygon([
 
 <!-- scad-render
 view: narrow-transition-right
-vpr: [90, 0, 0]
+vpr: [90, 0, 180]
 -->
 
 ## 8. Combine the three end-relief pieces
@@ -336,7 +336,7 @@ direction reversed.
 
 <!-- scad-render
 view: bay-bottom-relief
-vpr: [90, 0, 0]
+vpr: [90, 0, 180]
 -->
 
 ## 9. Complete one bay cutter
@@ -356,7 +356,7 @@ union() {
 
 <!-- scad-render
 view: bay-1
-vpr: [90, 0, 0]
+vpr: [90, 0, 180]
 -->
 
 This complete red shape is the material that will be removed for one
@@ -377,7 +377,7 @@ module rear_openings_2d() {
 
 <!-- scad-render
 view: rear-openings
-vpr: [90, 0, 0]
+vpr: [90, 0, 180]
 -->
 
 This explains where the three crossbars come from: they are simply the material
