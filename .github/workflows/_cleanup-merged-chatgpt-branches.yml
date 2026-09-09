@@ -1,0 +1,23 @@
+name: One-shot cleanup merged ChatGPT branches
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete merged development branches
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          gh api --method DELETE             "repos/${GITHUB_REPOSITORY}/git/refs/heads/chatgpt/design-doc-iteration"
+
+          gh api --method DELETE             "repos/${GITHUB_REPOSITORY}/git/refs/heads/chatgpt/publication-policy"
