@@ -238,3 +238,22 @@ next to it, for example:
 
 This lets a reader select the same view in the OpenSCAD Customizer when
 investigating a problem.
+
+
+## Commit identity
+
+When creating commits through a normal Git checkout, configure:
+
+```text
+user.name  = ChatGPT Bot
+user.email = chatgpt-bot@users.noreply.github.com
+```
+
+or use:
+
+```bash
+git commit --author="ChatGPT Bot <chatgpt-bot@users.noreply.github.com>"
+```
+
+Do not attribute ChatGPT-authored code commits to the repository owner when the
+Git interface allows an explicit author.
