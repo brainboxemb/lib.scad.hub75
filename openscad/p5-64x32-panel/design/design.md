@@ -268,9 +268,9 @@ rounded bay-opening rectangle
 <!-- scad-render
 view: bay-rounded-corner
 vpr: [68, 0, 212]
-vpt: [0, 10, -120]
-vpd: 185
-size: [900, 700]
+vpt: [-68, 10, -120]
+vpd: 62
+size: [760, 560]
 -->
 
 At this stage there is no stepped/narrow section yet.
@@ -302,7 +302,7 @@ view: narrow-end-width
 vpr: [68, 0, 212]
 vpt: [0, 10, -149]
 vpd: 105
-size: [900, 700]
+size: [760, 560]
 -->
 
 This is not an extra solid. It is part of the **opening cutter**, so this red
@@ -328,7 +328,7 @@ view: narrow-transition-left
 vpr: [68, 0, 212]
 vpt: [-17, 10, -149]
 vpd: 78
-size: [900, 700]
+size: [760, 560]
 -->
 
 ## 7. Right transition into the narrow relief
@@ -350,7 +350,7 @@ view: narrow-transition-right
 vpr: [68, 0, 212]
 vpt: [17, 10, -149]
 vpd: 78
-size: [900, 700]
+size: [760, 560]
 -->
 
 ## 8. Combine the three end-relief pieces
@@ -378,7 +378,7 @@ view: bay-bottom-relief
 vpr: [68, 0, 212]
 vpt: [0, 10, -149]
 vpd: 120
-size: [900, 700]
+size: [800, 580]
 -->
 
 ## 9. Complete one bay cutter
@@ -401,7 +401,7 @@ view: bay-1
 vpr: [68, 0, 212]
 vpt: [0, 10, -120]
 vpd: 190
-size: [1000, 750]
+size: [900, 650]
 -->
 
 This complete red shape is the material that will be removed for one
