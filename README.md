@@ -8,6 +8,8 @@ Reusable OpenSCAD reference geometry for HUB75 LED matrix hardware.
 - [HUB75 panel manual/reference](openscad/p5-64x32-panel/manual.md)
 - [Generated HUB75 panel design documentation](https://github.com/brainboxemb/lib.scad.hub75/blob/build/design/project/openscad/p5-64x32-panel/design/design.md)
 - [HUB75 panel OpenSCAD source](openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad)
+- [Build provenance](../../blob/build/publication-info.txt)
+- [Verification provenance](../../blob/verification/publication-info.txt)
 
 The first component is the portrait-oriented HUB75 P5 64 × 32 pixel panel (nominal 320 × 160 mm) model:
 
