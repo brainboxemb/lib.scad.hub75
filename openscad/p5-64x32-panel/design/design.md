@@ -267,9 +267,10 @@ rounded bay-opening rectangle
 
 <!-- scad-render
 view: bay-rounded-corner
-vpr: [90, 0, 180]
+vpr: [68, 0, 212]
 vpt: [0, 10, -120]
 vpd: 185
+size: [900, 700]
 -->
 
 At this stage there is no stepped/narrow section yet.
@@ -298,9 +299,10 @@ module bay_end_narrow_relief_2d(z_edge, direction=1) {
 
 <!-- scad-render
 view: narrow-end-width
-vpr: [90, 0, 180]
+vpr: [68, 0, 212]
 vpt: [0, 10, -149]
 vpd: 105
+size: [900, 700]
 -->
 
 This is not an extra solid. It is part of the **opening cutter**, so this red
@@ -323,9 +325,10 @@ polygon([
 
 <!-- scad-render
 view: narrow-transition-left
-vpr: [90, 0, 180]
+vpr: [68, 0, 212]
 vpt: [-17, 10, -149]
-vpd: 70
+vpd: 78
+size: [900, 700]
 -->
 
 ## 7. Right transition into the narrow relief
@@ -344,9 +347,10 @@ polygon([
 
 <!-- scad-render
 view: narrow-transition-right
-vpr: [90, 0, 180]
+vpr: [68, 0, 212]
 vpt: [17, 10, -149]
-vpd: 70
+vpd: 78
+size: [900, 700]
 -->
 
 ## 8. Combine the three end-relief pieces
@@ -371,9 +375,10 @@ direction reversed.
 
 <!-- scad-render
 view: bay-bottom-relief
-vpr: [90, 0, 180]
+vpr: [68, 0, 212]
 vpt: [0, 10, -149]
-vpd: 115
+vpd: 120
+size: [900, 700]
 -->
 
 ## 9. Complete one bay cutter
@@ -393,9 +398,10 @@ union() {
 
 <!-- scad-render
 view: bay-1
-vpr: [90, 0, 180]
+vpr: [68, 0, 212]
 vpt: [0, 10, -120]
-vpd: 185
+vpd: 190
+size: [1000, 750]
 -->
 
 This complete red shape is the material that will be removed for one
