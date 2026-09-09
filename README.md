@@ -48,8 +48,13 @@ hub75_p5_64x32_panel_width(panel);
 hub75_p5_64x32_panel_height(panel);
 hub75_p5_64x32_panel_hole_x_positions_centered(panel);
 hub75_p5_64x32_panel_rear_grid_gap_x(panel);
-hub75_rear_side_rail_width_at_mounting_plane(panel);
+hub75_p5_64x32_panel_rear_side_rail_width_at_mounting_plane(panel);
+hub75_p5_64x32_panel_rear_crossbar_width_at_mounting_plane(panel);
+hub75_p5_64x32_panel_mounting_tube_outer_diameter(panel);
 ```
+
+Project-specific mating parts should consume these public accessors rather than
+reading implementation fields from the panel object directly.
 
 The OpenSCAD implementation requires the `object()` experimental feature.
 Project tooling passes:

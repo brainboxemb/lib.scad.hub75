@@ -440,10 +440,67 @@ function hub75_p5_64x32_panel_grid_gap_z(panel) = panel.reference_height - panel
 function hub75_p5_64x32_panel_grid_margin_x(panel) = hub75_p5_64x32_panel_grid_gap_x(panel)/2;
 function hub75_p5_64x32_panel_grid_margin_z(panel) = hub75_p5_64x32_panel_grid_gap_z(panel)/2;
 
-function hub75_rear_outer_inset_x(panel) =
+// Public mechanical mating data used by project-specific brackets/couplers.
+// These accessors expose the same derived dimensions used by the production
+// panel geometry so consumers do not need to reach into panel object internals.
+function hub75_p5_64x32_panel_rear_outer_inset_x(panel) =
     panel.rear_outer_inset * panel.width / panel.reference_width;
-function hub75_rear_outer_inset_z(panel) =
+
+function hub75_p5_64x32_panel_rear_outer_inset_z(panel) =
     panel.rear_outer_inset * panel.height / panel.reference_height;
+
+function hub75_p5_64x32_panel_rear_side_rail_width_at_mounting_plane(panel) =
+    max(
+        0,
+        panel.rear_frame_side_width_reference
+        - hub75_p5_64x32_panel_rear_outer_inset_x(panel)
+    );
+
+function hub75_p5_64x32_panel_rear_end_rail_width_at_mounting_plane(panel) =
+    max(
+        0,
+        panel.rear_frame_end_width_reference
+        - hub75_p5_64x32_panel_rear_outer_inset_z(panel)
+    );
+
+function hub75_p5_64x32_panel_rear_end_narrow_width_at_mounting_plane(panel) =
+    max(
+        0,
+        panel.rear_frame_end_narrow_width_reference
+        - hub75_p5_64x32_panel_rear_outer_inset_z(panel)
+    );
+
+function hub75_p5_64x32_panel_rear_crossbar_width_at_mounting_plane(panel) =
+    panel.rear_frame_crossbar_width_reference
+    * panel.height
+    / panel.reference_height;
+
+function hub75_p5_64x32_panel_rear_opening_corner_radius(panel) =
+    min(
+        panel.rear_opening_corner_radius_reference
+            * panel.width
+            / panel.reference_width,
+        panel.rear_opening_corner_radius_reference
+            * panel.height
+            / panel.reference_height
+    );
+
+function hub75_p5_64x32_panel_mounting_tube_outer_diameter(panel) =
+    panel.mounting_tube_outer_diameter;
+
+function hub75_p5_64x32_panel_mounting_tube_protrusion(panel) =
+    panel.mounting_tube_protrusion;
+
+function hub75_p5_64x32_panel_reinforcement_bushing_outer_diameter(panel) =
+    panel.reinforcement_bushing_outer_diameter;
+
+function hub75_p5_64x32_panel_reinforcement_bushing_offset(panel) =
+    panel.reinforcement_disc_offset;
+
+function hub75_rear_outer_inset_x(panel) =
+    hub75_p5_64x32_panel_rear_outer_inset_x(panel);
+function hub75_rear_outer_inset_z(panel) =
+    hub75_p5_64x32_panel_rear_outer_inset_z(panel);
 
 function hub75_p5_64x32_panel_rear_grid_gap_x(panel) =
     panel.reference_width - (panel.width - 2*hub75_rear_outer_inset_x(panel));
@@ -451,11 +508,11 @@ function hub75_p5_64x32_panel_rear_grid_gap_z(panel) =
     panel.reference_height - (panel.height - 2*hub75_rear_outer_inset_z(panel));
 
 function hub75_rear_side_rail_width_at_mounting_plane(panel) =
-    max(0, panel.rear_frame_side_width_reference - hub75_rear_outer_inset_x(panel));
+    hub75_p5_64x32_panel_rear_side_rail_width_at_mounting_plane(panel);
 function hub75_rear_end_rail_width_at_mounting_plane(panel) =
-    max(0, panel.rear_frame_end_width_reference - hub75_rear_outer_inset_z(panel));
+    hub75_p5_64x32_panel_rear_end_rail_width_at_mounting_plane(panel);
 function hub75_rear_end_narrow_width_at_mounting_plane(panel) =
-    max(0, panel.rear_frame_end_narrow_width_reference - hub75_rear_outer_inset_z(panel));
+    hub75_p5_64x32_panel_rear_end_narrow_width_at_mounting_plane(panel);
 
 function hub75_p5_64x32_panel_data_connector_x(panel) = panel.width/2;
 function hub75_p5_64x32_panel_data_connector_center_offset(panel) = 113.5;

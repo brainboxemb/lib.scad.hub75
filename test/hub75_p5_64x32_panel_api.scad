@@ -11,6 +11,41 @@ assert(len(hub75_p5_64x32_panel_hole_z_positions(panel)) == 3);
 assert(abs(hub75_p5_64x32_panel_grid_gap_x(panel) - 0.30) < 0.001);
 assert(abs(hub75_p5_64x32_panel_grid_gap_z(panel) - 0.29) < 0.001);
 
+assert(
+    abs(
+        hub75_p5_64x32_panel_rear_side_rail_width_at_mounting_plane(panel)
+        - 11.25234375
+    ) < 0.001
+);
+assert(
+    abs(
+        hub75_p5_64x32_panel_rear_crossbar_width_at_mounting_plane(panel)
+        - 19.981875
+    ) < 0.001
+);
+assert(
+    abs(hub75_p5_64x32_panel_rear_opening_corner_radius(panel) - 4.99546875)
+    < 0.001
+);
+assert(
+    abs(hub75_p5_64x32_panel_mounting_tube_outer_diameter(panel) - 8.50)
+    < 0.001
+);
+assert(
+    abs(hub75_p5_64x32_panel_mounting_tube_protrusion(panel) - 0.50)
+    < 0.001
+);
+assert(
+    abs(
+        hub75_p5_64x32_panel_reinforcement_bushing_outer_diameter(panel)
+        - 14.0
+    ) < 0.001
+);
+assert(
+    abs(hub75_p5_64x32_panel_reinforcement_bushing_offset(panel) - 11.0)
+    < 0.001
+);
+
 echo("hub75_p5_64x32_panel_width", hub75_p5_64x32_panel_width(panel));
 echo("hub75_p5_64x32_panel_height", hub75_p5_64x32_panel_height(panel));
 echo("hub75_p5_64x32_panel_rear_grid_gap_x", hub75_p5_64x32_panel_rear_grid_gap_x(panel));

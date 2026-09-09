@@ -68,6 +68,19 @@ hub75_p5_64x32_panel_grid_gap_x(panel);
 hub75_p5_64x32_panel_grid_gap_z(panel);
 ```
 
+For project-specific mating parts such as brackets and couplers, use the public
+mechanical accessors rather than reading panel object fields directly:
+
+```scad
+hub75_p5_64x32_panel_rear_side_rail_width_at_mounting_plane(panel);
+hub75_p5_64x32_panel_rear_crossbar_width_at_mounting_plane(panel);
+hub75_p5_64x32_panel_rear_opening_corner_radius(panel);
+hub75_p5_64x32_panel_mounting_tube_outer_diameter(panel);
+hub75_p5_64x32_panel_mounting_tube_protrusion(panel);
+hub75_p5_64x32_panel_reinforcement_bushing_outer_diameter(panel);
+hub75_p5_64x32_panel_reinforcement_bushing_offset(panel);
+```
+
 ## Interactive render/debug views
 
 Open:
