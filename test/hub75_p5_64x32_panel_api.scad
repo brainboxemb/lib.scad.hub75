@@ -36,6 +36,14 @@ assert(
     < 0.001
 );
 assert(
+    abs(hub75_p5_64x32_panel_locator_pin_diameter(panel) - 3.00)
+    < 0.001
+);
+assert(
+    abs(hub75_p5_64x32_panel_locator_pin_protrusion(panel) - 3.00)
+    < 0.001
+);
+assert(
     abs(
         hub75_p5_64x32_panel_reinforcement_bushing_outer_diameter(panel)
         - 14.0
