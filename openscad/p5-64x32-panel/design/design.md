@@ -530,7 +530,37 @@ module rear_frame_base() {
 
 ## 13. Construct the shallow recess cutter
 
-The rear-face recess is itself assembled from several strips:
+The rear-face recess is itself assembled from several strips.
+
+For the **top and bottom rails**, the recess must follow the real stepped rail
+profile. A simple rectangular recess would cut through the outside rim when the
+rail narrows in the centre.
+
+The production code therefore intersects the actual frame profile with the
+top/bottom rail band and then offsets that shape inward:
+
+```scad
+offset(delta = -end_margin)
+    intersection() {
+        rear_frame_web_2d(outer_inset);
+
+        translate([...])
+            square([
+                end_band_w,
+                end_band_h
+            ]);
+    }
+```
+
+That leaves a continuous border on both sides of the recess:
+
+```text
+outer panel edge  → continuous rim
+recessed surface  → follows the stepped contour
+inner bay edge    → continuous rim
+```
+
+The complete rear-face recess is then assembled from several strips:
 
 ```scad
 module rear_recess_raw_2d() {
@@ -546,6 +576,19 @@ module rear_recess_raw_2d() {
     }
 }
 ```
+
+**View:** `recess-bottom`
+
+<!-- scad-render
+view: recess-bottom
+vpr: [68, 0, 212]
+vpt: [0, 10, -149]
+vpd: 125
+size: [800, 580]
+-->
+
+The red area is the actual bottom-rail recess cutter. The gray border should
+remain visible continuously along both the outside and stepped inside edge.
 
 The six reinforcement footprints are then excluded from that cutter:
 
