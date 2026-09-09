@@ -322,7 +322,30 @@ for(pos = reinforcement_bushing_positions)
             );
 ```
 
-That is the physical Ø14 cylindrical volume before its inner cuts are made.
+That is the Ø14 reinforcement volume before its inner cuts are made.
+
+One extra geometric rule matters here: the reinforcement may remain round on
+the **inside/bay side**, but it must not bulge through the outside wall. The
+production code therefore clips the cylinders with the same tapered outer
+housing envelope:
+
+```scad
+intersection() {
+    union()
+        for(pos = reinforcement_bushing_positions)
+            reinforcement_bushing_cylinder(pos);
+
+    tapered_outer_blank(
+        rear_frame_start_y,
+        mounting_plane_y_value,
+        0,
+        rear_outer_inset_actual
+    );
+}
+```
+
+So the inside keeps the circular reinforcement shape, while the outside follows
+the continuous tapered panel wall exactly.
 
 **View:** `reinforcement-solids`
 
