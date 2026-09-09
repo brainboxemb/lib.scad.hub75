@@ -29,5 +29,5 @@ verification:
   output_root: vrf/out
 
 publication:
-  build_branch: build
-  verification_branch: verification
+  build_branch: dev/build
+  verification_branch: dev/verification
