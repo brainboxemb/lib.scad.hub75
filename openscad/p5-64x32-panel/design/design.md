@@ -7,93 +7,126 @@ module: hub75_p5_64x32_panel_design
 vpr: [68, 0, 32]
 -->
 
-## Goal
+## Purpose
 
-This document follows the **actual construction code** of the reusable HUB75
-panel model.
+This document explains **how the physical panel model is built**.
 
-The same rule used by `lib.scad.clamps` applies here:
+You do not need to know OpenSCAD to follow the construction. The images and
+plain-language explanation come first; source code is included afterwards so
+we can trace a visible problem back to the model when needed.
 
-```text
-gray geometry
-    geometry that already exists at this point
-
-red geometry
-    geometry introduced by this code step
-
-transparent red volume
-    material/cutter that is being removed
-```
-
-For small features the image is deliberately **not** a full-panel overview.
-The camera is centred on the code operation being discussed. A detail image may
-therefore show only a few centimetres of the 320 mm panel.
-
-When a Boolean cutter is red, read the image as:
+The basic reading order is:
 
 ```text
-gray = material that exists before this line of code
-red  = volume selected by the current helper
-next = that red volume is subtracted or added as described in the text
+physical feature
+→ what it does / where it is
+→ geometric change
+→ image
+→ relevant OpenSCAD code
 ```
 
-Overview images are kept only where the position of several repeated features
-is the point of the step.
+For construction images:
 
-Design renders are generated at **1600 × 1200 px**. Many relevant features are
-only 2.5–14 mm across; the earlier 640 × 480 output lost too much information
-even when the camera was aimed correctly.
+```text
+gray = geometry that already exists before the current step
+red  = the addition, cutter or feature being discussed now
+```
 
-The render adapter is intentionally small. It only maps names to numeric view
-IDs. All design rendering happens inside `hub75_p5_64x32_panel.scad`, where the renderer
-can call the same private helpers that build the real panel.
+A completed result returns to a neutral color. Red is not used merely to mean
+"this is the newest complete state".
 
-This panel is much more complicated than the tube clamp, so this design
-document intentionally contains many small images rather than a few large
-"finished model" views.
+Small details use close-up views, protruding rear features should be viewed
+from the rear, and depth/profile questions should use a real section or profile
+view.
+
+Design images are generated at **1600 × 1200 px**.
+
+## Panel overview
+
+Before looking at dimensions or construction steps, first look at the complete
+panel from both sides.
+
+### Front — LED side
+
+This is the flat visible side of the panel. In this model the panel is shown in
+portrait orientation: roughly 160 mm wide and 320 mm high.
 
 <!-- scad-render
-view: final
+view: front
+vpr: [90, 0, 0]
 -->
 
+### Rear — mounting and connector side
 
-## 1. Physical and nominal envelope
+Most construction detail is on the rear. This side contains the open bays,
+rear frame, mounting geometry, locator pins and connector reference geometry.
 
-The physical body and the nominal placement grid are deliberately separate:
+Later detail images should be read in relation to this overview.
 
-```scad
-width = 159.70;
-height = 319.71;
+<!-- scad-render
+view: rear
+vpr: [90, 0, 180]
+-->
 
-reference_width = 160.00;
-reference_height = 320.00;
+## Orientation
+
+The model uses three directions:
+
+```text
+X = left ↔ right across the short side
+Y = front ↔ rear through the panel depth
+Z = bottom ↔ top along the long side
 ```
 
-### Physical panel envelope
+The axis names are only reference language for later measurements; you do not
+need to know OpenSCAD coordinates to understand the construction.
 
-The first image is only the real physical front envelope.
+## Physical size versus placement size
+
+The real panel body is slightly smaller than the nominal grid cell used when
+panels are placed next to each other:
+
+```text
+                         width       height
+physical panel          159.70 mm   319.71 mm
+nominal placement cell  160.00 mm   320.00 mm
+difference                0.30 mm     0.29 mm
+```
+
+That tiny difference matters when multiple panels are assembled.
+
+### Physical panel body
+
+This image establishes only the **real outside size of the panel body**.
 
 <!-- scad-render
 view: physical-envelope
 vpr: [90, 0, 0]
 -->
 
+### Nominal 160 × 320 mm placement cell
 
-### Nominal 160 × 320 placement cell
-
-The red outline adds the nominal assembly cell around the physical panel.
+The nominal cell is the space allocated to one panel in an array. The red
+outline/area represents the difference between that nominal cell and the real
+body. It is not another physical part of the panel.
 
 <!-- scad-render
 view: nominal-envelope
 vpr: [90, 0, 0]
 -->
 
+### Horizontal placement clearance
 
-### X placement clearance
+The physical panel is 159.70 mm wide inside a nominal 160.00 mm grid cell:
 
-```scad
-hub75_p5_64x32_panel_grid_gap_x(panel);
+```text
+160.00 - 159.70 = 0.30 mm total difference
 ```
+
+When centred, that leaves approximately **0.15 mm per side**.
+
+The red area in the image visualises this small placement allowance. It is
+space, not printable material.
 
 <!-- scad-render
 view: grid-gap-x
@@ -102,12 +135,24 @@ vpt: [-79.85, 14.5, 0]
 vpd: 18
 -->
 
-
-### Z placement clearance
+The model calculates that total difference with:
 
 ```scad
-hub75_p5_64x32_panel_grid_gap_z(panel);
+hub75_p5_64x32_panel_grid_gap_x(panel);
 ```
+
+In plain language: **how much narrower is the real panel than its nominal
+160 mm placement width?**
+
+### Vertical placement clearance
+
+Along the long side:
+
+```text
+320.00 - 319.71 = 0.29 mm total difference
+```
+
+When centred, that leaves approximately **0.145 mm at each end**.
 
 <!-- scad-render
 view: grid-gap-z
@@ -116,10 +161,27 @@ vpt: [0, 14.5, -159.855]
 vpd: 18
 -->
 
+The corresponding calculation is:
 
-## 2. Front stack
+```scad
+hub75_p5_64x32_panel_grid_gap_z(panel);
+```
 
-The front is built from two explicit solids rather than one anonymous depth.
+In plain language: **how much shorter is the real panel than its nominal
+320 mm placement height?**
+
+## Construction walkthrough
+
+With the complete object, orientation and basic dimensions established, the
+walkthrough can now start building the model from the front toward the rear.
+
+## Front stack
+
+The model starts at the visible front and builds toward the rear.
+
+The front is represented by two thin physical layers: the front-facing
+LED/mask layer and the PCB immediately behind it. Keeping those separate makes
+it clear where the deeper rear housing begins.
 
 ### Front mask
 
@@ -181,7 +243,7 @@ view: front-stack
 -->
 
 
-## 3. Rear housing envelope and taper
+## Rear housing envelope and taper
 
 The STEP-derived housing begins behind the PCB and tapers continuously to the
 rear mounting plane.
@@ -269,7 +331,7 @@ vpd: 28
 -->
 
 
-## 4. Basic rear-frame dimensions
+## Basic rear-frame dimensions
 
 Before openings are cut, the object derives the widths that define the material
 **left behind after the bay cutters are removed**.
@@ -324,7 +386,7 @@ vpr: [90, 0, 0]
 -->
 
 
-## 5. Four electronics bay openings
+## Four electronics bay openings
 
 The frame is not constructed by adding individual rails. Instead a tapered
 outer solid is created first and the four bay volumes are subtracted.
@@ -444,7 +506,7 @@ vpr: [90, 0, 0]
 -->
 
 
-## 6. From solid web to rear frame
+## From solid web to rear frame
 
 ### Solid rear web before bay subtraction
 
@@ -486,7 +548,7 @@ view: rear-frame-core
 -->
 
 
-## 7. Narrow stepped end-rail profile
+## Narrow stepped end-rail profile
 
 The STEP reference shows that each bay edge is not a constant straight rail.
 The production cutter is now decomposed into the same semantic pieces shown in
@@ -591,7 +653,7 @@ operation**. Red is only the volume introduced or removed by that operation.
 This corrects an important problem in the previous build: several features were
 already present in the completed gray context underneath their red highlight.
 
-## 8. Rear-face recess
+## Rear-face recess
 
 The rear rail face is recessed by `rear_recess_depth`. This is **not one large
 rectangular pocket**. The cutter is composed from:
@@ -735,7 +797,7 @@ view: rear-after-recess
 -->
 
 
-## 9. Drawing-derived mounting layout
+## Drawing-derived mounting layout
 
 The six mounting centres come directly from the drawing. They are deliberately
 not scaled with the STEP-derived structural geometry.
@@ -800,7 +862,7 @@ vpr: [90, 0, 0]
 -->
 
 
-## 10. Mounting tubes, reliefs and screw cuts
+## Mounting tubes, reliefs and screw cuts
 
 The gray state deliberately changes through this sequence:
 
@@ -839,7 +901,7 @@ mounting_tube(x, z);
 
 <!-- scad-render
 view: mounting-tube-single
-vpr: [65, 0, 35]
+vpr: [68, 0, 212]
 vpt: [-72.0, 10, -152.0]
 vpd: 90
 -->
@@ -849,6 +911,7 @@ vpd: 90
 
 <!-- scad-render
 view: mounting-tubes
+vpr: [68, 0, 212]
 -->
 
 
@@ -897,7 +960,7 @@ view: mounting-holes
 -->
 
 
-## 11. Reinforcement bushing positions
+## Reinforcement bushing positions
 
 These Ø14 features are separate from the Ø8.50 mounting tubes. Their placement
 is intentionally asymmetric in the middle pair.
@@ -906,7 +969,7 @@ is intentionally asymmetric in the middle pair.
 
 <!-- scad-render
 view: reinforcement-bottom-left
-vpr: [90, 0, 0]
+vpr: [68, 0, 212]
 vpt: [-72.0, 14.5, -141.0]
 vpd: 95
 -->
@@ -916,7 +979,7 @@ vpd: 95
 
 <!-- scad-render
 view: reinforcement-bottom-right
-vpr: [90, 0, 0]
+vpr: [68, 0, 212]
 vpt: [72.0, 14.5, -141.0]
 vpd: 95
 -->
@@ -926,7 +989,7 @@ vpd: 95
 
 <!-- scad-render
 view: reinforcement-middle-left
-vpr: [90, 0, 0]
+vpr: [68, 0, 212]
 vpt: [-72.0, 14.5, 11]
 vpd: 95
 -->
@@ -936,7 +999,7 @@ vpd: 95
 
 <!-- scad-render
 view: reinforcement-middle-right
-vpr: [90, 0, 0]
+vpr: [68, 0, 212]
 vpt: [72.0, 14.5, -11]
 vpd: 95
 -->
@@ -946,7 +1009,7 @@ vpd: 95
 
 <!-- scad-render
 view: reinforcement-top-left
-vpr: [90, 0, 0]
+vpr: [68, 0, 212]
 vpt: [-72.0, 14.5, 141.0]
 vpd: 95
 -->
@@ -956,13 +1019,13 @@ vpd: 95
 
 <!-- scad-render
 view: reinforcement-top-right
-vpr: [90, 0, 0]
+vpr: [68, 0, 212]
 vpt: [72.0, 14.5, 141.0]
 vpd: 95
 -->
 
 
-## 12. Reinforcement bushing construction
+## Reinforcement bushing construction
 
 For the Ø10 recess and Ø2.5 blind-hole views, the gray state contains the Ø14
 reinforcement material and mounting tubes but **does not already contain those
@@ -990,7 +1053,7 @@ does not destroy them.
 
 <!-- scad-render
 view: reinforcement-solids
-vpr: [65, 0, 35]
+vpr: [68, 0, 212]
 vpt: [-72.0, 10, -141.0]
 vpd: 100
 -->
@@ -1000,7 +1063,7 @@ vpd: 100
 
 <!-- scad-render
 view: reinforcement-inner-recess
-vpr: [65, 0, 35]
+vpr: [68, 0, 212]
 vpt: [-72.0, 10, -141.0]
 vpd: 100
 -->
@@ -1010,7 +1073,7 @@ vpd: 100
 
 <!-- scad-render
 view: reinforcement-blind-hole
-vpr: [65, 0, 35]
+vpr: [68, 0, 212]
 vpt: [-72.0, 10, -141.0]
 vpd: 100
 -->
@@ -1028,7 +1091,7 @@ vpd: 100
 -->
 
 
-## 13. Locator pins
+## Locator pins
 
 The two Ø3 × 3 mm locator pins come from explicit drawing dimensions. The first
 two renders are close-ups so the pin itself is visible; the third returns to an
@@ -1038,7 +1101,7 @@ overview to show their diagonal relationship.
 
 <!-- scad-render
 view: locator-upper-left
-vpr: [65, 0, 35]
+vpr: [68, 0, 212]
 vpt: [-75, 10, 110]
 vpd: 95
 -->
@@ -1048,7 +1111,7 @@ vpd: 95
 
 <!-- scad-render
 view: locator-lower-right
-vpr: [65, 0, 35]
+vpr: [68, 0, 212]
 vpt: [75, 10, -110]
 vpd: 95
 -->
@@ -1063,10 +1126,11 @@ for(pos=locator_pin_positions)
 
 <!-- scad-render
 view: locator-pins
+vpr: [68, 0, 212]
 -->
 
 
-## 14. Connector reference volumes
+## Connector reference volumes
 
 The connector models are clearance/reference volumes rather than detailed
 electrical CAD. Individual connectors are shown close-up first; the overview
@@ -1076,7 +1140,7 @@ then explains their placement in the complete panel.
 
 <!-- scad-render
 view: data-connector-bottom
-vpr: [65, 0, 35]
+vpr: [68, 0, 212]
 vpt: [0, 10, -113.5]
 vpd: 135
 -->
@@ -1086,7 +1150,7 @@ vpd: 135
 
 <!-- scad-render
 view: data-connector-top
-vpr: [65, 0, 35]
+vpr: [68, 0, 212]
 vpt: [0, 10, 113.5]
 vpd: 135
 -->
@@ -1096,6 +1160,7 @@ vpd: 135
 
 <!-- scad-render
 view: data-connectors
+vpr: [68, 0, 212]
 -->
 
 
@@ -1106,13 +1171,13 @@ drawing does not locate it.
 
 <!-- scad-render
 view: power-connector
-vpr: [65, 0, 35]
+vpr: [68, 0, 212]
 vpt: [-26.949, 10, -31.971]
 vpd: 130
 -->
 
 
-## 15. Orientation markers
+## Orientation markers
 
 The PCB arrows are visual/orientation references, not mechanical dimensions.
 
@@ -1120,7 +1185,7 @@ The PCB arrows are visual/orientation references, not mechanical dimensions.
 
 <!-- scad-render
 view: orientation-bay-1
-vpr: [90, 0, 0]
+vpr: [68, 0, 212]
 vpt: [38, 14.5, 113.5]
 vpd: 160
 -->
@@ -1130,7 +1195,7 @@ vpd: 160
 
 <!-- scad-render
 view: orientation-bay-2
-vpr: [90, 0, 0]
+vpr: [68, 0, 212]
 vpt: [-60, 14.5, 39.964]
 vpd: 160
 -->
@@ -1140,7 +1205,7 @@ vpd: 160
 
 <!-- scad-render
 view: orientation-bay-4
-vpr: [90, 0, 0]
+vpr: [68, 0, 212]
 vpt: [0, 14.5, -119.517]
 vpd: 190
 -->
@@ -1150,11 +1215,11 @@ vpd: 190
 
 <!-- scad-render
 view: orientation-all
-vpr: [90, 0, 0]
+vpr: [68, 0, 212]
 -->
 
 
-## 16. Drawing verification
+## Drawing verification
 
 The verification sequence deliberately uses only drawing-supported geometry.
 
@@ -1182,7 +1247,7 @@ vpr: [90, 0, 0]
 -->
 
 
-## 17. Mating and profile checks
+## Mating and profile checks
 
 These views are not new construction operations. They make the interfaces used
 by future couplers/enclosures explicit after the build sequence is understood.
@@ -1254,7 +1319,7 @@ vpd: 120
 -->
 
 
-## 18. Public API
+## Public API
 
 The public consumer remains small:
 

@@ -180,3 +180,32 @@ A design view uses the state immediately before the highlighted operation.
 
 Default HUB75 design-render resolution: 1600 × 1200 px.
 
+## Reader-first design documentation
+
+Assume the reader may not know OpenSCAD or PythonSCAD. Documentation exists to
+create understanding, not to document code for its own sake.
+
+For a meaningful construction step, explain the physical feature first, then
+its geometric change, then show an image that makes that exact change visible,
+and only then use source code as supporting detail.
+
+Start component walkthroughs with recognisable front and rear overview views.
+Use gray for the state before an operation and red for the current
+addition/removal/highlight. Completed after-states return to neutral.
+
+Choose the camera for the geometry: orthographic for flat placement geometry,
+rear-oblique close-ups for protruding rear features, and explicit
+sections/profiles for depth questions.
+
+A good quality test is whether the reader can identify and describe a modelling
+error from the explanation and image without knowing the CAD language.
+
+## View table rule
+
+Keep one sequential view ID space and one table of `[CONSTANT, "stable-name"]`
+rows. The constant value must equal the row index. This deliberate duplication
+acts as a C-style integrity check.
+
+Access a numeric row through `hub75_p5_64x32_panel_view_entry()`, which asserts
+that `VIEW_TABLE[view][0] == view`. Stable documentation names are converted
+through the same table; do not maintain a second long conditional mapping.

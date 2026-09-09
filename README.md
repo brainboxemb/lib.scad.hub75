@@ -134,3 +134,20 @@ development dependency is not recursively initialized by the parent project.
 
 The model, code and documentation are being developed with the assistance of
 ChatGPT.
+
+## Design documentation philosophy
+
+Design documentation is intended to make CAD construction understandable, not
+merely to list source code.
+
+A reader should be able to understand the physical model, follow how geometry
+is added or removed, and identify possible modelling errors without first
+knowing OpenSCAD.
+
+```text
+physical meaning → geometric change → image → supporting code
+```
+
+The generated images are therefore part of the explanation: gray shows the
+existing construction state and red identifies the current operation or
+feature.
