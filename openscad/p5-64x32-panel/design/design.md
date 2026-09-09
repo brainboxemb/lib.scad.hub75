@@ -114,7 +114,7 @@ mounting features and locator pins are added.
 
 <!-- scad-render
 view: rear-frame-core
-vpr: [68, 0, 32]
+vpr: [90, 0, 0]
 -->
 
 The production construction is a Boolean subtraction:
@@ -184,18 +184,19 @@ depend on that unrecessed material.
 
 The drawing defines six mounting centres: two columns by three rows.
 
-### Position of the six mounting centres
+### Six repeated mounting positions
 
-This overview exists only to answer **where are the six mounting points?**
+Rather than showing abstract centre markers, this overview shows the actual
+mounting tubes repeated at the six drawing-derived positions.
 
-**View:** `mounting-centres`
+**View:** `mounting-tubes`
 
 <!-- scad-render
-view: mounting-centres
-vpr: [90, 0, 0]
+view: mounting-tubes
+vpr: [68, 0, 212]
 -->
 
-At every centre the model then performs three related operations:
+At every position the model performs three related operations:
 
 ```text
 local rail relief
@@ -303,16 +304,11 @@ vpt: [-75, 10, 110]
 vpd: 95
 -->
 
-### Both locator positions
+### Second locator position
 
-The overview makes their diagonal relationship visible.
-
-**View:** `locator-pins`
-
-<!-- scad-render
-view: locator-pins
-vpr: [68, 0, 212]
--->
+The second locator pin is on the opposite diagonal side of the rear. The full
+panel overview at the start already shows their relationship, so a second
+full-panel locator render is not repeated here.
 
 ## 7. Connector reference geometry
 
@@ -366,7 +362,7 @@ rear structure.
 
 <!-- scad-render
 view: final-rear
-vpr: [90, 0, 180]
+vpr: [90, 0, 0]
 -->
 
 The purpose of this final image is comparison: after following the construction
