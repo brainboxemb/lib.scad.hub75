@@ -9,6 +9,29 @@ The first component is `openscad/p5-64x32-panel`.
 
 ## OpenSCAD architecture
 
+## Private symbol naming
+
+Follow the BOSL2-style private naming convention consistently:
+
+```text
+public function/module
+    no leading underscore
+
+private function/module
+    leading underscore
+
+nested/local private helper
+    leading underscore too
+```
+
+Scope does not replace naming intent. A module nested inside another module is
+still an implementation detail and must therefore use an underscore-prefixed
+name such as `_rear_opening_2d()` or `_design_scene()`.
+
+Only supported cross-file API symbols should be left without a leading
+underscore.
+
+
 OpenSCAD is the primary implementation.
 
 Public data must use the OpenSCAD `object()` model:
@@ -169,16 +192,16 @@ For small HUB75 features:
 
 ## Rear-frame staged design context
 
-Do not use completed `rear_frame_structure()` as the gray context for an
+Do not use completed `_rear_frame_structure()` as the gray context for an
 operation that is already part of that final geometry.
 
 Use the production states:
-- `rear_frame_base()`;
-- `rear_frame_after_recess()`;
-- `rear_frame_after_mounting_reliefs()`;
-- `rear_frame_with_mounting_tubes()`;
-- `rear_frame_after_reinforcement_cuts()`;
-- `rear_frame_structure()`.
+- `_rear_frame_base()`;
+- `_rear_frame_after_recess()`;
+- `_rear_frame_after_mounting_reliefs()`;
+- `_rear_frame_with_mounting_tubes()`;
+- `_rear_frame_after_reinforcement_cuts()`;
+- `_rear_frame_structure()`.
 
 A design view uses the state immediately before the highlighted operation.
 

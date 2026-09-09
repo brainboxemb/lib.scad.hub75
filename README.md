@@ -23,6 +23,11 @@ openscad/p5-64x32-panel/
 
 ## Public API
 
+Private implementation helpers, including helpers nested inside other modules,
+use a leading `_` consistently with the BOSL2 naming convention. Names without
+a leading underscore are reserved for supported library-facing API.
+
+
 The library uses the OpenSCAD object model:
 
 ```scad

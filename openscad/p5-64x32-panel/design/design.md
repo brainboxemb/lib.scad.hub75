@@ -109,7 +109,7 @@ The sections below follow this order.
 The first physical layer is the flat front body.
 
 ```scad
-module front_mask_shape() {
+module _front_mask_shape() {
     translate([0, 0, 0])
         cube([
             width,
@@ -133,7 +133,7 @@ Nothing mechanical has been added at the rear yet.
 The PCB is placed directly behind the front mask.
 
 ```scad
-module pcb_layer_shape() {
+module _pcb_layer_shape() {
     translate([0, front_mask_depth_value, 0])
         cube([
             width,
@@ -166,7 +166,7 @@ The front edge of this rear housing uses the full panel footprint. At the rear
 mounting plane the outside perimeter is inset by 1.25 mm per side.
 
 ```scad
-tapered_outer_blank(
+_tapered_outer_blank(
     rear_frame_start_y,
     mounting_plane_y_value,
     0,
@@ -197,13 +197,13 @@ rounded main rectangle plus local stepped reliefs at its top and bottom edges.
 The code for one complete opening is:
 
 ```scad
-module rear_opening_2d(i, include_reliefs=true) {
+module _rear_opening_2d(i, include_reliefs=true) {
     z0 = opening_z_min[i];
     z1 = opening_z_max[i];
     opening_h = z1 - z0;
 
     union() {
-        rounded_rect_2d(
+        _rounded_rect_2d(
             rear_frame_side_width,
             z0,
             width - 2 * rear_frame_side_width,
@@ -212,8 +212,8 @@ module rear_opening_2d(i, include_reliefs=true) {
         );
 
         if(include_reliefs) {
-            bay_end_relief_2d(z0, -1);
-            bay_end_relief_2d(z1,  1);
+            _bay_end_relief_2d(z0, -1);
+            _bay_end_relief_2d(z1,  1);
         }
     }
 }
@@ -229,7 +229,7 @@ rails.
 The call from the bay constructor is:
 
 ```scad
-rounded_rect_2d(
+_rounded_rect_2d(
     rear_frame_side_width,
     z0,
     width - 2 * rear_frame_side_width,
@@ -243,7 +243,7 @@ a normal square by the corner radius and then expanding it again with
 `offset(r=rr)`:
 
 ```scad
-module rounded_rect_2d(x, z, w, h, r) {
+module _rounded_rect_2d(x, z, w, h, r) {
     rr = min(r, min(w, h) / 2 - 0.01);
 
     translate([x + rr, z + rr])
@@ -281,7 +281,7 @@ At each end of a bay, the rail becomes locally narrower in the centre. The
 central part of that relief is a rectangle.
 
 ```scad
-module bay_end_narrow_relief_2d(z_edge, direction=1) {
+module _bay_end_narrow_relief_2d(z_edge, direction=1) {
     d = rear_frame_end_step_depth;
     half_narrow = rear_frame_end_narrow_length / 2;
     cx = width / 2;
@@ -359,11 +359,11 @@ The two triangular transitions and the central rectangle are united into one
 end-relief cutter:
 
 ```scad
-module bay_end_relief_2d(z_edge, direction=1) {
+module _bay_end_relief_2d(z_edge, direction=1) {
     union() {
-        bay_end_transition_relief_2d(z_edge, direction, "left");
-        bay_end_narrow_relief_2d(z_edge, direction);
-        bay_end_transition_relief_2d(z_edge, direction, "right");
+        _bay_end_transition_relief_2d(z_edge, direction, "left");
+        _bay_end_narrow_relief_2d(z_edge, direction);
+        _bay_end_transition_relief_2d(z_edge, direction, "right");
     }
 }
 ```
@@ -388,9 +388,9 @@ shape.
 
 ```scad
 union() {
-    rounded_rect_2d(...);
-    bay_end_relief_2d(z0, -1);
-    bay_end_relief_2d(z1,  1);
+    _rounded_rect_2d(...);
+    _bay_end_relief_2d(z0, -1);
+    _bay_end_relief_2d(z1,  1);
 }
 ```
 
@@ -412,9 +412,9 @@ electronics bay.
 All four openings are generated from the same construction:
 
 ```scad
-module rear_openings_2d() {
+module _rear_openings_2d() {
     for(i=[0:3])
-        rear_opening_2d(i);
+        _rear_opening_2d(i);
 }
 ```
 
@@ -434,20 +434,20 @@ Now the four complete 2D cutters are extruded through the rear housing and
 subtracted.
 
 ```scad
-module rear_frame_core_3d() {
+module _rear_frame_core_3d() {
     difference() {
-        tapered_outer_blank(
+        _tapered_outer_blank(
             rear_frame_start_y,
             mounting_plane_y_value,
             0,
             rear_outer_inset_actual
         );
 
-        rear_extrude_from_to(
+        _rear_extrude_from_to(
             rear_frame_start_y - 0.05,
             mounting_plane_y_value + 0.05
         )
-            rear_openings_2d();
+            _rear_openings_2d();
     }
 }
 ```
@@ -475,7 +475,7 @@ through the outside wall. Therefore the cylinders are clipped by the same
 tapered outer envelope used for the housing:
 
 ```scad
-module reinforcement_bushing_solids() {
+module _reinforcement_bushing_solids() {
     intersection() {
         union()
             for(pos=reinforcement_bushing_positions)
@@ -491,7 +491,7 @@ module reinforcement_bushing_solids() {
                             d = reinforcement_bushing_outer_diameter_value
                         );
 
-        tapered_outer_blank(
+        _tapered_outer_blank(
             rear_frame_start_y,
             mounting_plane_y_value,
             0,
@@ -516,10 +516,10 @@ panel wall.
 The base rear structure is therefore:
 
 ```scad
-module rear_frame_base() {
+module _rear_frame_base() {
     union() {
-        rear_frame_core_3d();
-        reinforcement_bushing_solids();
+        _rear_frame_core_3d();
+        _reinforcement_bushing_solids();
     }
 }
 ```
@@ -542,7 +542,7 @@ top/bottom rail band and then offsets that shape inward:
 ```scad
 offset(delta = -end_margin)
     intersection() {
-        rear_frame_web_2d(outer_inset);
+        _rear_frame_web_2d(outer_inset);
 
         translate([...])
             square([
@@ -563,16 +563,16 @@ inner bay edge    → continuous rim
 The complete rear-face recess is then assembled from several strips:
 
 ```scad
-module rear_recess_raw_2d() {
+module _rear_recess_raw_2d() {
     union() {
-        rear_side_recess_2d("left");
-        rear_side_recess_2d("right");
+        _rear_side_recess_2d("left");
+        _rear_side_recess_2d("right");
 
-        rear_end_recess_2d("bottom");
-        rear_end_recess_2d("top");
+        _rear_end_recess_2d("bottom");
+        _rear_end_recess_2d("top");
 
         for(i=[0:2])
-            rear_crossbar_recess_2d(i);
+            _rear_crossbar_recess_2d(i);
     }
 }
 ```
@@ -593,10 +593,10 @@ remain visible continuously along both the outside and stepped inside edge.
 The six reinforcement footprints are then excluded from that cutter:
 
 ```scad
-module rear_recess_2d() {
+module _rear_recess_2d() {
     difference() {
-        rear_recess_raw_2d();
-        reinforcement_bushing_footprints_2d();
+        _rear_recess_raw_2d();
+        _reinforcement_bushing_footprints_2d();
     }
 }
 ```
@@ -615,15 +615,15 @@ The red geometry is the shallow material to remove.
 The cutter is extruded only through the shallow recess depth:
 
 ```scad
-module rear_frame_after_recess() {
+module _rear_frame_after_recess() {
     difference() {
-        rear_frame_base();
+        _rear_frame_base();
 
-        rear_extrude_from_to(
+        _rear_extrude_from_to(
             mounting_plane_y_value - rear_recess_depth_actual,
             mounting_plane_y_value + 0.05
         )
-            rear_recess_2d();
+            _rear_recess_2d();
     }
 }
 ```
@@ -649,8 +649,8 @@ Before the tubes are added, a small circular relief is cut into the rail around
 each mounting position.
 
 ```scad
-module mounting_tube_relief_cutters() {
-    rear_extrude_from_to(
+module _mounting_tube_relief_cutters() {
+    _rear_extrude_from_to(
         mounting_plane_y_value - mounting_tube_relief_depth_value,
         mounting_plane_y_value + 0.05
     )
@@ -677,8 +677,8 @@ Production state:
 
 ```scad
 difference() {
-    rear_frame_after_recess();
-    mounting_tube_relief_cutters();
+    _rear_frame_after_recess();
+    _mounting_tube_relief_cutters();
 }
 ```
 
@@ -698,7 +698,7 @@ vpd: 90
 The tube itself is produced as an outer cylinder minus the Ø3 screw path:
 
 ```scad
-module mounting_tube(x, z) {
+module _mounting_tube(x, z) {
     difference() {
         translate([x, rear_frame_start_y, z])
             rotate([-90, 0, 0])
@@ -726,7 +726,7 @@ Two X positions × three Z positions gives six tubes:
 ```scad
 for(x=hole_x_positions)
     for(z=hole_z_positions)
-        mounting_tube(x, z);
+        _mounting_tube(x, z);
 ```
 
 **View:** `mounting-tubes`
@@ -739,13 +739,13 @@ vpr: [68, 0, 212]
 The production state is:
 
 ```scad
-module rear_frame_with_mounting_tubes() {
+module _rear_frame_with_mounting_tubes() {
     union() {
-        rear_frame_after_mounting_reliefs();
+        _rear_frame_after_mounting_reliefs();
 
         for(x=hole_x_positions)
             for(z=hole_z_positions)
-                mounting_tube(x, z);
+                _mounting_tube(x, z);
     }
 }
 ```
@@ -759,7 +759,7 @@ module rear_frame_with_mounting_tubes() {
 The shallow Ø10 recess is cut into each Ø14 reinforcement area.
 
 ```scad
-module reinforcement_bushing_inner_recess_cuts() {
+module _reinforcement_bushing_inner_recess_cuts() {
     for(pos=reinforcement_bushing_positions)
         translate([
             pos[0],
@@ -790,7 +790,7 @@ The second cutter starts below the Ø10 recess floor and continues deeper into
 the reinforcement.
 
 ```scad
-module reinforcement_bushing_blind_hole_cuts() {
+module _reinforcement_bushing_blind_hole_cuts() {
     for(pos=reinforcement_bushing_positions)
         translate([
             pos[0],
@@ -819,10 +819,10 @@ vpd: 100
 Both cuts are combined in the production geometry:
 
 ```scad
-module rear_frame_after_reinforcement_cuts() {
+module _rear_frame_after_reinforcement_cuts() {
     difference() {
-        rear_frame_with_mounting_tubes();
-        reinforcement_bushing_cuts();
+        _rear_frame_with_mounting_tubes();
+        _reinforcement_bushing_cuts();
     }
 }
 ```
@@ -836,7 +836,7 @@ module rear_frame_after_reinforcement_cuts() {
 Each locator is a Ø3 cylinder standing 3 mm proud of the rear mounting plane.
 
 ```scad
-module locator_pin(x, z) {
+module _locator_pin(x, z) {
     translate([x, mounting_plane_y_value, z])
         rotate([-90, 0, 0])
             cylinder(
@@ -858,11 +858,11 @@ vpd: 95
 Both pins are added after all reinforcement cuts:
 
 ```scad
-module rear_frame_structure() {
-    rear_frame_after_reinforcement_cuts();
+module _rear_frame_structure() {
+    _rear_frame_after_reinforcement_cuts();
 
     for(pos=locator_pin_positions)
-        locator_pin(pos[0], pos[1]);
+        _locator_pin(pos[0], pos[1]);
 }
 ```
 
