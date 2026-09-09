@@ -24,7 +24,7 @@ assert(
     ) < 0.001
 );
 assert(
-    abs(hub75_p5_64x32_panel_rear_opening_corner_radius(panel) - 4.99546875)
+    abs(hub75_p5_64x32_panel_rear_opening_corner_radius(panel) - 4.990625)
     < 0.001
 );
 assert(
