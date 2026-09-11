@@ -6,9 +6,6 @@ cd "$repo_root"
 
 mkdir -p vrf/out/fixtures vrf/out/plan vrf/out/drawings
 
-# OpenSCAD may exit successfully while emitting a completely unusable model after
-# an unknown function/undef propagation. Treat those warnings as verification
-# failures; ordinary camera notices remain allowed.
 run_openscad_checked() {
   local log
   log="$(mktemp)"
@@ -54,7 +51,6 @@ render_dxf() {
       "$source"
 }
 
-# Auto-fitted preview for a standalone fixture or 2D reference drawing.
 render_png_autofit() {
   local output="$1"
   local source="$2"
@@ -72,8 +68,6 @@ render_png_autofit() {
       "$source"
 }
 
-# Operator-plan views define $vpr/$vpt/$vpd in their .scad adapters. Do not add
-# --autocenter/--viewall here: those CLI flags replace the selected local framing.
 render_png_camera() {
   local output="$1"
   local source="$2"
@@ -93,12 +87,7 @@ render_stl \
   vrf/out/hub75-p5-64x32-panel-api.stl \
   test/hub75_p5_64x32_panel_api.scad
 
-# -----------------------------------------------------------------------------
-# Stage 1: upper-left rear corner.
-# -----------------------------------------------------------------------------
-
-# TL1 v0.2. Combined STL works as a normal one-colour print; base + markings
-# share an origin and can be imported as a multipart AMS object in Bambu Studio.
+# TL1 v0.2: combined one-colour STL plus aligned AMS base/markings parts.
 render_stl \
   vrf/out/fixtures/hub75-p5-64x32-top-left-profile-comb.stl \
   vrf/fixtures/export/top-left-profile-comb.scad
@@ -113,8 +102,7 @@ render_png_autofit \
   vrf/fixtures/export/top-left-profile-comb.scad \
   900,500
 
-# SQ1 v0.1 keeps the thin comb mechanically square using the straight front-most
-# top-edge strip; it is an orientation aid, not a dimensional gauge.
+# SQ1 v0.1 square/orientation guide.
 render_stl \
   vrf/out/fixtures/hub75-p5-64x32-top-left-alignment-guide.stl \
   vrf/fixtures/export/top-left-alignment-guide.scad
@@ -129,7 +117,7 @@ render_png_autofit \
   vrf/fixtures/export/top-left-alignment-guide.scad \
   900,500
 
-# R1 v0.1 brackets the modelled ~R4.99 rear-bay inside radius.
+# R1 v0.1 radius comparator.
 render_stl \
   vrf/out/fixtures/hub75-p5-64x32-corner-radius-comparator.stl \
   vrf/fixtures/export/corner-radius-comparator.scad
@@ -169,19 +157,15 @@ render_png_camera \
   vrf/top-left/render/top-left-radius-reinforcement.scad \
   820,720
 
-# 1:1 reference geometry plus a human-readable preview generated from exactly
-# the same OpenSCAD source.
 render_dxf \
   vrf/out/drawings/hub75-p5-64x32-top-left-dimensions.dxf \
   vrf/top-left/drawing/top-left-dimension-sheet.scad
-render_png_autofit \
+render_png_camera \
   vrf/out/drawings/hub75-p5-64x32-top-left-dimensions.png \
-  vrf/top-left/drawing/top-left-dimension-sheet.scad \
+  vrf/top-left/render/top-left-dimension-sheet.scad \
   1600,900
 
-# -----------------------------------------------------------------------------
 # Secondary helpers retained for later stages.
-# -----------------------------------------------------------------------------
 render_stl \
   vrf/out/fixtures/hub75-p5-64x32-corner-datum-gauge.stl \
   vrf/fixtures/export/corner-datum-gauge.scad
