@@ -1,6 +1,6 @@
 // Focused render helpers for the physical upper-left verification procedure.
 // These helpers do not duplicate panel geometry: the complete production panel
-// is built through the public API and overlays/fixtures consume public accessors.
+// is rendered through the public API and overlays/fixtures consume public accessors.
 
 use <../../openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad>
 use <../fixtures/hub75_p5_64x32_physical_verification_fixtures.scad>
@@ -19,6 +19,16 @@ function hub75_vrf_top_left_reinforcement_z(panel) =
 
 function hub75_vrf_overlay_y(panel) =
     hub75_p5_64x32_panel_depth(panel) + 4.5;
+
+// Verification images use the same neutral/light documentation rendering as the
+// library design document. The physical/default model remains black; this only
+// improves contrast between panel geometry and coloured operator overlays.
+module hub75_vrf_plan_panel(panel) {
+    hub75_p5_64x32_panel_render(
+        panel,
+        view = hub75_p5_64x32_panel_view_id("rear")
+    );
+}
 
 module _hub75_vrf_rear_ring(x, y, z, outer_d, inner_d, thickness=0.7) {
     translate([x, y, z])
@@ -44,7 +54,7 @@ module hub75_vrf_top_left_location(panel, area_width=46, area_height=56) {
     rear_left = width/2;
     top = height/2;
 
-    hub75_p5_64x32_panel_build(panel);
+    hub75_vrf_plan_panel(panel);
 
     _hub75_vrf_rear_rect_frame(
         rear_left - area_width,
@@ -67,7 +77,7 @@ module hub75_vrf_top_left_feature_map(panel, datum_length=38) {
     top = height/2;
     oy = hub75_vrf_overlay_y(panel);
 
-    hub75_p5_64x32_panel_build(panel);
+    hub75_vrf_plan_panel(panel);
 
     color([1.0, 0.78, 0.08]) {
         translate([rear_left-datum_length, oy, top-0.5])
@@ -109,7 +119,7 @@ module hub75_vrf_top_left_radius_reinforcement_map(panel) {
     local_cz = local_open_z + r;
     oy = hub75_vrf_overlay_y(panel);
 
-    hub75_p5_64x32_panel_build(panel);
+    hub75_vrf_plan_panel(panel);
 
     // Magenta beads trace the nominal bay-opening radius without obscuring the
     // production edge underneath.
@@ -181,14 +191,14 @@ module hub75_vrf_top_left_alignment_guide_on_panel(panel) {
 }
 
 module hub75_vrf_top_left_comb_use(panel) {
-    hub75_p5_64x32_panel_build(panel);
+    hub75_vrf_plan_panel(panel);
 
     color([1.0, 0.48, 0.05])
         hub75_vrf_top_left_profile_comb_on_panel(panel);
 }
 
 module hub75_vrf_top_left_comb_square_use(panel) {
-    hub75_p5_64x32_panel_build(panel);
+    hub75_vrf_plan_panel(panel);
 
     color([1.0, 0.48, 0.05])
         hub75_vrf_top_left_profile_comb_on_panel(panel);
