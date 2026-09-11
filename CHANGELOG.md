@@ -4,6 +4,10 @@ Functional changes to released `lib.scad.hub75` versions.
 
 ## Unreleased
 
+### Fixed
+
+- Join each stepped bay-end relief to its rounded bay opening with a small internal cutter overlap, preventing stale vertical walls across the horizontal-crossbar reliefs without changing the visible STEP-derived contour.
+
 ### Changed
 
 - Place the rear PCB orientation arrows directly on the PCB as a 0.10 mm white coating instead of 0.35 mm markers at the rear mounting plane.
