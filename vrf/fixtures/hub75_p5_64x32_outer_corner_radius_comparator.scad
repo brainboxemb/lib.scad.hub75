@@ -102,6 +102,7 @@ module hub75_vrf_outer_corner_radius_comparator_markings(
     marking_height = 0.50
 ) {
     radii = hub75_vrf_outer_corner_radius_comparator_radii();
+    labels = ["R0.5", "R1.0", "R1.5", "R2.0"];
     z0 = thickness - 0.02;
     h = marking_height + 0.02;
 
@@ -110,7 +111,7 @@ module hub75_vrf_outer_corner_radius_comparator_markings(
         translate([tangent[0] - (leg-wall)/2, wall+3.1, z0])
             linear_extrude(height=h)
                 text(
-                    str("R", radii[i]),
+                    labels[i],
                     size=2.3,
                     halign="center",
                     valign="center"
