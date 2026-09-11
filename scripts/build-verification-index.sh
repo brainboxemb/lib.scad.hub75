@@ -23,11 +23,17 @@ local upper-left procedure; do not treat the STL files as self-explanatory.
 - [preview](fixtures/hub75-p5-64x32-top-left-alignment-guide.png)
 - AMS multipart: [base STL](fixtures/hub75-p5-64x32-top-left-alignment-guide-base.stl) + [raised markings STL](fixtures/hub75-p5-64x32-top-left-alignment-guide-markings.stl)
 
-### R1 v0.1 radius comparator
+### R1 v0.1 bay-radius comparator
 
 - [combined STL](fixtures/hub75-p5-64x32-corner-radius-comparator.stl)
 - [preview](fixtures/hub75-p5-64x32-corner-radius-comparator.png)
 - AMS multipart: [base STL](fixtures/hub75-p5-64x32-corner-radius-comparator-base.stl) + [raised markings STL](fixtures/hub75-p5-64x32-corner-radius-comparator-markings.stl)
+
+### R2 v0.1 outer-corner radius comparator
+
+- [combined STL](fixtures/hub75-p5-64x32-outer-corner-radius-comparator.stl)
+- [preview](fixtures/hub75-p5-64x32-outer-corner-radius-comparator.png)
+- AMS multipart: [base STL](fixtures/hub75-p5-64x32-outer-corner-radius-comparator-base.stl) + [raised markings STL](fixtures/hub75-p5-64x32-outer-corner-radius-comparator-markings.stl)
 
 ### 1:1 dimension sheet
 
