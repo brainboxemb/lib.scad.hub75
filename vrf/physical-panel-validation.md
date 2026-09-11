@@ -21,7 +21,8 @@ The first rule is deliberately simple:
 For the first verification session you need:
 
 - one physical P5 64 × 32 HUB75 panel;
-- one printed **TL1 v0.1** profile comb;
+- one printed **TL1 v0.2** profile comb;
+- one printed **SQ1 v0.1** alignment guide so TL1 can be held repeatably square;
 - a digital caliper;
 - a usable depth/step measurement method for the 0.5 mm tube protrusion and the
   reinforcement recess;
@@ -109,14 +110,14 @@ numbers.
 
 ---
 
-# The first printed helper: `TL1 v0.1`
+# The first printed helper: `TL1 v0.2`
 
 The first helper is intentionally small. Its nominal envelope is about
 **20.8 × 35 × 2.0 mm** and it is used next to the upper-left mounting column.
 
-<img src="../../../raw/prod/verification/fixtures/hub75-p5-64x32-top-left-profile-comb.png" alt="TL1 v0.1 top-left profile comb" width="72%">
+<img src="../../../raw/prod/verification/fixtures/hub75-p5-64x32-top-left-profile-comb.png" alt="TL1 v0.2 top-left profile comb" width="72%">
 
-The helper is marked **`TL1 v0.1`** on the part itself. Always record that
+The helper is marked **`TL1 v0.2`** on the part itself. Always record that
 identifier/version with the measurement results. If the fixture geometry changes,
 its version must change too.
 
@@ -126,12 +127,12 @@ relationships easy to inspect:
 
 - its long contact edge follows the expected top outer profile/taper;
 - its rear blade hangs behind the panel;
-- the upper witness hole/arm, engraved **S**, marks the expected screw centre
+- the upper witness hole/arm, raised **S**, marks the expected screw centre
   height;
-- the lower witness hole/arm, engraved **R**, marks the reinforcement centre
+- the lower witness hole/arm, raised **R**, marks the reinforcement centre
   height;
 - the front edge of the witness arm represents the rear mounting plane;
-- the engraved line on the upper arm marks the expected 0.5 mm screw-tube tip.
+- the raised line on the upper arm marks the expected 0.5 mm screw-tube tip.
 
 The round witness holes are centre indicators only. Do **not** use their printed
 diameter to accept or reject the physical screw or reinforcement diameter.
@@ -145,6 +146,11 @@ Print it flat on its broad face:
 - normal dimensional print profile;
 - do not scale the STL in the slicer.
 
+The combined STL works for a normal one-colour print. For an AMS print, the
+verification branch also provides an exactly aligned base STL and raised-markings
+STL; import those as one multipart object and assign the markings a contrasting
+filament.
+
 Before using it, record printer/material/profile and check that the printed part
 is flat. Measure its 2 mm thickness at a few places. If the part is visibly
 warped, do not use it for the taper check.
@@ -153,18 +159,22 @@ warped, do not use it for the taper check.
 
 # How to place `TL1`
 
-<img src="../../../raw/prod/verification/plan/top-left-comb-use.png" alt="TL1 comb positioned on upper-left model corner" width="82%">
+<img src="../../../raw/prod/verification/plan/top-left-comb-square-use.png" alt="TL1 comb and SQ1 alignment guide positioned on upper-left model corner" width="82%">
 
 The comb is used **perpendicular to the rear face**, not laid flat over the rear
-of the panel.
+of the panel. `SQ1 v0.1` is deliberately a separate orientation aid so printer
+fit in SQ1 cannot silently become part of the dimensional measurement.
 
 1. Put the panel rear side toward you.
-2. Put the long lower profile of the comb on the physical **top edge**.
-3. Position the comb a few millimetres to the side of the upper-left mounting
+2. Slide SQ1 over TL1 and move SQ1 to the straight front-most part of the top edge.
+3. Put the long lower profile of TL1 on the physical **top edge**.
+4. Let SQ1 sit naturally on the top edge so TL1 is held repeatably square across
+   the panel width.
+5. Position the comb a few millimetres to the side of the upper-left mounting
    tube so it does not collide with the tube itself.
-4. Let the rear witness blade hang behind the panel next to the mounting tube and
+6. Let the rear witness blade hang behind the panel next to the mounting tube and
    reinforcement feature.
-5. Do not force the helper down. A forced fit hides exactly the discrepancy we
+7. Do not force either helper down. A forced fit hides exactly the discrepancy we
    are trying to see.
 
 The strict side view below shows the intended relationship more clearly.
@@ -277,9 +287,9 @@ For the hole, use the best available method: suitable pin/plug gauges are better
 than trying to infer a small bore accurately from normal caliper jaws.
 
 For rear protrusion, use the comb as a visual reference first. The front edge of
-the upper witness arm corresponds to the 14.5 mm rear mounting plane; the
-engraved line marks the modelled tube end 0.5 mm farther rearward. Confirm
-numerically with a depth/step method if the visual result is questionable.
+the upper witness arm corresponds to the 14.5 mm rear mounting plane; the raised
+line marks the modelled tube end 0.5 mm farther rearward. Confirm numerically with
+a depth/step method if the visual result is questionable.
 
 ---
 
@@ -444,7 +454,8 @@ Generated verification renders/STLs remain publication output below
 Do not call the whole P5 64 × 32 model physically verified after one corner.
 Stage 1 is complete when:
 
-1. the operator can identify and place `TL1 v0.1` without reading source code;
+1. the operator can identify and place `TL1 v0.2` with `SQ1 v0.1` without reading
+   source code;
 2. every TL-01…TL-15 item that can reasonably be checked has a recorded result;
 3. questionable observations are photographed and marked `investigate`;
 4. no library dimension has been changed merely to make a printed helper fit;
