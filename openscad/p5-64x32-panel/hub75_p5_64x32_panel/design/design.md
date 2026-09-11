@@ -299,6 +299,7 @@ module _bay_end_narrow_relief_2d(z_edge, direction=1) {
 
 <!-- scad-render
 view: narrow-end-width
+size: [480, 360]
 vpr: [68, 0, 212]
 vpt: [0, 10, -149]
 vpd: 105
@@ -390,6 +391,7 @@ with the direction reversed.
 
 <!-- scad-render
 view: bay-bottom-relief
+size: [480, 360]
 vpr: [68, 0, 212]
 vpt: [0, 10, -149]
 vpd: 120
@@ -412,6 +414,7 @@ union() {
 
 <!-- scad-render
 view: bay-1
+size: [480, 360]
 vpr: [68, 0, 212]
 vpt: [0, 10, -120]
 vpd: 190
@@ -528,6 +531,7 @@ module _reinforcement_bushing_solids() {
 
 <!-- scad-render
 view: reinforcement-solids
+size: [480, 360]
 vpr: [68, 0, 212]
 vpt: [-72.0, 10, -141.0]
 vpd: 100
@@ -604,6 +608,7 @@ module _rear_recess_raw_2d() {
 
 <!-- scad-render
 view: recess-bottom
+size: [480, 360]
 vpr: [68, 0, 212]
 vpt: [0, 10, -149]
 vpd: 125
@@ -654,6 +659,7 @@ module _rear_frame_after_recess() {
 
 <!-- scad-render
 view: rear-after-recess
+size: [480, 360]
 vpr: [68, 0, 212]
 vpt: [-72.0, 10, -141.0]
 vpd: 130
@@ -690,6 +696,7 @@ module _mounting_tube_relief_cutters() {
 
 <!-- scad-render
 view: mounting-relief-single
+size: [480, 360]
 vpr: [68, 0, 212]
 vpt: [-72.0, 10, -152.0]
 vpd: 90
@@ -712,6 +719,7 @@ A tube is then added at the relieved position.
 
 <!-- scad-render
 view: mounting-tube-single
+size: [480, 360]
 vpr: [68, 0, 212]
 vpt: [-72.0, 10, -152.0]
 vpd: 90
@@ -801,6 +809,7 @@ module _reinforcement_bushing_inner_recess_cuts() {
 
 <!-- scad-render
 view: reinforcement-inner-recess
+size: [480, 360]
 vpr: [68, 0, 212]
 vpt: [-72.0, 10, -141.0]
 vpd: 100
@@ -833,6 +842,7 @@ module _reinforcement_bushing_blind_hole_cuts() {
 
 <!-- scad-render
 view: reinforcement-blind-hole
+size: [480, 360]
 vpr: [68, 0, 212]
 vpt: [-72.0, 10, -141.0]
 vpd: 100
@@ -872,6 +882,7 @@ module _locator_pin(x, z) {
 
 <!-- scad-render
 view: locator-upper-left
+size: [480, 360]
 vpr: [68, 0, 212]
 vpt: [-75, 10, 110]
 vpd: 95
@@ -914,6 +925,7 @@ translate([
 
 <!-- scad-render
 view: data-connector-bottom
+size: [480, 360]
 vpr: [68, 0, 212]
 vpt: [0, 10, -113.5]
 vpd: 135
@@ -950,6 +962,7 @@ translate([
 
 <!-- scad-render
 view: power-connector
+size: [480, 360]
 vpr: [68, 0, 212]
 vpt: [-26.949, 10, -31.971]
 vpd: 130

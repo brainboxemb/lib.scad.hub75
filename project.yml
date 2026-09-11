@@ -13,6 +13,9 @@ paths:
   build_root: bld
   render_root: openscad/p5-64x32-panel/hub75_p5_64x32_panel/render
 
+build_engine:
+  engine: scons
+
 openscad:
   common_flags:
     - --enable=object-function
