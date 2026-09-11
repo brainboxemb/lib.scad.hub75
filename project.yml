@@ -22,6 +22,15 @@ openscad:
 
 externals: []
 
+builds:
+  - name: hub75-p5-64x32-panel-front-angled
+    source: openscad/p5-64x32-panel/hub75_p5_64x32_panel/render/front-angled.scad
+    output: bld/png/hub75-p5-64x32-panel-front-angled.png
+
+  - name: hub75-p5-64x32-panel-rear-angled
+    source: openscad/p5-64x32-panel/hub75_p5_64x32_panel/render/rear-angled.scad
+    output: bld/png/hub75-p5-64x32-panel-rear-angled.png
+
 verification:
   commands:
     - [bash, scripts/run-verification.sh]

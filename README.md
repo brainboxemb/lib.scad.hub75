@@ -11,25 +11,25 @@ Reusable OpenSCAD mechanical reference geometry for HUB75 LED matrix hardware.
   </tr>
   <tr>
     <td align="center">
-      <a href="../../blob/prod/build/design/project/openscad/p5-64x32-panel/design/img/01-front.png">
-        <img src="../../raw/prod/build/design/project/openscad/p5-64x32-panel/design/img/01-front.png" alt="HUB75 P5 64 x 32 panel front angled view" width="100%">
+      <a href="../../blob/prod/build/png/hub75-p5-64x32-panel-front-angled.png">
+        <img src="../../raw/prod/build/png/hub75-p5-64x32-panel-front-angled.png" alt="HUB75 P5 64 x 32 panel front angled view" width="100%">
       </a>
     </td>
     <td align="center">
-      <a href="../../blob/prod/build/design/project/openscad/p5-64x32-panel/design/img/02-rear.png">
-        <img src="../../raw/prod/build/design/project/openscad/p5-64x32-panel/design/img/02-rear.png" alt="HUB75 P5 64 x 32 panel rear angled view" width="100%">
+      <a href="../../blob/prod/build/png/hub75-p5-64x32-panel-rear-angled.png">
+        <img src="../../raw/prod/build/png/hub75-p5-64x32-panel-rear-angled.png" alt="HUB75 P5 64 x 32 panel rear angled view" width="100%">
       </a>
     </td>
   </tr>
 </table>
 
-These angled images are generated from the current `prod/build` branch.
+These angled presentation images are dedicated build outputs from the current `prod/build` branch; they are not design-documentation renders.
 
 ## Quick links
 
-- [HUB75 panel design source](openscad/p5-64x32-panel/design/design.md)
+- [HUB75 panel design source](openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md)
 - [HUB75 panel manual/reference](openscad/p5-64x32-panel/manual.md)
-- [Generated HUB75 panel design documentation](https://github.com/brainboxemb/lib.scad.hub75/blob/prod/build/design/project/openscad/p5-64x32-panel/design/design.md)
+- [Generated HUB75 panel design documentation](https://github.com/brainboxemb/lib.scad.hub75/blob/prod/build/design/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md)
 - [HUB75 panel OpenSCAD source](openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad)
 - [Latest generated build](../../tree/prod/build)
 - [Functional verification](../../tree/prod/verification)
@@ -40,10 +40,14 @@ The first component is the portrait-oriented HUB75 P5 64 × 32 pixel panel model
 ```text
 openscad/p5-64x32-panel/
 ├── hub75_p5_64x32_panel.scad
-├── hub75_p5_64x32_panel_render.scad
 ├── manual.md
-└── design/
-    └── design.md
+└── hub75_p5_64x32_panel/
+    ├── hub75_p5_64x32_panel_render.scad
+    ├── design/
+    │   └── design.md
+    └── render/
+        ├── front-angled.scad
+        └── rear-angled.scad
 ```
 
 ## Public API
@@ -90,10 +94,10 @@ Do not silently promote a STEP/photo approximation into a drawing-derived dimens
 
 ## Design documentation
 
-Source design documentation lives beside the component at:
+Source design documentation lives beside the supporting files for the component at:
 
 ```text
-openscad/p5-64x32-panel/design/design.md
+openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md
 ```
 
 `tool.scad-project design-build` renders the readable generated copy under `bld/design`. Successful production builds publish that generated documentation to `prod/build`; generated PNGs do not belong on `main`.
