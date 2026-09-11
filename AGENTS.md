@@ -2,6 +2,16 @@
 
 Persistent guidance for automated coding agents working in `lib.scad.hub75`.
 
+## Generic workflow policy
+
+Before branch, pull-request, publication or release work, read the pinned
+`tools/tool.scad-project/AGENTS.md`. Its pull-request-first change workflow and
+publication lifecycle are authoritative for this consumer.
+
+This root file adds HUB75-library-specific guidance only. It must not contradict
+or duplicate changing generic branch/PR/publication rules from the pinned tool
+policy.
+
 ## Repository purpose
 
 `lib.scad.hub75` contains reusable mechanical reference models for HUB75
@@ -169,10 +179,10 @@ conversion path.
 
 Pin `tool.scad-project` under `tools/tool.scad-project` as declared in
 `project.yml`. Use thin reusable workflow callers and direct-only submodule
-checkout.
+checkout. Generic branch naming, pull-request previews, cleanup and release
+lifecycle are governed by the pinned tool policy.
 
-Generated build and verification output do not belong on `main`. Branch names
-and lifecycle policy are defined in `project.yml`; do not duplicate them here.
+Generated build and verification output do not belong on `main`.
 
 Root bootstrap/update scripts are canonical copies from `tool.scad-project` and
 must remain Python-free during bootstrap.
