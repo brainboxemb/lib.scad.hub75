@@ -14,6 +14,24 @@ first physical procedure below; do not treat the STL files as self-explanatory.
 - [TL1 v0.1 profile comb STL](fixtures/hub75-p5-64x32-top-left-profile-comb.stl)
 - [TL1 fixture preview](fixtures/hub75-p5-64x32-top-left-profile-comb.png)
 
+## Workbench checklist
+
+For the first verification session you need:
+
+- one physical P5 64 × 32 HUB75 panel;
+- one printed **TL1 v0.1** profile comb;
+- a digital caliper;
+- a usable depth/step measurement method for the 0.5 mm tube protrusion and the
+  reinforcement recess;
+- preferably suitable small pin/plug gauges for the 3.0 mm and 2.5 mm holes;
+- a phone/camera for side/profile evidence when something does not agree;
+- a sample identifier, initially for example `P5-64X32-001`.
+
+Do **not** change the CAD model while taking the first readings. Record a
+mismatch as `investigate` first. Also do not start with the long 144/152 mm
+spacing gauges; Stage 1 deliberately proves one understandable physical corner
+before moving across the whole panel.
+
 The procedure below is generated from `vrf/physical-panel-validation.md` on the
 same source commit. Image links are rewritten to this verification branch so the
 PR preview and production verification page are self-contained.
