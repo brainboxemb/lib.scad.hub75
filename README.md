@@ -35,7 +35,7 @@ These angled presentation images are dedicated build outputs from the current `p
 - [Functional verification](../../tree/prod/verification)
 - [Changelog](CHANGELOG.md)
 
-The first component is the portrait-oriented HUB75 P5 64 × 32 pixel panel model. Its nominal landscape dimensions are 320 × 160 mm; consumers may orient the model vertically without changing the library geometry.
+The first component is the portrait-oriented HUB75 P5 64 × 32 pixel panel model. Its nominal placement size is 160 × 320 mm (width × height), matching the library's native portrait coordinate system.
 
 ```text
 openscad/p5-64x32-panel/

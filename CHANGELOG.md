@@ -4,6 +4,13 @@ Functional changes to released `lib.scad.hub75` versions.
 
 ## Unreleased
 
+## v0.1.1
+
+### Added
+
+- Add dedicated front/rear angled standalone panel preview builds and expose them from the root README.
+- Group panel-specific design/render support files below the public panel component while keeping the public consumer entrypoint unchanged.
+
 ### Fixed
 
 - Join each stepped bay-end relief to its rounded bay opening with a small internal cutter overlap, preventing stale vertical walls across the horizontal-crossbar reliefs without changing the visible STEP-derived contour.
@@ -11,6 +18,10 @@ Functional changes to released `lib.scad.hub75` versions.
 ### Changed
 
 - Place the rear PCB orientation arrows directly on the PCB as a 0.10 mm white coating instead of 0.35 mm markers at the rear mounting plane.
+- Render standalone panel previews on portrait 1000 × 1600 canvases with level, reduced side angles suited to side-by-side documentation.
+- Discover standalone previews through the component-local render directory and `render.yml` instead of root-level explicit `builds:` entries.
+- Upgrade repository tooling to `tool.scad-project` v0.9.10, enable the SCons dependency-selective backend and use layout-independent generated-design cache inputs.
+- Reduce the normal design-documentation canvas to 640 × 480, with 480 × 360 overrides for focused detail views.
 
 ## v0.1.0
 
