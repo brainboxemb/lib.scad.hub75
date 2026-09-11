@@ -12,7 +12,6 @@ paths:
   design_root: .
   build_root: bld
   render_root: openscad/p5-64x32-panel/hub75_p5_64x32_panel/render
-  export_root: openscad/p5-64x32-panel/hub75_p5_64x32_panel/diagnostic-export
 
 openscad:
   common_flags:
