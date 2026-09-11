@@ -292,21 +292,22 @@ module hub75_vrf_top_left_alignment_guide_markings(
     version = hub75_vrf_top_left_alignment_guide_version(),
     marking_height = 0.50
 ) {
-    // Keep the identifier comfortably inside the 18 x 6 mm side face. Splitting
-    // name and version over two centred rows is clearer in both the preview and
-    // an FDM print than stretching one long line almost from edge to edge.
+    // The centre of this face is interrupted by the open TL1 slot. Keep every
+    // glyph on solid material instead of bridging text across that opening.
+    // After the Y rotation, 2D X maps to -local Z, so +/-5 mm centres the two
+    // labels on the two solid wings either side of the slot.
     translate([depth-0.02, -height/2, 0])
         rotate([0, 90, 0])
             linear_extrude(height=marking_height+0.02)
                 union() {
-                    translate([0, 1.25])
+                    translate([-5.0, 0])
                         text(
                             "SQ1",
-                            size=2.0,
+                            size=2.1,
                             halign="center",
                             valign="center"
                         );
-                    translate([0, -1.25])
+                    translate([5.0, 0])
                         text(
                             version,
                             size=1.8,
