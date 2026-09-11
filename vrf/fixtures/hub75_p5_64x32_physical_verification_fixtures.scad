@@ -295,13 +295,12 @@ module hub75_vrf_top_left_alignment_guide_markings(
     translate([depth-0.02, -height/2, 0])
         rotate([0, 90, 0])
             linear_extrude(height=marking_height+0.02)
-                mirror([1, 0, 0])
-                    text(
-                        str("SQ1 ", version),
-                        size=2.4,
-                        halign="center",
-                        valign="center"
-                    );
+                text(
+                    str("SQ1 ", version),
+                    size=2.4,
+                    halign="center",
+                    valign="center"
+                );
 }
 
 module hub75_vrf_top_left_alignment_guide(panel) {
