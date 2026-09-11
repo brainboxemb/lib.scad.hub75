@@ -3,7 +3,7 @@ use <../hub75_p5_64x32_top_left_verification.scad>
 
 $fn = 96;
 $vpr = [90, 0, 90];
-$vpt = [-68, 8, 145];
+$vpt = [68, 8, 145];
 $vpd = 95;
 
 panel = hub75_p5_64x32_panel_create();
