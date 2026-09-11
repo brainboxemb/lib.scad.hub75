@@ -4,6 +4,12 @@ Functional changes to released `lib.scad.hub75` versions.
 
 ## Unreleased
 
+## v0.1.2
+
+### Changed
+
+- Move both right-pointing rear PCB orientation arrows inward using one consistent 12 mm visible clearance from the bay side rail, derived from the scaled rail width and arrow size; keep the downward markers and mechanical panel geometry unchanged.
+
 ## v0.1.1
 
 ### Added
