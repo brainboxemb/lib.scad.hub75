@@ -1,0 +1,27 @@
+name: Apply rear core rework
+
+on:
+  push:
+    branches: [fix/rear-bay-cut-and-render-config]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/rear-bay-cut-and-render-config
+          fetch-depth: 0
+      - run: |
+          python3 .github/agent-rework-rear-core.py
+          rm .github/agent-rework-rear-core.py .github/workflows/agent-rework-rear-core.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'fix: build rear frame from clean web profile'
+          git push origin HEAD:fix/rear-bay-cut-and-render-config
