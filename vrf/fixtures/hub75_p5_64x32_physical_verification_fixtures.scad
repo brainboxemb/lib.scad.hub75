@@ -146,7 +146,7 @@ module _hub75_vrf_top_left_profile_comb_2d(
     screw_from_top = hub75_vrf_top_left_hole_from_top(panel);
     reinforcement_from_top = hub75_vrf_top_left_reinforcement_from_top(panel);
 
-    blade_x0 = rear_plane + protrusion + rear_clearance;
+    blade_x0 = rear_plane + protrusion + 0.8;
     blade_x1 = blade_x0 + blade_depth;
     arm_x0 = rear_plane + 0.05;
 
@@ -202,9 +202,9 @@ module hub75_vrf_top_left_profile_comb_markings(
     z0 = thickness - 0.02;
     h = marking_height + 0.02;
 
-    // Two short lines are much more FDM-readable than one long vertical string
-    // on the narrow blade, and every glyph remains physically supported.
-    translate([blade_center_x, 25.0, z0])
+    // Keep both text rows fully on the narrow blade so the combined STL remains
+    // one connected solid while retaining large FDM-readable characters.
+    translate([blade_center_x, 22.8, z0])
         linear_extrude(height=h)
             rotate(90)
                 text(
@@ -214,7 +214,7 @@ module hub75_vrf_top_left_profile_comb_markings(
                     valign="center"
                 );
 
-    translate([blade_center_x, 31.0, z0])
+    translate([blade_center_x, 28.2, z0])
         linear_extrude(height=h)
             rotate(90)
                 text(
