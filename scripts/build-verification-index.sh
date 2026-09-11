@@ -2,40 +2,43 @@
 set -euo pipefail
 
 mkdir -p vrf/out
+
 cat > vrf/out/README.md <<'EOF'
 # HUB75 panel verification
 
-Physical verification is organised as operator procedures, not as an unexplained
-collection of STL files.
+This branch is intended to be usable directly at the workbench. Start with the
+first physical procedure below; do not treat the STL files as self-explanatory.
 
-## Start here — upper-left rear corner
+## Downloads for Stage 1
 
-The first procedure verifies one recognizable corner before moving to full-panel
-spacing checks.
+- [TL1 v0.1 profile comb STL](fixtures/hub75-p5-64x32-top-left-profile-comb.stl)
+- [TL1 fixture preview](fixtures/hub75-p5-64x32-top-left-profile-comb.png)
 
-![Upper-left verification area](plan/top-left-location.png)
+The procedure below is generated from `vrf/physical-panel-validation.md` on the
+same source commit. Image links are rewritten to this verification branch so the
+PR preview and production verification page are self-contained.
 
-### Feature map
+---
 
-![Upper-left feature map](plan/top-left-feature-map.png)
+EOF
 
-### TL1 v0.1 profile comb
+# Publish the operator procedure itself, not merely a link back to the source
+# branch. Source documentation points at prod/verification; replace that prefix
+# with relative paths so the same document works on dev/pr-*/verification too.
+sed \
+  -e '1s/^# /## /' \
+  -e 's#../../../raw/prod/verification/##g' \
+  vrf/physical-panel-validation.md \
+  >> vrf/out/README.md
 
-- [STL](fixtures/hub75-p5-64x32-top-left-profile-comb.stl)
-- [fixture preview](fixtures/hub75-p5-64x32-top-left-profile-comb.png)
-- [placed on the model](plan/top-left-comb-use.png)
-- [strict side view](plan/top-left-comb-side.png)
+cat >> vrf/out/README.md <<'EOF'
 
-TL1 is used perpendicular to the rear face. Its top rail follows the expected
-front-to-rear top profile, while the rear blade provides screw-centre,
-reinforcement-centre, mounting-plane and screw-protrusion witness references.
-The operator instructions and numerical targets live in
-`vrf/physical-panel-validation.md` on the source branch.
+---
 
-## Secondary helpers
+## Later-stage fixture downloads
 
-These remain available for later verification stages, after local corner datums
-have been understood.
+These helpers remain available, but they are intentionally secondary to the
+local corner procedure above.
 
 - [Corner datum gauge STL](fixtures/hub75-p5-64x32-corner-datum-gauge.stl) · [preview](fixtures/hub75-p5-64x32-corner-datum-gauge.png)
 - [144 mm X mounting-spacing gauge STL](fixtures/hub75-p5-64x32-mounting-spacing-x-gauge.stl) · [preview](fixtures/hub75-p5-64x32-mounting-spacing-x-gauge.png)
