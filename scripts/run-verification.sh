@@ -6,14 +6,41 @@ cd "$repo_root"
 
 mkdir -p vrf/out/fixtures vrf/out/plan
 
+# OpenSCAD may exit successfully while emitting a completely unusable model after
+# an unknown function/undef propagation. Treat those warnings as verification
+# failures; ordinary camera notices remain allowed.
+run_openscad_checked() {
+  local log
+  log="$(mktemp)"
+
+  if ! "$@" 2>"$log"; then
+    cat "$log" >&2
+    rm -f "$log"
+    return 1
+  fi
+
+  cat "$log" >&2
+
+  if grep -Eq \
+    'WARNING: (Ignoring unknown (function|module)|undefined operation|Unable to convert|.*parameter could not be converted|Object may not be a valid 2-manifold)' \
+    "$log"; then
+    echo "verification: fatal OpenSCAD warning detected" >&2
+    rm -f "$log"
+    return 1
+  fi
+
+  rm -f "$log"
+}
+
 render_stl() {
   local output="$1"
   local source="$2"
 
-  xvfb-run -a openscad \
-    --enable=object-function \
-    -o "$output" \
-    "$source"
+  run_openscad_checked \
+    xvfb-run -a openscad \
+      --enable=object-function \
+      -o "$output" \
+      "$source"
 }
 
 # Auto-fitted preview for a standalone fixture. These sources intentionally do
@@ -23,15 +50,16 @@ render_png_autofit() {
   local source="$2"
   local image_size="$3"
 
-  xvfb-run -a openscad \
-    --enable=object-function \
-    --render \
-    --projection=o \
-    --autocenter \
-    --viewall \
-    --imgsize="$image_size" \
-    -o "$output" \
-    "$source"
+  run_openscad_checked \
+    xvfb-run -a openscad \
+      --enable=object-function \
+      --render \
+      --projection=o \
+      --autocenter \
+      --viewall \
+      --imgsize="$image_size" \
+      -o "$output" \
+      "$source"
 }
 
 # Operator-plan views define $vpr/$vpt/$vpd in their .scad adapters. Do not add
@@ -42,13 +70,14 @@ render_png_camera() {
   local source="$2"
   local image_size="$3"
 
-  xvfb-run -a openscad \
-    --enable=object-function \
-    --render \
-    --projection=o \
-    --imgsize="$image_size" \
-    -o "$output" \
-    "$source"
+  run_openscad_checked \
+    xvfb-run -a openscad \
+      --enable=object-function \
+      --render \
+      --projection=o \
+      --imgsize="$image_size" \
+      -o "$output" \
+      "$source"
 }
 
 render_stl \
