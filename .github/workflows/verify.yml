@@ -1,13 +1,12 @@
 name: Verify
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - "**"
-    tags:
-      - "v*"
+      - "!release-request/**"
   pull_request:
-  workflow_dispatch:
 
 permissions:
   contents: write
@@ -18,4 +17,7 @@ jobs:
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
-    uses: brainboxemb/tool.scad-project/.github/workflows/project-verify.yml@v0.7.2
+    uses: brainboxemb/tool.scad-project/.github/workflows/project-verify.yml@360b6aa950288adfad845fffccd0ffa41becd45c
+    with:
+      artifact_name: lib-scad-hub75-verification
+      verification_path: vrf/out
