@@ -6,8 +6,8 @@ Reusable OpenSCAD mechanical reference geometry for HUB75 LED matrix hardware.
 
 <table>
   <tr>
-    <th align="center">Front</th>
-    <th align="center">Rear</th>
+    <th align="center">Front angled</th>
+    <th align="center">Rear angled</th>
   </tr>
   <tr>
     <td align="center">
