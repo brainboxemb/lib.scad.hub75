@@ -1324,11 +1324,9 @@ module _hub75_p5_64x32_panel_geometry(
 
 
     module _rear_frame_core_3d() {
-        // Extrude the already-cut 2D frame web with vertical bay walls, then
-        // clip only its outside perimeter with the tapered rear envelope.
-        // This is geometrically equivalent to subtracting the four vertical
-        // bay cutters, without the triangular Boolean remnants.
-        intersection() {
+        difference() {
+            // The outside wall tapers continuously from the rear-housing
+            // start to the mounting plane. The bay cutters remain vertical.
             _tapered_outer_blank(
                 rear_frame_start_y,
                 mounting_plane_y_value,
@@ -1340,7 +1338,7 @@ module _hub75_p5_64x32_panel_geometry(
                 rear_frame_start_y - 0.05,
                 mounting_plane_y_value + 0.05
             )
-                _rear_frame_web_2d();
+                _rear_openings_2d();
         }
     }
 
