@@ -6,7 +6,7 @@ Functional changes to released `lib.scad.hub75` versions.
 
 ### Fixed
 
-- Build the rear frame from the clean 2D web clipped by the tapered outer envelope, eliminating triangular Boolean remnants in the horizontal crossbars.
+- Join each stepped bay-end relief to its rounded bay opening with a small internal cutter overlap, preventing stale vertical walls across the horizontal-crossbar reliefs without changing the visible STEP-derived contour.
 
 ### Changed
 
