@@ -1,4 +1,4 @@
-// Temporary diagnostic STL export used to verify the bay-relief topology fix.
+// Temporary diagnostic STL export: robust relief with original vertical bay subtraction.
 use <../../hub75_p5_64x32_panel.scad>
 
 $fn = 120;
