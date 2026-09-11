@@ -83,15 +83,47 @@ non-zero outer-corner-radius parameter.
 
 That does **not** prove the real moulded panel is R0.
 
-Inspect the real rear perimeter corner closely. If it is visibly rounded:
+The yellow L in the detail image marks this exact outer corner. Do not confuse it
+with the much larger magenta bay-opening radius.
 
-- photograph it square-on and obliquely;
-- record `investigate` for CR-01;
-- estimate/measure the radius only after confirming which physical edge the
-  rounding belongs to;
-- do not silently reuse the bay-opening radius for the outside corner.
+<img src="../../../raw/prod/verification/plan/top-left-radius-reinforcement.png" alt="Bay radius, reinforcement and outer rear corner" width="78%">
 
-If a non-zero outside radius is confirmed, that is new model/API evidence.
+### Use `R2 v0.1` if the outside corner is visibly rounded
+
+A true R0 corner cannot be represented by a useful printed notch: printer nozzle
+and layer rounding would dominate the result. `R2 v0.1` therefore answers the
+next practical question instead — **if it is not visually sharp, roughly how
+large is the moulded radius?**
+
+It supplies four small concave references:
+
+```text
+R0.5     R1.0     R1.5     R2.0
+```
+
+<img src="../../../raw/prod/verification/fixtures/hub75-p5-64x32-outer-corner-radius-comparator.png" alt="R2 outer-corner radius comparator" width="78%">
+
+Procedure:
+
+1. first inspect the real rear-perimeter corner without R2;
+2. if it looks genuinely sharp at the scale of the moulding, record
+   `consistent with R0 / below useful printed-comparator resolution` and take a
+   close photograph;
+3. if it is clearly rounded, hold R2 square to the rear X/Z corner;
+4. compare R0.5, R1.0, R1.5 and R2.0 without forcing the plastic against the
+   panel;
+5. record the best match or the two adjacent values if the result falls between
+   them;
+6. photograph the best fit approximately normal to the corner.
+
+R2 is deliberately coarse. A result such as “between R1.0 and R1.5” is useful
+evidence; it is **not** a reason to enter R1.25 into the production model. If a
+non-zero radius matters to mating geometry, follow up with a finer gauge,
+profile image/scan or another repeatable method before changing the library.
+
+Printer dimensional error is especially significant at these small radii. Record
+printer/nozzle/material/profile with the observation. The X2D/AMS colour split
+is only for readability; the radius geometry is entirely in the base body.
 
 ### CR-02 — inside corner of the top rear bay
 
@@ -110,8 +142,6 @@ R = 4.991 mm approximately
 The highlighted view shows the relevant inside corner in magenta. The blue circle
 is the nearby reinforcement feature; the yellow L is the current sharp rear
 perimeter corner.
-
-<img src="../../../raw/prod/verification/plan/top-left-radius-reinforcement.png" alt="Bay radius, reinforcement and outer rear corner" width="78%">
 
 ---
 
@@ -213,6 +243,11 @@ If the real part instead has a complete circular boss bulging through the outsid
 wall, the production model is conceptually wrong even if the diameters themselves
 are correct.
 
+For RF-01/RF-02, use the dimension sheet and a direct caliper/visual measurement
+first. No extra printed gauge is introduced yet: a custom fixture would add its
+own printer tolerance without answering this local relationship better than the
+1:1 drawing plus direct measurement.
+
 ---
 
 ## Dimension sheet — what it is for
@@ -226,9 +261,10 @@ measurement record. Its left-side rear view contains:
 - reinforcement OD/recess/blind-hole circles;
 - rear-perimeter inset and the current R0 outer corner;
 - the R~4.99 bay-opening corner;
-- the bay edge references.
+- actual dimension lines for TL-01, TL-02 and TL-06;
+- local callouts for tube, reinforcement, radius and reinforcement/wall relation.
 
-The right-side legend names the actual TL checks and nominal values. A small side
+The right-side table names the TL/CR/RF checks and nominal values. A small side
 profile underneath shows the front-to-rear taper start, 14.5 mm rear mounting
 plane and rear inset.
 
@@ -250,7 +286,7 @@ phone photograph does not overlay perfectly.
 | ID | Observation | Result |
 | --- | --- | --- |
 | SQ-01 | TL1 can be held square/repeatably with SQ1 | pending |
-| CR-01 | outside rear corner is consistent with current R0 | pending |
+| CR-01 | outside rear corner: visually R0 / R0.5 / R1.0 / R1.5 / R2.0 / between / unclear | pending |
 | CR-02 | best bay-corner probe: R4.5 / R5.0 / R5.5 / unclear | pending |
 | RF-01 | outside wall remains continuous through reinforcement | pending |
 | RF-02 | reinforcement projects into bay about 2.35 mm | pending |
