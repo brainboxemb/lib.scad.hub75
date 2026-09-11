@@ -47,7 +47,7 @@ The library stores the panel in portrait orientation.
 
 <!-- scad-render
 view: front
-vpr: [68, 0, 32]
+vpr: [85, 0, 40]
 -->
 
 The front is the flat LED side.
@@ -58,7 +58,7 @@ The front is the flat LED side.
 
 <!-- scad-render
 view: rear
-vpr: [68, 0, 212]
+vpr: [85, 0, 220]
 -->
 
 Keep this overview in mind while following the individual construction steps
