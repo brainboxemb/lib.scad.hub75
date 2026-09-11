@@ -129,15 +129,25 @@ R0.5     R1.0     R1.5     R2.0
 
 <img src="../../../raw/prod/verification/fixtures/hub75-p5-64x32-outer-corner-radius-comparator.png" alt="R2 outer-corner radius comparator" width="78%">
 
+The placement view below uses the **R1.0 notch only as an orientation example**.
+It does not imply that R1.0 is the correct physical radius. Keep the comparator
+parallel to the rear X/Z face and bring the selected concave notch to the outside
+rear-perimeter corner.
+
+<img src="../../../raw/prod/verification/plan/top-left-r2-use.png" alt="R2 comparator orientation at the outside rear-perimeter corner" width="82%">
+
 Procedure:
 
 1. first inspect the real rear-perimeter corner without R2;
 2. if it looks genuinely sharp at the scale of the moulding, record
    `consistent with R0 / below useful printed-comparator resolution` and take a
    close photograph;
-3. if it is clearly rounded, use R2 only as a rough range indicator;
-4. record the closest printed reference or two adjacent values;
-5. confirm any model-relevant result with a metal radius gauge or another
+3. if it is clearly rounded, hold R2 parallel to the rear face and bring one
+   notch gently to the corner without twisting or forcing the helper;
+4. use R2 only as a rough range indicator and compare the nearest adjacent
+   references when the result is ambiguous;
+5. record the closest printed reference or two adjacent values;
+6. confirm any model-relevant result with a metal radius gauge or another
    repeatable method before changing the library.
 
 The X2D/AMS colour split is only for readability; it adds no measurement

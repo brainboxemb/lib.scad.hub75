@@ -5,6 +5,25 @@
 // concave notches so a real moulded radius can be bracketed before changing CAD.
 
 function hub75_vrf_outer_corner_radius_comparator_version() = "v0.1";
+function hub75_vrf_outer_corner_radius_comparator_radii() = [0.5, 1.0, 1.5, 2.0];
+function hub75_vrf_outer_corner_radius_comparator_probe_size() = 10.0;
+function hub75_vrf_outer_corner_radius_comparator_spacing() = 14.0;
+function hub75_vrf_outer_corner_radius_comparator_handle_height() = 12.0;
+function hub75_vrf_outer_corner_radius_comparator_total_width() =
+    let(
+        radii = hub75_vrf_outer_corner_radius_comparator_radii(),
+        spacing = hub75_vrf_outer_corner_radius_comparator_spacing(),
+        probe_size = hub75_vrf_outer_corner_radius_comparator_probe_size()
+    )
+    (len(radii)-1)*spacing + probe_size;
+function hub75_vrf_outer_corner_radius_probe_notch_corner(index) =
+    let(
+        total_w = hub75_vrf_outer_corner_radius_comparator_total_width(),
+        spacing = hub75_vrf_outer_corner_radius_comparator_spacing(),
+        probe_size = hub75_vrf_outer_corner_radius_comparator_probe_size(),
+        x0 = -total_w/2
+    )
+    [x0 + index*spacing + probe_size, probe_size];
 
 module _hub75_vrf_outer_radius_probe_2d(radius, size=10.0) {
     // Concave quarter-circle at the exposed upper-right corner. The adjacent
@@ -18,11 +37,11 @@ module _hub75_vrf_outer_radius_probe_2d(radius, size=10.0) {
 
 module hub75_vrf_outer_corner_radius_comparator_base(
     thickness = 2.0,
-    probe_size = 10.0,
-    spacing = 14.0,
-    handle_height = 12.0
+    probe_size = hub75_vrf_outer_corner_radius_comparator_probe_size(),
+    spacing = hub75_vrf_outer_corner_radius_comparator_spacing(),
+    handle_height = hub75_vrf_outer_corner_radius_comparator_handle_height()
 ) {
-    radii = [0.5, 1.0, 1.5, 2.0];
+    radii = hub75_vrf_outer_corner_radius_comparator_radii();
     total_w = (len(radii)-1)*spacing + probe_size;
     x0 = -total_w/2;
 
@@ -42,13 +61,13 @@ module hub75_vrf_outer_corner_radius_comparator_base(
 
 module hub75_vrf_outer_corner_radius_comparator_markings(
     thickness = 2.0,
-    probe_size = 10.0,
-    spacing = 14.0,
-    handle_height = 12.0,
+    probe_size = hub75_vrf_outer_corner_radius_comparator_probe_size(),
+    spacing = hub75_vrf_outer_corner_radius_comparator_spacing(),
+    handle_height = hub75_vrf_outer_corner_radius_comparator_handle_height(),
     version = hub75_vrf_outer_corner_radius_comparator_version(),
     marking_height = 0.50
 ) {
-    radii = [0.5, 1.0, 1.5, 2.0];
+    radii = hub75_vrf_outer_corner_radius_comparator_radii();
     total_w = (len(radii)-1)*spacing + probe_size;
     x0 = -total_w/2;
     z0 = thickness - 0.02;

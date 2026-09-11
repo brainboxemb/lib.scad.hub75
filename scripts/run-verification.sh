@@ -172,6 +172,10 @@ render_png_camera \
   vrf/out/plan/top-left-radius-reinforcement.png \
   vrf/top-left/render/top-left-radius-reinforcement.scad \
   820,720
+render_png_camera \
+  vrf/out/plan/top-left-r2-use.png \
+  vrf/top-left/render/top-left-r2-use.scad \
+  900,720
 
 render_dxf \
   vrf/out/drawings/hub75-p5-64x32-top-left-dimensions.dxf \
