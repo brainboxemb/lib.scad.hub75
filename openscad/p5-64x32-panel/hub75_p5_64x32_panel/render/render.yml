@@ -1,0 +1,2 @@
+defaults:
+  image_size: [1000, 1600]

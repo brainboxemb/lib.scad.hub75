@@ -1090,11 +1090,21 @@ module _hub75_p5_64x32_panel_geometry(
 
 
     module _bay_end_relief_2d(z_edge, direction=1) {
-        union() {
-            _bay_end_transition_relief_2d(z_edge, direction, "left");
-            _bay_end_narrow_relief_2d(z_edge, direction);
-            _bay_end_transition_relief_2d(z_edge, direction, "right");
-        }
+        d = rear_frame_end_step_depth;
+        half_narrow = rear_frame_end_narrow_length/2;
+        cx = width/2;
+        join_overlap = 0.05;
+
+        // Build the production cutter as one polygon. The long edge overlaps
+        // 0.05 mm into the already-removed rounded bay opening so the 3D
+        // subtraction never depends on face-only unions between cutter parts.
+        if(d > 0)
+            polygon([
+                [cx-half_narrow-d, z_edge - direction*join_overlap],
+                [cx-half_narrow,   z_edge + direction*d],
+                [cx+half_narrow,   z_edge + direction*d],
+                [cx+half_narrow+d, z_edge - direction*join_overlap]
+            ]);
     }
 
 

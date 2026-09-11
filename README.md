@@ -46,8 +46,9 @@ openscad/p5-64x32-panel/
     ├── design/
     │   └── design.md
     └── render/
-        ├── front-angled.scad
-        └── rear-angled.scad
+        ├── render.yml
+        ├── hub75-p5-64x32-panel-front-angled.scad
+        └── hub75-p5-64x32-panel-rear-angled.scad
 ```
 
 ## Public API

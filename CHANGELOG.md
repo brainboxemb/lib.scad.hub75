@@ -4,6 +4,10 @@ Functional changes to released `lib.scad.hub75` versions.
 
 ## Unreleased
 
+### Fixed
+
+- Make the rear bay-end opening cutters topologically robust so the 3D subtraction no longer leaves triangular remnants in the horizontal crossbars.
+
 ### Changed
 
 - Place the rear PCB orientation arrows directly on the PCB as a 0.10 mm white coating instead of 0.35 mm markers at the rear mounting plane.

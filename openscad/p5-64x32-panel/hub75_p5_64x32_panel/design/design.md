@@ -355,21 +355,26 @@ size: [760, 560]
 
 ## 8. Combine the three end-relief pieces
 
-The two triangular transitions and the central rectangle are united into one
-end-relief cutter:
+The two triangular transitions and the central rectangle describe one
+continuous trapezoidal end-relief cutter. For the production Boolean that same
+outline is emitted as one polygon, with a 0.05 mm overlap into the already
+removed rounded opening:
 
 ```scad
-module _bay_end_relief_2d(z_edge, direction=1) {
-    union() {
-        _bay_end_transition_relief_2d(z_edge, direction, "left");
-        _bay_end_narrow_relief_2d(z_edge, direction);
-        _bay_end_transition_relief_2d(z_edge, direction, "right");
-    }
-}
+join_overlap = 0.05;
+
+polygon([
+    [cx-half_narrow-d, z_edge - direction*join_overlap],
+    [cx-half_narrow,   z_edge + direction*d],
+    [cx+half_narrow,   z_edge + direction*d],
+    [cx+half_narrow+d, z_edge - direction*join_overlap]
+]);
 ```
 
-The same operation is applied at the bottom and top edge of the bay, with the
-direction reversed.
+The overlap lies wholly inside the main bay opening, so it does not change the
+intended rail dimensions. It only avoids a face-only union when the 2D cutter is
+extruded and subtracted. The same operation is applied at the bottom and top
+edge of the bay, with the direction reversed.
 
 **View:** `bay-bottom-relief`
 
@@ -461,6 +466,10 @@ vpr: [90, 0, 0]
 
 At this point the main rear frame exists: two side rails, top/bottom rails and
 three crossbars.
+
+The generated image is also a geometry check: each crossbar must show the same
+clean stepped relief on both adjacent bay edges. Triangular remnants or a local
+slit on only one side mean the opening subtraction is not valid.
 
 ---
 
