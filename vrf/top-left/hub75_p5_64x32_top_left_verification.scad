@@ -158,35 +158,45 @@ module hub75_vrf_top_left_radius_reinforcement_map(panel) {
 // Place the print-flat profile comb in its real use orientation.
 // Local comb axes: X=front->rear, Y=down from top, Z=print thickness.
 // Global panel axes: X=width, Y=front->rear, Z=height.
+//
+// This mapping must be a proper rotation, not a reflection. With local X mapped
+// to +global Y and local Y mapped to -global Z, local Z necessarily maps to
+// -global X. The previous +global-X mapping mirrored the printable fixture in
+// the explanatory assembly, which made directional markings appear backwards.
 module hub75_vrf_top_left_profile_comb_on_panel(panel) {
     top = hub75_p5_64x32_panel_height(panel)/2;
     screw_x = hub75_vrf_top_left_x(panel);
     tube_d = hub75_p5_64x32_panel_mounting_tube_outer_diameter(panel);
-    comb_x = screw_x - tube_d/2 - 2.4;
+    comb_thickness = 2.0;
+    tube_clearance = 0.4;
+    comb_x = screw_x - tube_d/2 - tube_clearance;
 
     multmatrix([
-        [0,  0, 1, comb_x],
-        [1,  0, 0, 0],
-        [0, -1, 0, top],
-        [0,  0, 0, 1]
+        [0,  0, -1, comb_x],
+        [1,  0,  0, 0],
+        [0, -1,  0, top],
+        [0,  0,  0, 1]
     ])
-        hub75_vrf_top_left_profile_comb(panel);
+        hub75_vrf_top_left_profile_comb(panel, thickness=comb_thickness);
 }
 
 module hub75_vrf_top_left_alignment_guide_on_panel(panel) {
     top = hub75_p5_64x32_panel_height(panel)/2;
     screw_x = hub75_vrf_top_left_x(panel);
     tube_d = hub75_p5_64x32_panel_mounting_tube_outer_diameter(panel);
-    comb_x = screw_x - tube_d/2 - 2.4;
+    comb_thickness = 2.0;
+    tube_clearance = 0.4;
+    comb_x = screw_x - tube_d/2 - tube_clearance;
 
     multmatrix([
-        [0,  0, 1, comb_x],
-        [1,  0, 0, 0],
-        [0, -1, 0, top],
-        [0,  0, 0, 1]
+        [0,  0, -1, comb_x],
+        [1,  0,  0, 0],
+        [0, -1,  0, top],
+        [0,  0,  0, 1]
     ])
-        // SQ1's slot is centred on local Z=0; TL1 occupies Z=0..2 mm.
-        translate([0, 0, 1])
+        // SQ1's slot is centred on local Z=0; TL1 occupies local Z=0..2 mm.
+        // Shift SQ1 by half the TL1 thickness so its slot is centred on TL1.
+        translate([0, 0, comb_thickness/2])
             hub75_vrf_top_left_alignment_guide(panel);
 }
 

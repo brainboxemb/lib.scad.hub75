@@ -22,7 +22,7 @@ For the first verification session you need:
 
 - one physical P5 64 × 32 HUB75 panel;
 - one printed **TL1 v0.2** profile comb;
-- one printed **SQ1 v0.2** alignment guide so TL1 can be held repeatably square;
+- one printed **SQ1 v0.1** alignment guide so TL1 can be held repeatably square;
 - a digital caliper;
 - a usable depth/step measurement method for the 0.5 mm tube protrusion and the
   reinforcement recess;
@@ -162,7 +162,7 @@ warped, do not use it for the taper check.
 <img src="../../../raw/prod/verification/plan/top-left-comb-square-use.png" alt="TL1 comb and SQ1 alignment guide positioned on upper-left model corner" width="82%">
 
 The comb is used **perpendicular to the rear face**, not laid flat over the rear
-of the panel. `SQ1 v0.2` is deliberately a separate orientation aid so printer
+of the panel. `SQ1 v0.1` is deliberately a separate orientation aid so printer
 fit in SQ1 cannot silently become part of the dimensional measurement.
 
 1. Put the panel rear side toward you.
@@ -454,7 +454,7 @@ Generated verification renders/STLs remain publication output below
 Do not call the whole P5 64 × 32 model physically verified after one corner.
 Stage 1 is complete when:
 
-1. the operator can identify and place `TL1 v0.2` with `SQ1 v0.2` without reading
+1. the operator can identify and place `TL1 v0.2` with `SQ1 v0.1` without reading
    source code;
 2. every TL-01…TL-15 item that can reasonably be checked has a recorded result;
 3. questionable observations are photographed and marked `investigate`;
