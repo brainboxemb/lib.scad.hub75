@@ -23,7 +23,6 @@ openscad:
 
 externals: []
 
-
 verification:
   commands:
     - [bash, scripts/run-verification.sh]
