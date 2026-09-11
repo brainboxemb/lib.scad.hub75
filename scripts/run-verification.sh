@@ -151,7 +151,7 @@ render_png_autofit \
 render_png_camera \
   vrf/out/plan/top-left-location.png \
   vrf/top-left/render/top-left-location.scad \
-  520,900
+  720,620
 render_png_camera \
   vrf/out/plan/top-left-feature-map.png \
   vrf/top-left/render/top-left-feature-map.scad \
