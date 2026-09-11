@@ -55,7 +55,6 @@ module _hub75_vrf_spacing_bar(
     }
 }
 
-// A rear-mounted corner datum gauge retained for later comparison work.
 module hub75_vrf_corner_datum_gauge(
     panel,
     plate_size = 32,
@@ -132,10 +131,6 @@ module hub75_vrf_mounting_spacing_z_gauge(
     );
 }
 
-// TL1 profile-comb local coordinates:
-//   X = real panel front -> rear depth
-//   Y = distance downward from the physical top edge
-//   Z = printed plate thickness / across-panel direction in use
 module _hub75_vrf_top_left_profile_comb_2d(
     panel,
     rail_height = 4.0,
@@ -192,9 +187,6 @@ module hub75_vrf_top_left_profile_comb_base(panel, thickness = 2.0) {
         _hub75_vrf_top_left_profile_comb_2d(panel);
 }
 
-// Raised markings are deliberately separate geometry. Exporting this module on
-// its own produces an AMS-colour part that shares the exact origin with the
-// base STL. Import base + markings as one multipart object in Bambu Studio.
 module hub75_vrf_top_left_profile_comb_markings(
     panel,
     thickness = 2.0,
@@ -210,12 +202,24 @@ module hub75_vrf_top_left_profile_comb_markings(
     z0 = thickness - 0.02;
     h = marking_height + 0.02;
 
-    translate([blade_center_x, 27.0, z0])
+    // Two short lines are much more FDM-readable than one long vertical string
+    // on the narrow blade, and every glyph remains physically supported.
+    translate([blade_center_x, 25.0, z0])
         linear_extrude(height=h)
             rotate(90)
                 text(
-                    str("TL1 ", version),
-                    size=3.0,
+                    "TL1",
+                    size=3.5,
+                    halign="center",
+                    valign="center"
+                );
+
+    translate([blade_center_x, 31.0, z0])
+        linear_extrude(height=h)
+            rotate(90)
+                text(
+                    version,
+                    size=2.5,
                     halign="center",
                     valign="center"
                 );
@@ -233,8 +237,6 @@ module hub75_vrf_top_left_profile_comb_markings(
                     valign="center"
                 );
 
-    // Raised witness bar for the expected tube end, 0.5 mm behind the nominal
-    // rear mounting plane.
     translate([
         rear_plane + protrusion - 0.18,
         screw_from_top - 0.8,
@@ -260,17 +262,16 @@ module hub75_vrf_top_left_profile_comb(
     }
 }
 
-// SQ1 is an orientation helper rather than a dimensional gauge. It sits on the
-// straight front-most 1.8 mm of the physical top edge and its slot holds the
-// 2 mm TL1 plate normal to that edge. A generous slot clearance prevents SQ1
-// printer fit from becoming a false panel measurement.
+// SQ1 is a U-shaped orientation shoe. The slot is open at the panel side so it
+// can slide over TL1, while a 1.6 mm bridge keeps both feet one printable part.
 module hub75_vrf_top_left_alignment_guide_base(
     panel,
     comb_thickness = 2.0,
     slot_clearance = 0.30,
     width = 18.0,
     depth = 1.80,
-    height = 5.0
+    height = 6.0,
+    slot_depth = 4.4
 ) {
     slot = comb_thickness + slot_clearance;
 
@@ -278,8 +279,8 @@ module hub75_vrf_top_left_alignment_guide_base(
         translate([0, -height, -width/2])
             cube([depth, height, width]);
 
-        translate([-0.1, -height-0.1, -slot/2])
-            cube([depth+0.2, height+0.2, slot]);
+        translate([-0.1, -slot_depth, -slot/2])
+            cube([depth+0.2, slot_depth+0.1, slot]);
     }
 }
 
@@ -287,17 +288,16 @@ module hub75_vrf_top_left_alignment_guide_markings(
     panel,
     width = 18.0,
     depth = 1.80,
-    height = 5.0,
+    height = 6.0,
     version = hub75_vrf_top_left_alignment_guide_version(),
     marking_height = 0.50
 ) {
-    // Mark the broad outside face; the text never touches the panel or TL1 slot.
     translate([depth-0.02, -height/2, 0])
         rotate([0, 90, 0])
             linear_extrude(height=marking_height+0.02)
                 text(
                     str("SQ1 ", version),
-                    size=2.8,
+                    size=2.4,
                     halign="center",
                     valign="center"
                 );
@@ -310,10 +310,6 @@ module hub75_vrf_top_left_alignment_guide(panel) {
     }
 }
 
-// R1 compares the concave bay-opening corner against three nearby convex probe
-// radii. The centre probe comes from the public API (~R4.99 mm); its neighbours
-// intentionally bracket it by ±0.5 mm so a visual fit can distinguish the model
-// value from a clearly larger/smaller radius.
 module _hub75_vrf_radius_probe_2d(size, radius) {
     rr = min(radius, size/2 - 0.1);
     offset(r=rr)
@@ -325,7 +321,7 @@ module hub75_vrf_corner_radius_comparator_base(
     thickness = 2.0,
     probe_size = 15.0,
     spacing = 20.0,
-    handle_height = 8.0
+    handle_height = 12.0
 ) {
     target = hub75_p5_64x32_panel_rear_opening_corner_radius(panel);
     radii = [max(0.1, target-0.5), target, target+0.5];
@@ -347,7 +343,7 @@ module hub75_vrf_corner_radius_comparator_markings(
     thickness = 2.0,
     probe_size = 15.0,
     spacing = 20.0,
-    handle_height = 8.0,
+    handle_height = 12.0,
     version = hub75_vrf_corner_radius_comparator_version(),
     marking_height = 0.50
 ) {
@@ -356,7 +352,7 @@ module hub75_vrf_corner_radius_comparator_markings(
     labels = ["R4.5", "R5.0", "R5.5"];
 
     for(i=[0:2])
-        translate([(i-1)*spacing, -handle_height/2, z0])
+        translate([(i-1)*spacing, -3.2, z0])
             linear_extrude(height=h)
                 text(
                     labels[i],
@@ -365,11 +361,11 @@ module hub75_vrf_corner_radius_comparator_markings(
                     valign="center"
                 );
 
-    translate([0, probe_size+1.8, z0])
+    translate([0, -9.0, z0])
         linear_extrude(height=h)
             text(
                 str("R1 ", version),
-                size=2.8,
+                size=2.7,
                 halign="center",
                 valign="center"
             );
