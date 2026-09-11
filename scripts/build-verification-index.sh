@@ -53,6 +53,9 @@ EOF
 
 publish_doc() {
   local source="$1"
+  # SQ1 v0.2 is a marking-only revision of the same fit geometry. Keep the
+  # workbench publication on the current printable identifier while the draft
+  # source procedure is being iterated in this PR.
   sed -E \
     -e 's/^(#{1,5}) /\1# /' \
     -e 's#../../../raw/prod/verification/##g' \
