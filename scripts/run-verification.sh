@@ -102,7 +102,7 @@ render_png_autofit \
   vrf/fixtures/export/top-left-profile-comb.scad \
   900,500
 
-# SQ1 v0.1 square/orientation guide.
+# SQ1 v0.2 square/orientation guide.
 render_stl \
   vrf/out/fixtures/hub75-p5-64x32-top-left-alignment-guide.stl \
   vrf/fixtures/export/top-left-alignment-guide.scad
@@ -114,7 +114,7 @@ render_stl \
   vrf/fixtures/export/top-left-alignment-guide-markings.scad
 render_png_autofit \
   vrf/out/fixtures/hub75-p5-64x32-top-left-alignment-guide.png \
-  vrf/fixtures/export/top-left-alignment-guide.scad \
+  vrf/fixtures/render/top-left-alignment-guide-preview.scad \
   900,500
 
 # R1 v0.1: convex probes for the concave ~R5 bay-opening corner.
@@ -132,8 +132,7 @@ render_png_autofit \
   vrf/fixtures/export/corner-radius-comparator.scad \
   1100,520
 
-# R2 v0.1: concave notches for checking whether the current R0 outer rear
-# perimeter is actually a small moulded radius on the physical panel.
+# R2 v0.3: concave notches for checking the real external rear-corner radius.
 render_stl \
   vrf/out/fixtures/hub75-p5-64x32-outer-corner-radius-comparator.stl \
   vrf/fixtures/export/outer-corner-radius-comparator.scad
