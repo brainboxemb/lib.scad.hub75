@@ -2,6 +2,29 @@
 
 Reusable OpenSCAD mechanical reference geometry for HUB75 LED matrix hardware.
 
+## Preview
+
+<table>
+  <tr>
+    <th align="center">Front angled</th>
+    <th align="center">Rear angled</th>
+  </tr>
+  <tr>
+    <td align="center">
+      <a href="../../blob/prod/build/design/project/openscad/p5-64x32-panel/design/img/01-front.png">
+        <img src="../../raw/prod/build/design/project/openscad/p5-64x32-panel/design/img/01-front.png" alt="HUB75 P5 64 x 32 panel front angled view" width="100%">
+      </a>
+    </td>
+    <td align="center">
+      <a href="../../blob/prod/build/design/project/openscad/p5-64x32-panel/design/img/02-rear.png">
+        <img src="../../raw/prod/build/design/project/openscad/p5-64x32-panel/design/img/02-rear.png" alt="HUB75 P5 64 x 32 panel rear angled view" width="100%">
+      </a>
+    </td>
+  </tr>
+</table>
+
+These angled images are generated from the current `prod/build` branch.
+
 ## Quick links
 
 - [HUB75 panel design source](openscad/p5-64x32-panel/design/design.md)
