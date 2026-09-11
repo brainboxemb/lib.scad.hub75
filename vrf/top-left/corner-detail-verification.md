@@ -114,12 +114,18 @@ are moulded radii rather than printer-fit features.
 Record the actual gauge size that fits best. If two adjacent leaves are equally
 plausible, record a range rather than inventing an interpolated radius.
 
-### `R2 v0.1` — coarse printed helper for the outside corner
+### `R2 v0.2` — coarse printed helper for the outside corner
+
+`R2 v0.2` replaces the draft `R2 v0.1`. **Do not print or use v0.1.** Its notch
+was generated around the theoretical sharp corner itself, which is not the
+geometry of a true external-radius gauge. In v0.2 each concave reference has two
+straight tangent legs and an arc whose centre is shifted one radius inward from
+both tangent lines, matching a convex 90-degree corner.
 
 A true R0 corner cannot be represented by a useful printed notch: printer nozzle
-and layer rounding would dominate the result. `R2 v0.1` therefore answers only
-the coarse question **if it is not visually sharp, roughly how large is the
-moulded radius?**
+and layer rounding would dominate the result. R2 therefore answers only the
+coarse question **if it is not visually sharp, roughly how large is the moulded
+radius?**
 
 It supplies four small concave references:
 
@@ -127,14 +133,15 @@ It supplies four small concave references:
 R0.5     R1.0     R1.5     R2.0
 ```
 
-<img src="../../../raw/prod/verification/fixtures/hub75-p5-64x32-outer-corner-radius-comparator.png" alt="R2 outer-corner radius comparator" width="78%">
+<img src="../../../raw/prod/verification/fixtures/hub75-p5-64x32-outer-corner-radius-comparator.png" alt="R2 v0.2 external-corner radius comparator" width="78%">
 
 The placement view below uses the **R1.0 notch only as an orientation example**.
 It does not imply that R1.0 is the correct physical radius. Keep the comparator
 parallel to the rear X/Z face and bring the selected concave notch to the outside
-rear-perimeter corner.
+rear-perimeter corner. The two straight inner legs are the tangent references:
+one follows the top edge direction and one follows the outside side edge.
 
-<img src="../../../raw/prod/verification/plan/top-left-r2-use.png" alt="R2 comparator orientation at the outside rear-perimeter corner" width="82%">
+<img src="../../../raw/prod/verification/plan/top-left-r2-use.png" alt="R2 v0.2 comparator orientation at the outside rear-perimeter corner" width="82%">
 
 Procedure:
 
@@ -143,11 +150,13 @@ Procedure:
    `consistent with R0 / below useful printed-comparator resolution` and take a
    close photograph;
 3. if it is clearly rounded, hold R2 parallel to the rear face and bring one
-   notch gently to the corner without twisting or forcing the helper;
-4. use R2 only as a rough range indicator and compare the nearest adjacent
+   notch gently to the corner;
+4. seat both straight tangent legs against the adjacent edge directions without
+   twisting or forcing the helper;
+5. use R2 only as a rough range indicator and compare the nearest adjacent
    references when the result is ambiguous;
-5. record the closest printed reference or two adjacent values;
-6. confirm any model-relevant result with a metal radius gauge or another
+6. record the closest printed reference or two adjacent values;
+7. confirm any model-relevant result with a metal radius gauge or another
    repeatable method before changing the library.
 
 The X2D/AMS colour split is only for readability; it adds no measurement

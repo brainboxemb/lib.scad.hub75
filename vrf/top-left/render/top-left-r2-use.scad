@@ -4,8 +4,8 @@ use <../../fixtures/hub75_p5_64x32_outer_corner_radius_comparator.scad>
 
 $fn = 96;
 $vpr = [88, 0, 205];
-$vpt = [68, 16, 149];
-$vpd = 145;
+$vpt = [69, 16, 150];
+$vpd = 150;
 
 panel = hub75_p5_64x32_panel_create();
 
@@ -17,17 +17,21 @@ rear_y = hub75_p5_64x32_panel_depth(panel) + 0.7;
 corner_x = width/2 - inset_x;
 corner_z = height/2 - inset_z;
 
-// Use the R1.0 notch only to demonstrate orientation. The render does not imply
+// Use the R1.0 probe only to demonstrate orientation. The render does not imply
 // that R1.0 is the physically correct panel radius.
 probe_index = 1;
-notch = hub75_vrf_outer_corner_radius_probe_notch_corner(probe_index);
+tangent = hub75_vrf_outer_corner_radius_probe_tangent(probe_index);
 
 module place_r2_at_outer_corner() {
+    // Local R2 X/Y is the rear X/Z plane. The chosen probe's theoretical sharp
+    // tangent intersection is aligned with the production model's current R0
+    // corner. Positive local X/Z then places the L-shaped gauge outside the
+    // panel while its two inner legs lie on the adjacent tangent directions.
     multmatrix([
-        [-1,  0,  0, corner_x + notch[0]],
-        [ 0,  0,  1, rear_y],
-        [ 0, -1,  0, corner_z + notch[1]],
-        [ 0,  0,  0, 1]
+        [1, 0, 0, corner_x - tangent[0]],
+        [0, 0, 1, rear_y],
+        [0, 1, 0, corner_z],
+        [0, 0, 0, 1]
     ])
         children();
 }
