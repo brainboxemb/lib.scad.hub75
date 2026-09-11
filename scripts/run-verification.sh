@@ -117,7 +117,7 @@ render_png_autofit \
   vrf/fixtures/export/top-left-alignment-guide.scad \
   900,500
 
-# R1 v0.1 radius comparator.
+# R1 v0.1: convex probes for the concave ~R5 bay-opening corner.
 render_stl \
   vrf/out/fixtures/hub75-p5-64x32-corner-radius-comparator.stl \
   vrf/fixtures/export/corner-radius-comparator.scad
@@ -131,6 +131,22 @@ render_png_autofit \
   vrf/out/fixtures/hub75-p5-64x32-corner-radius-comparator.png \
   vrf/fixtures/export/corner-radius-comparator.scad \
   1100,520
+
+# R2 v0.1: concave notches for checking whether the current R0 outer rear
+# perimeter is actually a small moulded radius on the physical panel.
+render_stl \
+  vrf/out/fixtures/hub75-p5-64x32-outer-corner-radius-comparator.stl \
+  vrf/fixtures/export/outer-corner-radius-comparator.scad
+render_stl \
+  vrf/out/fixtures/hub75-p5-64x32-outer-corner-radius-comparator-base.stl \
+  vrf/fixtures/export/outer-corner-radius-comparator-base.scad
+render_stl \
+  vrf/out/fixtures/hub75-p5-64x32-outer-corner-radius-comparator-markings.stl \
+  vrf/fixtures/export/outer-corner-radius-comparator-markings.scad
+render_png_autofit \
+  vrf/out/fixtures/hub75-p5-64x32-outer-corner-radius-comparator.png \
+  vrf/fixtures/export/outer-corner-radius-comparator.scad \
+  1100,480
 
 render_png_camera \
   vrf/out/plan/top-left-location.png \
