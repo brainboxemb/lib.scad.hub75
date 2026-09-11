@@ -16,6 +16,24 @@ The first rule is deliberately simple:
 > physical corner, understand every feature there, and only then repeat or extend
 > the method.
 
+## Before you start
+
+For the first verification session you need:
+
+- one physical P5 64 × 32 HUB75 panel;
+- one printed **TL1 v0.1** profile comb;
+- a digital caliper;
+- a usable depth/step measurement method for the 0.5 mm tube protrusion and the
+  reinforcement recess;
+- preferably suitable small pin/plug gauges for the 3.0 mm and 2.5 mm holes;
+- a phone/camera for side/profile evidence when something does not agree;
+- a sample identifier, initially for example `P5-64X32-001`.
+
+Do **not** change the CAD model while taking the first readings. Record a
+mismatch as `investigate` first. Also do not start with the long 144/152 mm
+spacing gauges; Stage 1 deliberately proves one understandable physical corner
+before moving across the whole panel.
+
 ---
 
 # Stage 1 — upper-left corner, viewed from the rear
@@ -93,8 +111,8 @@ numbers.
 
 # The first printed helper: `TL1 v0.1`
 
-The first helper is intentionally small: approximately 2 mm thick and only large
-enough to sit on the upper edge next to the upper-left mounting column.
+The first helper is intentionally small. Its nominal envelope is about
+**20.8 × 35 × 2.0 mm** and it is used next to the upper-left mounting column.
 
 <img src="../../../raw/prod/verification/fixtures/hub75-p5-64x32-top-left-profile-comb.png" alt="TL1 v0.1 top-left profile comb" width="72%">
 
@@ -102,15 +120,18 @@ The helper is marked **`TL1 v0.1`** on the part itself. Always record that
 identifier/version with the measurement results. If the fixture geometry changes,
 its version must change too.
 
-The comb is **not** a precision substitute for a caliper. Its job is to make the
-spatial relationships easy to inspect:
+The comb is **not** a precision substitute for a caliper and it does not fit over
+the mounting features. It stands beside them. Its job is to make the spatial
+relationships easy to inspect:
 
 - its long contact edge follows the expected top outer profile/taper;
 - its rear blade hangs behind the panel;
-- the upper witness hole/arm marks the expected screw centre height;
-- the lower witness hole/arm marks the reinforcement centre height;
+- the upper witness hole/arm, engraved **S**, marks the expected screw centre
+  height;
+- the lower witness hole/arm, engraved **R**, marks the reinforcement centre
+  height;
 - the front edge of the witness arm represents the rear mounting plane;
-- the narrow slot in the upper arm marks the expected 0.5 mm screw-tube tip.
+- the engraved line on the upper arm marks the expected 0.5 mm screw-tube tip.
 
 The round witness holes are centre indicators only. Do **not** use their printed
 diameter to accept or reject the physical screw or reinforcement diameter.
@@ -256,9 +277,9 @@ For the hole, use the best available method: suitable pin/plug gauges are better
 than trying to infer a small bore accurately from normal caliper jaws.
 
 For rear protrusion, use the comb as a visual reference first. The front edge of
-the upper witness arm corresponds to the 14.5 mm rear mounting plane; the narrow
-slot marks the modelled tube end 0.5 mm farther rearward. Confirm numerically with
-a depth/step method if the visual result is questionable.
+the upper witness arm corresponds to the 14.5 mm rear mounting plane; the
+engraved line marks the modelled tube end 0.5 mm farther rearward. Confirm
+numerically with a depth/step method if the visual result is questionable.
 
 ---
 
