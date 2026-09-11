@@ -23,15 +23,15 @@ probe_index = 1;
 tangent = hub75_vrf_outer_corner_radius_probe_tangent(probe_index);
 
 module place_r2_at_outer_corner() {
-    // Local R2 X/Y is the rear X/Z plane. The chosen probe's theoretical sharp
-    // tangent intersection is aligned with the production model's current R0
-    // corner. Positive local X/Z then places the L-shaped gauge outside the
-    // panel while its two inner legs lie on the adjacent tangent directions.
+    // R2 is mirrored into the rear-view X direction so positive local X follows
+    // the panel interior while the raised markings remain readable to the
+    // operator. The chosen probe's theoretical sharp tangent intersection is
+    // aligned with the production model's current R0 corner.
     multmatrix([
-        [1, 0, 0, corner_x - tangent[0]],
-        [0, 0, 1, rear_y],
-        [0, 1, 0, corner_z],
-        [0, 0, 0, 1]
+        [-1, 0, 0, corner_x + tangent[0]],
+        [ 0, 0, 1, rear_y],
+        [ 0, 1, 0, corner_z],
+        [ 0, 0, 0, 1]
     ])
         children();
 }

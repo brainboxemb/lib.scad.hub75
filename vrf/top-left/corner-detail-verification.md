@@ -114,13 +114,17 @@ are moulded radii rather than printer-fit features.
 Record the actual gauge size that fits best. If two adjacent leaves are equally
 plausible, record a range rather than inventing an interpolated radius.
 
-### `R2 v0.2` — coarse printed helper for the outside corner
+### `R2 v0.3` — coarse printed helper for the outside corner
 
-`R2 v0.2` replaces the draft `R2 v0.1`. **Do not print or use v0.1.** Its notch
-was generated around the theoretical sharp corner itself, which is not the
-geometry of a true external-radius gauge. In v0.2 each concave reference has two
-straight tangent legs and an arc whose centre is shifted one radius inward from
-both tangent lines, matching a convex 90-degree corner.
+Use **R2 v0.3** only. The earlier draft helpers are superseded: v0.1 used an
+incorrect external-radius construction, and v0.2 corrected the radius geometry
+but left the raised markings mirrored in the intended rear upper-left placement.
+V0.3 preserves the corrected tangent/arc geometry while mirroring the probe
+layout so the marked face remains readable to the operator.
+
+Each concave reference has two straight tangent legs and an arc whose centre is
+shifted one radius inward from both tangent lines, matching a convex 90-degree
+corner.
 
 A true R0 corner cannot be represented by a useful printed notch: printer nozzle
 and layer rounding would dominate the result. R2 therefore answers only the
@@ -133,7 +137,7 @@ It supplies four small concave references:
 R0.5     R1.0     R1.5     R2.0
 ```
 
-<img src="../../../raw/prod/verification/fixtures/hub75-p5-64x32-outer-corner-radius-comparator.png" alt="R2 v0.2 external-corner radius comparator" width="78%">
+<img src="../../../raw/prod/verification/fixtures/hub75-p5-64x32-outer-corner-radius-comparator.png" alt="R2 v0.3 external-corner radius comparator" width="78%">
 
 The placement view below uses the **R1.0 notch only as an orientation example**.
 It does not imply that R1.0 is the correct physical radius. Keep the comparator
@@ -141,7 +145,7 @@ parallel to the rear X/Z face and bring the selected concave notch to the outsid
 rear-perimeter corner. The two straight inner legs are the tangent references:
 one follows the top edge direction and one follows the outside side edge.
 
-<img src="../../../raw/prod/verification/plan/top-left-r2-use.png" alt="R2 v0.2 comparator orientation at the outside rear-perimeter corner" width="82%">
+<img src="../../../raw/prod/verification/plan/top-left-r2-use.png" alt="R2 v0.3 comparator orientation at the outside rear-perimeter corner" width="82%">
 
 Procedure:
 

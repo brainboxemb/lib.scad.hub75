@@ -29,7 +29,7 @@ local upper-left procedure; do not treat the STL files as self-explanatory.
 - [preview](fixtures/hub75-p5-64x32-corner-radius-comparator.png)
 - AMS multipart: [base STL](fixtures/hub75-p5-64x32-corner-radius-comparator-base.stl) + [raised markings STL](fixtures/hub75-p5-64x32-corner-radius-comparator-markings.stl)
 
-### R2 v0.2 outer-corner radius comparator
+### R2 v0.3 outer-corner radius comparator
 
 - [combined STL](fixtures/hub75-p5-64x32-outer-corner-radius-comparator.stl)
 - [preview](fixtures/hub75-p5-64x32-outer-corner-radius-comparator.png)
