@@ -4,6 +4,12 @@ Functional changes to released `lib.scad.hub75` versions.
 
 ## Unreleased
 
+### Changed
+
+- Upgrade repository tooling to `tool.scad-project` v0.9.11 and pin Build, Verify and Release to its exact commit.
+- Publish pull-request previews to isolated `dev/pr-<number>/build` and `dev/pr-<number>/verification` branches instead of shared `dev/*` branches.
+- Run normal Build/Verify workflows on pull requests and `main` pushes, avoiding duplicate feature-branch push builds, and clean PR preview/source branches when the pull request closes.
+
 ## v0.1.2
 
 ### Changed
