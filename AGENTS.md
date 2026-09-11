@@ -1,282 +1,150 @@
-# CHATGPT.md
+# Repository agent guidance
+
+Persistent guidance for automated coding agents working in `lib.scad.hub75`.
 
 ## Repository purpose
 
 `lib.scad.hub75` contains reusable mechanical reference models for HUB75
-hardware.
+hardware. The current primary component is `openscad/p5-64x32-panel`.
 
-The first component is `openscad/p5-64x32-panel`.
+## Sources of truth
+
+Use:
+
+```text
+component source + design documentation     geometry/API intent
+project.yml                                 tool/dependency policy
+.gitlinks / .gitmodules                     resolved dependency state
+source references noted in design docs      dimensional authority
+```
+
+Do not duplicate volatile `tool.scad-project` versions in this file. The active
+release is declared in `project.yml` and resolved by the gitlink/workflow refs.
 
 ## OpenSCAD architecture
 
-## Private symbol naming
-
-Follow the BOSL2-style private naming convention consistently:
-
-```text
-public function/module
-    no leading underscore
-
-private function/module
-    leading underscore
-
-nested/local private helper
-    leading underscore too
-```
-
-Scope does not replace naming intent. A module nested inside another module is
-still an implementation detail and must therefore use an underscore-prefixed
-name such as `_rear_opening_2d()` or `_design_scene()`.
-
-Only supported cross-file API symbols should be left without a leading
-underscore.
-
-
 OpenSCAD is the primary implementation.
 
-Public data must use the OpenSCAD `object()` model:
+Public data uses the `object()` model:
 
-```text
-hub75_p5_64x32_panel_create(...)
-    -> panel object
-
-hub75_p5_64x32_panel_build(panel)
-    -> final geometry
-
-hub75_p5_64x32_panel_render(panel, view)
-    -> design/debug geometry
+```scad
+panel = hub75_p5_64x32_panel_create(...);
+hub75_p5_64x32_panel_build(panel);
+hub75_p5_64x32_panel_render(panel, view);
 ```
 
-Do not reintroduce a public API consisting of many unrelated global scalar
-functions with hidden file-level state. Derived accessors must take the panel
-object.
+Derived accessors must receive the panel object. Do not reintroduce a public API
+of unrelated global scalar state.
 
-The object function feature is enabled through project tooling with
-`--enable=object-function`.
+The object-function feature is enabled by project tooling.
+
+## Naming
+
+Use the BOSL2-style convention consistently:
+
+```text
+public cross-file function/module    no leading underscore
+private implementation helper       leading underscore
+nested/local private helper          leading underscore
+```
+
+Scope does not replace naming intent.
+
+Global OpenSCAD constants must be component-prefixed. Named design/render views
+use one sequential table and one conversion function; do not maintain duplicate
+numeric mappings across files.
 
 ## Geometry authority
 
-Preserve the distinctions already recorded in the supplied source:
+Preserve the documented source hierarchy:
 
-- dimensional drawing for authoritative basic envelope/mounting dimensions;
-- STEP for taper and rear mechanical form where noted;
-- rear photograph only for secondary visual/orientation references where noted.
+- dimensional drawing for authoritative envelope/mounting dimensions;
+- STEP for taper/rear mechanical form where explicitly recorded;
+- photographs only for secondary visual/orientation evidence where recorded.
 
-Do not silently promote a photo/STEP approximation into a drawing-derived
-dimension.
+Do not silently promote an approximation into a drawing-derived dimension.
 
 Coordinate system:
-- X = width, centred;
-- Y = front to rear, front face Y=0;
-- Z = height, centred.
+
+```text
+X = width, centred
+Y = front to rear, front face Y=0
+Z = height, centred
+```
+
+Consumers may orient the panel differently, but the library geometry remains in
+its native coordinate system.
 
 ## Design documentation
 
-Every meaningful component has `design/design.md`.
+Each meaningful component has `design/design.md`.
 
-The HUB75 panel design document should explain:
-- coordinate/orientation;
-- object data model;
-- front envelope;
-- rear structure/taper;
-- mounting tubes, reinforcement bushings and locator pins;
-- connectors/orientation references;
-- PDF/drawing verification overlay;
-- rear mounting plane and mating dimensions.
+Design documentation must explain the physical model in reader-first order:
 
-Design renders use `hub75_p5_64x32_panel_render.scad` and stable named views.
+1. physical feature/purpose;
+2. geometric change;
+3. image that makes that change visible;
+4. code/helper only as supporting detail.
 
-Generated PNG/STL files do not belong on `main`.
+Assume the reader does not know OpenSCAD. A good design document should let a
+reader identify a modelling error from the explanation and image alone.
 
-## Repository workflow
+Start with recognizable front/rear overviews. For construction steps, use
+neutral context for the previous state and a contrasting highlight for the
+current operation. Use orthographic, oblique close-up, or section views according
+to the geometry being explained.
 
-Pin `tool.scad-project` at `tools/tool.scad-project`.
+Generated images belong under `bld/`; do not commit generated `design/img/`
+output to `main`.
 
-Current intended tool ref: `v0.6.1`.
+`manual.md` and `design/design.md` have different jobs:
 
-Use thin reusable GitHub workflow callers.
-
-Normal submodule operations are direct-only. Do not recursively initialize a
-consumer dependency's own development submodules.
-
-Branches:
-- `main`: source/design/tests;
-- `build`: generated design/build output;
-- `verification`: generated functional/API verification evidence.
-
-Root bootstrap/update scripts are canonical copies from `tool.scad-project`
-and must remain Python-free.
-
-## OpenSCAD use-boundary rule
-
-`use <...>` imports modules and functions, but file-level variables are not a
-public cross-file API. Values needed by render adapters must therefore be
-exposed through functions or defined locally.
-
-For HUB75 design views use the public `hub75_p5_64x32_panel_view_*()` functions rather
-than `HUB75_P5_64X32_PANEL_VIEW_*` variables across a `use` boundary.
-
-## Design-documentation depth
-
-`design.md` must be an engineering/design narrative, not merely a list of
-render views.
-
-For HUB75 components it should explain, where applicable:
-- geometry source and authority;
-- coordinate/orientation choices;
-- object/API model;
-- construction sequence;
-- derived mating dimensions;
-- distinction between drawing-, STEP- and photo-derived geometry;
-- intentional limitations.
-
-Use source snippets to explain key geometry decisions, following the
-`lib.scad.clamps` design-documentation style.
-
-## HUB75 design-render rule
-
-Follow the same architecture as `lib.scad.clamps`:
-
-- `hub75_p5_64x32_panel_render.scad` is a small interface only;
-- it maps stable string view names to numeric `hub75_p5_64x32_panel_render()` views;
-- actual design geometry stays in `hub75_p5_64x32_panel.scad`;
-- design views reuse the same private helpers as the production build;
-- do not implement a second copy of panel geometry in the render adapter.
-
-The renderer may expose many fine-grained diagnostic views, but design.md
-should use only the subset that improves understanding. Do not create or keep a
-render in the narrative merely because a helper or intermediate coordinate
-exists.
-
-Prefer one useful overview plus representative close-ups over a catalogue of
-nearly identical views.
-
-
-
-## Component naming
-
-The repository is generic: `lib.scad.hub75`.
-
-The current component is specific:
-- directory: `openscad/p5-64x32-panel`;
-- source/API prefix: `hub75_p5_64x32_panel_*`;
-- view constants: `HUB75_P5_64X32_PANEL_VIEW_*`.
-
-It models a HUB75 P5 64 × 32 pixel panel with nominal 320 × 160 mm landscape
-dimensions, although a consumer may orient it vertically.
-
-## OpenSCAD constant visibility
-
-File-level variables/constants do not cross an OpenSCAD `use <...>` boundary.
-
-For named design/render views:
-- keep authoritative `HUB75_P5_64X32_PANEL_VIEW_*` constants in
-  `hub75_p5_64x32_panel.scad`;
-- expose one `hub75_p5_64x32_panel_view_id(view)` conversion function;
-- do not create one accessor function per constant;
-- do not duplicate numeric view IDs in the render adapter.
-
-## Design image framing
-
-Generated design images are part of the explanation, not merely proof that a
-view renders.
-
-For small HUB75 features:
-- use exact `vpt`/`vpd` cameras centred on the feature;
-- do not auto-fit the full 159.7 × 319.71 mm panel for a 3–14 mm detail;
-- show a local construction sequence first, then an overview where repetition
-  or placement matters;
-- use thin design-only sections when a depth/profile view would otherwise
-  collapse into an edge-on line;
-- inspect the generated build images after camera/design changes.
-
-## Rear-frame staged design context
-
-Do not use completed `_rear_frame_structure()` as the gray context for an
-operation that is already part of that final geometry.
-
-Use the production states:
-- `_rear_frame_base()`;
-- `_rear_frame_after_recess()`;
-- `_rear_frame_after_mounting_reliefs()`;
-- `_rear_frame_with_mounting_tubes()`;
-- `_rear_frame_after_reinforcement_cuts()`;
-- `_rear_frame_structure()`.
-
-A design view uses the state immediately before the highlighted operation.
-
-Default HUB75 design-render resolution: 1600 × 1200 px.
-
-## Reader-first design documentation
-
-Assume the reader may not know OpenSCAD or PythonSCAD. Documentation exists to
-create understanding, not to document code for its own sake.
-
-For a meaningful construction step, explain the physical feature first, then
-its geometric change, then show an image that makes that exact change visible,
-and only then use source code as supporting detail.
-
-Start component walkthroughs with recognisable front and rear overview views.
-Use gray for the state before an operation and red for the current
-addition/removal/highlight. Completed after-states return to neutral.
-
-Choose the camera for the geometry: orthographic for flat placement geometry,
-rear-oblique close-ups for protruding rear features, and explicit
-sections/profiles for depth questions.
-
-A good quality test is whether the reader can identify and describe a modelling
-error from the explanation and image without knowing the CAD language.
-
-## View table rule
-
-Keep one sequential view ID space and one table of `[CONSTANT, "stable-name"]`
-rows. The constant value must equal the row index. This deliberate duplication
-acts as a C-style integrity check.
-
-Access a numeric row through `hub75_p5_64x32_panel_view_entry()`, which asserts
-that `VIEW_TABLE[view][0] == view`. Stable documentation names are converted
-through the same table; do not maintain a second long conditional mapping.
-
-
-## Design versus manual/reference
-
-Keep two concerns separate:
-
-- `design/design.md` explains how the physical geometry is constructed;
-- `manual.md` explains usage, placement/reference dimensions, object accessors
-  and the interactive Customizer/render views.
-
-Physical versus nominal placement dimensions do not need multiple generated
-design images unless an image genuinely improves understanding.
-
-Internal coordinate/depth planes are normally debug views, not design-document
-content.
-
-Every generated image used in design.md must have the stable view name written
-next to it, for example:
-
-```markdown
-**View:** `mounting-tube-single`
+```text
+design/design.md    how the physical geometry is constructed
+manual.md           usage, placement/reference dimensions, API and views
 ```
 
-This lets a reader select the same view in the OpenSCAD Customizer when
-investigating a problem.
+Every generated image used in design documentation should expose its stable view
+name so the same view can be selected during debugging.
 
+## Render architecture
+
+Keep render adapters small. They translate stable view names and call the public
+component render API. Actual geometry stays in the component source and reuses
+the same private helpers as production geometry.
+
+Do not implement a second copy of panel geometry in render adapters.
+
+For detailed features, frame the feature itself; do not auto-fit an entire panel
+when the subject is only a few millimetres across. Use explicit sections when a
+depth/profile question would otherwise collapse edge-on.
+
+When documenting staged rear-frame construction, use the production state
+immediately before the highlighted operation as context rather than the final
+completed frame.
+
+## OpenSCAD `use` boundary
+
+`use <...>` imports modules/functions, not file-level variables. Values needed
+across files must be exposed through functions or parameters.
+
+Do not create one accessor per view constant; keep one stable view-name-to-ID
+conversion path.
+
+## Tooling and publication
+
+Pin `tool.scad-project` under `tools/tool.scad-project` as declared in
+`project.yml`. Use thin reusable workflow callers and direct-only submodule
+checkout.
+
+Generated build and verification output do not belong on `main`. Branch names
+and lifecycle policy are defined in `project.yml`; do not duplicate them here.
+
+Root bootstrap/update scripts are canonical copies from `tool.scad-project` and
+must remain Python-free during bootstrap.
 
 ## Commit identity
 
-When creating commits through a normal Git checkout, configure:
-
-```text
-user.name  = ChatGPT Bot
-user.email = chatgpt-bot@users.noreply.github.com
-```
-
-or use:
-
-```bash
-git commit --author="ChatGPT Bot <chatgpt-bot@users.noreply.github.com>"
-```
-
-Do not attribute ChatGPT-authored code commits to the repository owner when the
-Git interface allows an explicit author.
+When a normal Git checkout allows explicit authorship, use the configured bot
+identity for agent-created commits rather than attributing them to the repository
+owner.
