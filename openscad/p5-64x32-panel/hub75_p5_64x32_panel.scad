@@ -1090,21 +1090,11 @@ module _hub75_p5_64x32_panel_geometry(
 
 
     module _bay_end_relief_2d(z_edge, direction=1) {
-        d = rear_frame_end_step_depth;
-        half_narrow = rear_frame_end_narrow_length/2;
-        cx = width/2;
-        join_overlap = 0.05;
-
-        // Build the production cutter as one polygon. The long edge overlaps
-        // 0.05 mm into the already-removed rounded bay opening so the 3D
-        // subtraction never depends on face-only unions between cutter parts.
-        if(d > 0)
-            polygon([
-                [cx-half_narrow-d, z_edge - direction*join_overlap],
-                [cx-half_narrow,   z_edge + direction*d],
-                [cx+half_narrow,   z_edge + direction*d],
-                [cx+half_narrow+d, z_edge - direction*join_overlap]
-            ]);
+        union() {
+            _bay_end_transition_relief_2d(z_edge, direction, "left");
+            _bay_end_narrow_relief_2d(z_edge, direction);
+            _bay_end_transition_relief_2d(z_edge, direction, "right");
+        }
     }
 
 
@@ -1323,10 +1313,11 @@ module _hub75_p5_64x32_panel_geometry(
 
 
     module _rear_frame_core_3d() {
-        difference() {
-            // The full outside wall tapers continuously from the 2.0 mm
-            // rear-housing start to the rear mounting plane. There is no
-            // artificial short chamfer followed by a straight wall.
+        // Extrude the already-cut 2D frame web with vertical bay walls, then
+        // clip only its outside perimeter with the tapered rear envelope.
+        // This is geometrically equivalent to subtracting the four vertical
+        // bay cutters, without the triangular Boolean remnants.
+        intersection() {
             _tapered_outer_blank(
                 rear_frame_start_y,
                 mounting_plane_y_value,
@@ -1334,12 +1325,11 @@ module _hub75_p5_64x32_panel_geometry(
                 rear_outer_inset_actual
             );
 
-            // Keep the bay walls vertical, as in the STEP model.
             _rear_extrude_from_to(
                 rear_frame_start_y - 0.05,
                 mounting_plane_y_value + 0.05
             )
-                _rear_openings_2d();
+                _rear_frame_web_2d();
         }
     }
 

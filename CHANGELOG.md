@@ -6,7 +6,7 @@ Functional changes to released `lib.scad.hub75` versions.
 
 ### Fixed
 
-- Make the rear bay-end opening cutters topologically robust so the 3D subtraction no longer leaves triangular remnants in the horizontal crossbars.
+- Build the rear frame from the clean 2D web clipped by the tapered outer envelope, eliminating triangular Boolean remnants in the horizontal crossbars.
 
 ### Changed
 
