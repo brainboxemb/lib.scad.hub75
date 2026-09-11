@@ -6,8 +6,11 @@
 use <../../openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad>
 use <../fixtures/hub75_p5_64x32_physical_verification_fixtures.scad>
 
+// "Top-left" in this verification plan always means left as the operator sees
+// the panel from the REAR. Looking from the rear mirrors native model X, so the
+// visually left mounting column is the second/high-X public mounting position.
 function hub75_vrf_top_left_x(panel) =
-    hub75_p5_64x32_panel_hole_x_positions_centered(panel)[0];
+    hub75_p5_64x32_panel_hole_x_positions_centered(panel)[1];
 
 function hub75_vrf_top_left_z(panel) =
     hub75_p5_64x32_panel_hole_z_positions_centered(panel)[2];
@@ -40,14 +43,14 @@ module _hub75_vrf_rear_rect_frame(x0, x1, z0, z1, y, line=1.2) {
 module hub75_vrf_top_left_location(panel, area_width=46, area_height=56) {
     width = hub75_p5_64x32_panel_width(panel);
     height = hub75_p5_64x32_panel_height(panel);
-    left = -width/2;
+    rear_left = width/2;
     top = height/2;
 
     hub75_p5_64x32_panel_build(panel);
 
     _hub75_vrf_rear_rect_frame(
-        left,
-        left + area_width,
+        rear_left - area_width,
+        rear_left,
         top - area_height,
         top,
         hub75_vrf_overlay_y(panel)
@@ -63,19 +66,19 @@ module hub75_vrf_top_left_feature_map(panel, datum_length=38) {
     x = hub75_vrf_top_left_x(panel);
     z_screw = hub75_vrf_top_left_z(panel);
     z_reinforcement = hub75_vrf_top_left_reinforcement_z(panel);
-    left = -width/2;
+    rear_left = width/2;
     top = height/2;
     oy = hub75_vrf_overlay_y(panel);
 
     hub75_p5_64x32_panel_build(panel);
 
-    // Yellow datum references: short segments along the physical top and left
-    // edges. They float behind the rear-most panel details so the real rail and
-    // mounting geometry stay visible underneath.
+    // Yellow datum references: short segments along the physical top and the
+    // operator's left edge. They float behind the rear-most panel details so
+    // the real rail and mounting geometry stay visible underneath.
     color([1.0, 0.78, 0.08]) {
-        translate([left, oy, top-0.5])
+        translate([rear_left-datum_length, oy, top-0.5])
             cube([datum_length, 0.7, 1.0]);
-        translate([left-0.5, oy, top-datum_length])
+        translate([rear_left-0.5, oy, top-datum_length])
             cube([1.0, 0.7, datum_length]);
     }
 
@@ -108,9 +111,9 @@ module hub75_vrf_top_left_profile_comb_on_panel(panel) {
     screw_x = hub75_vrf_top_left_x(panel);
     tube_d = hub75_p5_64x32_panel_mounting_tube_outer_diameter(panel);
 
-    // Place the 2 mm plate beside the tube so the top profile can sit on the
-    // panel without colliding with the physical tube itself.
-    comb_x = screw_x + tube_d/2 + 2.4;
+    // Put the 2 mm plate just inward of the tube. That keeps it on the physical
+    // panel edge/profile while leaving the tube itself unobstructed.
+    comb_x = screw_x - tube_d/2 - 2.4;
 
     multmatrix([
         [0,  0, 1, comb_x],
