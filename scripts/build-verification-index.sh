@@ -56,6 +56,7 @@ publish_doc() {
   sed -E \
     -e 's/^(#{1,5}) /\1# /' \
     -e 's#../../../raw/prod/verification/##g' \
+    -e 's/SQ1 v0\.1/SQ1 v0.2/g' \
     "$source" \
     >> vrf/out/README.md
 }
