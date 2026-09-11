@@ -267,10 +267,10 @@ rounded bay-opening rectangle
 
 <!-- scad-render
 view: bay-rounded-corner
+size: [480, 360]
 vpr: [68, 0, 212]
 vpt: [-67, 10, -149]
 vpd: 58
-size: [760, 560]
 -->
 
 At this stage there is no stepped/narrow section yet.
@@ -302,7 +302,6 @@ view: narrow-end-width
 vpr: [68, 0, 212]
 vpt: [0, 10, -149]
 vpd: 105
-size: [760, 560]
 -->
 
 This is not an extra solid. It is part of the **opening cutter**, so this red
@@ -325,10 +324,10 @@ polygon([
 
 <!-- scad-render
 view: narrow-transition-left
+size: [480, 360]
 vpr: [68, 0, 212]
 vpt: [-17, 10, -149]
 vpd: 78
-size: [760, 560]
 -->
 
 ## 7. Right transition into the narrow relief
@@ -347,10 +346,10 @@ polygon([
 
 <!-- scad-render
 view: narrow-transition-right
+size: [480, 360]
 vpr: [68, 0, 212]
 vpt: [17, 10, -149]
 vpd: 78
-size: [760, 560]
 -->
 
 ## 8. Combine the three end-relief pieces
@@ -394,7 +393,6 @@ view: bay-bottom-relief
 vpr: [68, 0, 212]
 vpt: [0, 10, -149]
 vpd: 120
-size: [800, 580]
 -->
 
 ## 9. Complete one bay cutter
@@ -417,7 +415,6 @@ view: bay-1
 vpr: [68, 0, 212]
 vpt: [0, 10, -120]
 vpd: 190
-size: [900, 650]
 -->
 
 This complete red shape is the material that will be removed for one
@@ -477,7 +474,7 @@ bay edge cannot survive as an internal vertical wall through the narrow centre.
 
 <!-- scad-render
 view: rear-frame-core
-vpr: [90, 0, 0]
+vpr: [90, 0, 180]
 -->
 
 At this point the main rear frame exists: two side rails, top/bottom rails and
@@ -610,7 +607,6 @@ view: recess-bottom
 vpr: [68, 0, 212]
 vpt: [0, 10, -149]
 vpd: 125
-size: [800, 580]
 -->
 
 The red area is the actual bottom-rail recess cutter. The gray border should
