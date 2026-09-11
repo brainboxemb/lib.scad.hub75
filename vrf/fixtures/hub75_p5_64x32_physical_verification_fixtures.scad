@@ -25,9 +25,9 @@ module _hub75_vrf_spacing_bar(
 ) {
     opening_d = reference_diameter + opening_clearance;
     end_d = max(bar_width, opening_d + 5);
-    x0 = end_d / 2;
-    x1 = x0 + spacing;
-    y0 = end_d / 2;
+    x0 = -spacing / 2;
+    x1 = spacing / 2;
+    y0 = 0;
 
     difference() {
         hull() {
@@ -63,28 +63,32 @@ module hub75_vrf_corner_datum_gauge(
     fence_height = hub75_p5_64x32_panel_depth(panel) + 1.5;
     outer_min = -edge_clearance - fence_thickness;
     span = plate_size - outer_min;
+    center = (outer_min + plate_size) / 2;
 
-    difference() {
-        union() {
-            // Rear reference plate.
-            translate([outer_min, outer_min, 0])
-                cube([span, span, plate_thickness]);
+    // Keep the physical datum construction in edge-based local coordinates,
+    // then centre only the completed fixture for stable preview framing.
+    translate([-center, -center, 0])
+        difference() {
+            union() {
+                // Rear reference plate.
+                translate([outer_min, outer_min, 0])
+                    cube([span, span, plate_thickness]);
 
-            // Side and end fences. Their inside faces sit edge_clearance outside
-            // the nominal physical X/Z panel edges.
-            translate([outer_min, outer_min, 0])
-                cube([fence_thickness, span, fence_height]);
-            translate([outer_min, outer_min, 0])
-                cube([span, fence_thickness, fence_height]);
+                // Side and end fences. Their inside faces sit edge_clearance outside
+                // the nominal physical X/Z panel edges.
+                translate([outer_min, outer_min, 0])
+                    cube([fence_thickness, span, fence_height]);
+                translate([outer_min, outer_min, 0])
+                    cube([span, fence_thickness, fence_height]);
+            }
+
+            translate([xs[0], zs[0], -0.1])
+                cylinder(
+                    h=plate_thickness + 0.2,
+                    d=ring_d + ring_clearance,
+                    $fn=96
+                );
         }
-
-        translate([xs[0], zs[0], -0.1])
-            cylinder(
-                h=plate_thickness + 0.2,
-                d=ring_d + ring_clearance,
-                $fn=96
-            );
-    }
 }
 
 // Horizontal mounting-column spacing fixture. The openings clear the Ø14-ish
