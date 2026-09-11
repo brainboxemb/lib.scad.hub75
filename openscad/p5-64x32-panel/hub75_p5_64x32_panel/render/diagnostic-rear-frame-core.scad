@@ -1,8 +1,8 @@
-// Temporary diagnostic: rear frame core viewed from the true rear side.
+// Temporary diagnostic: rear frame core with the production rear-preview camera.
 use <../../hub75_p5_64x32_panel.scad>
 
 $fn = 120;
-$vpr = [90, 0, 180];
+$vpr = [90, 0, 205];
 
 panel = hub75_p5_64x32_panel_create();
 hub75_p5_64x32_panel_render(
