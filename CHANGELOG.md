@@ -4,6 +4,10 @@ Functional changes to released `lib.scad.hub75` versions.
 
 ## Unreleased
 
+### Changed
+
+- Place the rear PCB orientation arrows directly on the PCB as a 0.10 mm white coating instead of 0.35 mm markers at the rear mounting plane.
+
 ## v0.1.0
 
 ### Added

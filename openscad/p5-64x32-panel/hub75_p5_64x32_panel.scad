@@ -1574,10 +1574,11 @@ module _hub75_p5_64x32_panel_geometry(
     }
 
 
-    module _pcb_arrow(x, z, direction = "down", arrow_scale = 0.55, arrow_color = [0.85, 0.85, 0.85, 1]) {
-        // Simple rear-PCB orientation marker. These arrows are included because
-        // they make the portrait rotation of the real panel unambiguous.
-        // They are visual reference features, not dimensional geometry.
+    module _pcb_arrow(x, z, direction = "down", arrow_scale = 0.55, arrow_color = [1, 1, 1, 1]) {
+        coating_thickness = 0.10;
+        // Rear-PCB orientation marking modelled as a thin white coating.
+        // The extrusion starts at the coating's rear face and runs back to
+        // pcb_back_y, so the marking sits directly on the PCB instead of floating.
         rot_y =
             direction == "down"  ? 0 :
             direction == "up"    ? 180 :
@@ -1587,11 +1588,11 @@ module _hub75_p5_64x32_panel_geometry(
         color(arrow_color)
             translate([
                 x,
-                mounting_plane_y_value + 0.01,
+                pcb_back_y + coating_thickness,
                 z
             ])
                 rotate([90, rot_y, 0])
-                    linear_extrude(height=0.35)
+                    linear_extrude(height=coating_thickness)
                         scale([arrow_scale, arrow_scale])
                             polygon([
                                 [-4, 18],
