@@ -1585,6 +1585,19 @@ module _hub75_p5_64x32_panel_geometry(
     }
 
 
+    // The rear photograph is secondary placement evidence. Keep both horizontal
+    // markers at one consistent visual inset instead of reproducing the photo's
+    // slightly different offsets. At scale 0.50 the arrow extends 9 mm from its
+    // centre along X, leaving 12 mm of clear PCB between the visible arrow and
+    // the inside edge of the side rail.
+    orientation_horizontal_arrow_scale = 0.50;
+    orientation_horizontal_arrow_clearance = 12.0;
+    orientation_horizontal_arrow_x =
+        rear_frame_side_width
+        + 18 * orientation_horizontal_arrow_scale
+        + orientation_horizontal_arrow_clearance;
+
+
     module _pcb_arrow(x, z, direction = "down", arrow_scale = 0.55, arrow_color = [1, 1, 1, 1]) {
         coating_thickness = 0.10;
         // Rear-PCB orientation marking modelled as a thin white coating.
@@ -1632,13 +1645,14 @@ module _hub75_p5_64x32_panel_geometry(
             0.42
         );
 
-        // Bay 2: right arrow close to the VISUAL right side in rear view.
-        // Rear viewing reverses the X direction on screen, so this uses the low-X side.
+        // Bay 2: right arrow on the VISUAL right side in rear view, with a
+        // consistent clear inset from the side rail. Rear viewing reverses the
+        // X direction on screen, so this uses the low-X side.
         _pcb_arrow(
-            20,
+            orientation_horizontal_arrow_x,
             (opening_z_min[2] + opening_z_max[2]) / 2,
             "right",
-            0.50
+            orientation_horizontal_arrow_scale
         );
 
         // Bay 3 intentionally has no orientation arrow. The POWER connector
@@ -1652,12 +1666,12 @@ module _hub75_p5_64x32_panel_geometry(
             0.42
         );
 
-        // Bay 4: right arrow close to the VISUAL right side, like the bay-2 marker.
+        // Bay 4: use the same horizontal inset as bay 2.
         _pcb_arrow(
-            20,
+            orientation_horizontal_arrow_x,
             (opening_z_min[0] + opening_z_max[0]) / 2,
             "right",
-            0.50
+            orientation_horizontal_arrow_scale
         );
     }
 
@@ -2545,10 +2559,10 @@ module _hub75_p5_64x32_panel_geometry(
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_ORIENTATION_BAY_2) {
             _design_rear_structure_context();
             _design_arrow_marker(
-                20,
+                orientation_horizontal_arrow_x,
                 (opening_z_min[2]+opening_z_max[2])/2,
                 "right",
-                0.50
+                orientation_horizontal_arrow_scale
             );
 
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_ORIENTATION_BAY_4) {
@@ -2560,10 +2574,10 @@ module _hub75_p5_64x32_panel_geometry(
                 0.42
             );
             _design_arrow_marker(
-                20,
+                orientation_horizontal_arrow_x,
                 (opening_z_min[0]+opening_z_max[0])/2,
                 "right",
-                0.50
+                orientation_horizontal_arrow_scale
             );
 
         } else if(view == HUB75_P5_64X32_PANEL_VIEW_ORIENTATION_ALL) {
