@@ -1,0 +1,101 @@
+name: Apply rear bay and render config fix
+
+on:
+  push:
+    branches:
+      - fix/rear-bay-cut-and-render-config
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/rear-bay-cut-and-render-config
+          fetch-depth: 0
+
+      - name: Apply targeted repository changes
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          root = Path('.')
+
+          # 1) Replace legacy explicit builds with the directory-driven render root.
+          p = root / 'project.yml'
+          text = p.read_text()
+          text = text.replace(
+              'paths:\n  design_root: .\n  build_root: bld\n',
+              'paths:\n  design_root: .\n  build_root: bld\n  render_root: openscad/p5-64x32-panel/hub75_p5_64x32_panel/render\n'
+          )
+          start = text.index('\nbuilds:\n')
+          end = text.index('\nverification:\n', start)
+          text = text[:start] + '\n' + text[end:]
+          p.write_text(text)
+
+          # 2) Keep model-specific output names under directory discovery.
+          render_dir = root / 'openscad/p5-64x32-panel/hub75_p5_64x32_panel/render'
+          (render_dir / 'front-angled.scad').rename(render_dir / 'hub75-p5-64x32-panel-front-angled.scad')
+          (render_dir / 'rear-angled.scad').rename(render_dir / 'hub75-p5-64x32-panel-rear-angled.scad')
+          (render_dir / 'render.yml').write_text('defaults:\n  image_size: [1000, 1600]\n')
+
+          # 3) Make the bay-end cutter one robust polygon with overlap into the
+          #    already-removed rounded opening. This changes topology, not the
+          #    intended outer cutter boundary.
+          p = root / 'openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad'
+          text = p.read_text()
+          old = '''    module _bay_end_relief_2d(z_edge, direction=1) {\n        union() {\n            _bay_end_transition_relief_2d(z_edge, direction, "left");\n            _bay_end_narrow_relief_2d(z_edge, direction);\n            _bay_end_transition_relief_2d(z_edge, direction, "right");\n        }\n    }\n'''
+          new = '''    module _bay_end_relief_2d(z_edge, direction=1) {\n        d = rear_frame_end_step_depth;\n        half_narrow = rear_frame_end_narrow_length/2;\n        cx = width/2;\n        join_overlap = 0.05;\n\n        // Build the production cutter as one polygon. The long edge overlaps\n        // 0.05 mm into the already-removed rounded bay opening so the 3D\n        // subtraction never depends on face-only unions between cutter parts.\n        if(d > 0)\n            polygon([\n                [cx-half_narrow-d, z_edge - direction*join_overlap],\n                [cx-half_narrow,   z_edge + direction*d],\n                [cx+half_narrow,   z_edge + direction*d],\n                [cx+half_narrow+d, z_edge - direction*join_overlap]\n            ]);\n    }\n'''
+          if old not in text:
+              raise SystemExit('Expected _bay_end_relief_2d block not found')
+          p.write_text(text.replace(old, new))
+
+          # 4) Keep the reader-first design explanation accurate and add a
+          #    visual acceptance condition at the subtraction step.
+          p = root / 'openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md'
+          text = p.read_text()
+          old = '''The two triangular transitions and the central rectangle are united into one\nend-relief cutter:\n\n```scad\nmodule _bay_end_relief_2d(z_edge, direction=1) {\n    union() {\n        _bay_end_transition_relief_2d(z_edge, direction, "left");\n        _bay_end_narrow_relief_2d(z_edge, direction);\n        _bay_end_transition_relief_2d(z_edge, direction, "right");\n    }\n}\n```\n\nThe same operation is applied at the bottom and top edge of the bay, with the\ndirection reversed.\n'''
+          new = '''The two triangular transitions and the central rectangle describe one\ncontinuous trapezoidal end-relief cutter. For the production Boolean that same\noutline is emitted as one polygon, with a 0.05 mm overlap into the already\nremoved rounded opening:\n\n```scad\njoin_overlap = 0.05;\n\npolygon([\n    [cx-half_narrow-d, z_edge - direction*join_overlap],\n    [cx-half_narrow,   z_edge + direction*d],\n    [cx+half_narrow,   z_edge + direction*d],\n    [cx+half_narrow+d, z_edge - direction*join_overlap]\n]);\n```\n\nThe overlap lies wholly inside the main bay opening, so it does not change the\nintended rail dimensions. It only avoids a face-only union when the 2D cutter is\nextruded and subtracted. The same operation is applied at the bottom and top\nedge of the bay, with the direction reversed.\n'''
+          if old not in text:
+              raise SystemExit('Expected design step 8 block not found')
+          text = text.replace(old, new)
+          marker = '''At this point the main rear frame exists: two side rails, top/bottom rails and\nthree crossbars.\n'''
+          replacement = marker + '''\nThe generated image is also a geometry check: each crossbar must show the same\nclean stepped relief on both adjacent bay edges. Triangular remnants or a local\nslit on only one side mean the opening subtraction is not valid.\n'''
+          if marker not in text:
+              raise SystemExit('Expected rear-frame-core acceptance text not found')
+          p.write_text(text.replace(marker, replacement))
+
+          # 5) Reflect the local render config in the README tree.
+          p = root / 'README.md'
+          text = p.read_text()
+          text = text.replace(
+              '''    └── render/\n        ├── front-angled.scad\n        └── rear-angled.scad\n''',
+              '''    └── render/\n        ├── render.yml\n        ├── hub75-p5-64x32-panel-front-angled.scad\n        └── hub75-p5-64x32-panel-rear-angled.scad\n'''
+          )
+          p.write_text(text)
+
+          # 6) Record the geometry correction.
+          p = root / 'CHANGELOG.md'
+          text = p.read_text()
+          needle = '### Changed\n\n'
+          addition = ('### Fixed\n\n'
+                      '- Make the rear bay-end opening cutters topologically robust so the 3D subtraction no longer leaves triangular remnants in the horizontal crossbars.\n\n')
+          if addition not in text:
+              idx = text.index(needle)
+              text = text[:idx] + addition + text[idx:]
+          p.write_text(text)
+          PY
+
+          rm .github/workflows/agent-fix-rear-bay.yml
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'fix: stabilise rear bay cuts and render config'
+          git push origin HEAD:fix/rear-bay-cut-and-render-config
