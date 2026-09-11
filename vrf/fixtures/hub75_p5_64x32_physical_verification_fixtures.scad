@@ -17,7 +17,7 @@ function hub75_vrf_mounting_spacing_z(panel) =
     zs[1] - zs[0];
 
 function hub75_vrf_top_left_profile_comb_version() = "v0.2";
-function hub75_vrf_top_left_alignment_guide_version() = "v0.1";
+function hub75_vrf_top_left_alignment_guide_version() = "v0.2";
 function hub75_vrf_corner_radius_comparator_version() = "v0.1";
 
 function hub75_vrf_top_left_hole_from_top(panel) =
@@ -292,15 +292,28 @@ module hub75_vrf_top_left_alignment_guide_markings(
     version = hub75_vrf_top_left_alignment_guide_version(),
     marking_height = 0.50
 ) {
+    // Keep the identifier comfortably inside the 18 x 6 mm side face. Splitting
+    // name and version over two centred rows is clearer in both the preview and
+    // an FDM print than stretching one long line almost from edge to edge.
     translate([depth-0.02, -height/2, 0])
         rotate([0, 90, 0])
             linear_extrude(height=marking_height+0.02)
-                text(
-                    str("SQ1 ", version),
-                    size=2.4,
-                    halign="center",
-                    valign="center"
-                );
+                union() {
+                    translate([0, 1.25])
+                        text(
+                            "SQ1",
+                            size=2.0,
+                            halign="center",
+                            valign="center"
+                        );
+                    translate([0, -1.25])
+                        text(
+                            version,
+                            size=1.8,
+                            halign="center",
+                            valign="center"
+                        );
+                }
 }
 
 module hub75_vrf_top_left_alignment_guide(panel) {
