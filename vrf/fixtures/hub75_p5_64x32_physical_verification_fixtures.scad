@@ -214,36 +214,31 @@ module _hub75_vrf_top_left_profile_comb_2d(
             circle(d=1.5, $fn=32);
         translate([blade_x0 + blade_depth/2, reinforcement_from_top])
             circle(d=1.5, $fn=32);
-
-        // The front edge of the upper witness arm marks the rear mounting plane.
-        // This second slot marks the expected end of the screw tube 0.5 mm
-        // farther rearward on the default panel.
-        translate([
-            rear_plane + protrusion - 0.12,
-            screw_from_top - witness_width
-        ])
-            square([0.24, 2*witness_width]);
     }
 }
 
 module hub75_vrf_top_left_profile_comb(
     panel,
     thickness = 2.0,
-    version = hub75_vrf_top_left_profile_comb_version()
+    version = hub75_vrf_top_left_profile_comb_version(),
+    engraving_depth = 0.35
 ) {
     rear_plane = hub75_p5_64x32_panel_depth(panel);
     protrusion = hub75_p5_64x32_panel_mounting_tube_protrusion(panel);
+    screw_from_top = hub75_vrf_top_left_hole_from_top(panel);
+    reinforcement_from_top = hub75_vrf_top_left_reinforcement_from_top(panel);
     blade_x0 = rear_plane + protrusion + 0.8;
     blade_center_x = blade_x0 + 2.5;
+    marker_depth = engraving_depth + 0.05;
 
-    union() {
+    difference() {
         linear_extrude(height=thickness)
             _hub75_vrf_top_left_profile_comb_2d(panel);
 
-        // Raised version mark on the broad face. The exact printed helper can
-        // therefore be recorded with the measurement evidence.
-        translate([blade_center_x, 27, thickness])
-            linear_extrude(height=0.35)
+        // Engrave, rather than add, the fixture identity so the exported STL
+        // remains one connected printable solid.
+        translate([blade_center_x, 27, thickness-engraving_depth])
+            linear_extrude(height=marker_depth)
                 rotate(90)
                     text(
                         str("TL1 ", version),
@@ -251,5 +246,33 @@ module hub75_vrf_top_left_profile_comb(
                         halign="center",
                         valign="center"
                     );
+
+        // Shallow face engraving for the two witness levels.
+        for(mark = [
+            [screw_from_top, "S"],
+            [reinforcement_from_top, "R"]
+        ])
+            translate([
+                blade_x0 + 0.9,
+                mark[0] + 2.0,
+                thickness-engraving_depth
+            ])
+                linear_extrude(height=marker_depth)
+                    text(
+                        mark[1],
+                        size=1.7,
+                        halign="center",
+                        valign="center"
+                    );
+
+        // The front edge of the upper witness arm is the rear mounting plane.
+        // A shallow engraved line 0.5 mm farther rearward marks the expected
+        // end of the mounting tube without cutting the arm into two pieces.
+        translate([
+            rear_plane + protrusion - 0.12,
+            screw_from_top - 0.7,
+            thickness-engraving_depth
+        ])
+            cube([0.24, 1.4, marker_depth]);
     }
 }
