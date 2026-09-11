@@ -97,35 +97,29 @@ _vrf_label("DATUM A - PHYSICAL TOP EDGE", [23, 1.8], 1.9, "center");
 _vrf_label("DATUM B", [-2.0, -30], 1.9, "right");
 _vrf_label("PHYSICAL LEFT EDGE", [-2.0, -33], 1.7, "right");
 
-// Rear perimeter at mounting plane.
 _vrf_line([inset_x, -inset_z], [45, -inset_z], 0.20);
 _vrf_line([inset_x, -inset_z], [inset_x, -45], 0.20);
 
-// Mounting tube / through-hole.
 _vrf_ring([hole_x, -hole_top], tube_d, 0.28);
 _vrf_ring([hole_x, -hole_top], hole_d, 0.22);
 _vrf_line([hole_x-1.5, -hole_top], [hole_x+1.5, -hole_top], 0.16);
 _vrf_line([hole_x, -hole_top-1.5], [hole_x, -hole_top+1.5], 0.16);
 
-// Reinforcement footprint and nested recess/hole.
 _vrf_ring([hole_x, -reinforcement_top], reinforcement_d, 0.28);
 _vrf_ring([hole_x, -reinforcement_top], reinforcement_recess_d, 0.22);
 _vrf_ring([hole_x, -reinforcement_top], reinforcement_hole_d, 0.18);
 _vrf_line([hole_x-1.5, -reinforcement_top], [hole_x+1.5, -reinforcement_top], 0.16);
 _vrf_line([hole_x, -reinforcement_top-1.5], [hole_x, -reinforcement_top+1.5], 0.16);
 
-// Nominal top-left corner of the upper rear bay opening.
 arc_c = [opening_x + opening_r, -(opening_top + opening_r)];
 _vrf_line([opening_x + opening_r, -opening_top], [46, -opening_top], 0.30);
 _vrf_line([opening_x, -(opening_top + opening_r)], [opening_x, -46], 0.30);
 _vrf_polyline(_vrf_arc_points(arc_c, opening_r, 90, 180), 0.30);
 
-// Real dimension lines around the 1:1 geometry.
 _vrf_dim_h(0, hole_x, 5.2, str("TL-01  ", _vrf_fmt(hole_x)), 0);
 _vrf_dim_v(0, -hole_top, -7.0, str("TL-02  ", _vrf_fmt(hole_top)), 0);
 _vrf_dim_v(-hole_top, -reinforcement_top, -13.0, str("TL-06  ", _vrf_fmt(reinforcement_offset)), 0);
 
-// Leaders name local feature sizes without covering the circles.
 _vrf_line([hole_x+tube_d/2, -hole_top], [29, -6.0], 0.16);
 _vrf_label(str("TL-03 OD ", _vrf_fmt(tube_d), " / TL-04 HOLE ", _vrf_fmt(hole_d)), [30, -6.0], 1.65);
 
@@ -139,18 +133,16 @@ _vrf_label(str("TL-11 BLIND HOLE ", _vrf_fmt(reinforcement_hole_d)), [30, -24.7]
 _vrf_line([opening_x+opening_r*0.3, -(opening_top+opening_r*0.3)], [29, -14.0], 0.16);
 _vrf_label(str("CR-02 BAY CORNER R", _vrf_fmt(opening_r)), [30, -14.0], 1.65);
 
-// Keep perimeter/radius relations below the local drawing so they cannot collide
-// with the nominal-value table.
 _vrf_label(
     str("REAR PERIMETER  X=", _vrf_fmt(inset_x), "  Z=", _vrf_fmt(inset_z)),
     [3, -34.0], 1.65
 );
-_vrf_label("CR-01 OUTER REAR CORNER = R0 IN CURRENT MODEL - VERIFY", [3, -36.8], 1.55);
+_vrf_label("CR-01 OUTER CORNER: R0 (VERIFY)", [3, -36.8], 1.55);
 _vrf_label(str("RF-01 OUTER CLIP ~= ", _vrf_fmt(reinforcement_outer_clip)), [3, -49.0], 1.65);
 _vrf_label(str("RF-02 BAY PROJECTION ~= ", _vrf_fmt(reinforcement_bay_projection)), [3, -52.0], 1.65);
 
-// Nominal-value table, separate from true-size geometry.
-legend_x = 61;
+// Nominal-value table, deliberately separated from true-size geometry.
+legend_x = 72;
 legend_y = 5.5;
 legend_step = 3.15;
 
@@ -177,8 +169,7 @@ labels = [
 for(i=[0:len(labels)-1])
     _vrf_label(labels[i], [legend_x, legend_y-i*legend_step], 1.65);
 
-// Side/profile inset well below the table.
-profile_origin = [61, -61];
+profile_origin = [72, -61];
 profile_scale = 2.0;
 profile_depth = depth * profile_scale;
 profile_inset = inset_z * profile_scale;
