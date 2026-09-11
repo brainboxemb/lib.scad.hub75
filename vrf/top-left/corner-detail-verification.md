@@ -36,12 +36,12 @@ change the production CAD solely because a printed comparator appears to fit.
 
 ---
 
-## Keep TL1 square: `SQ1 v0.1`
+## Keep TL1 square: `SQ1 v0.2`
 
 TL1 is only useful as a profile comparator when its plate is perpendicular to the
 physical top edge. Holding a 2 mm plate by eye is not repeatable enough.
 
-`SQ1 v0.1` is a small slotted alignment shoe. It sits only on the straight
+`SQ1 v0.2` is a small slotted alignment shoe. It sits only on the straight
 front-most part of the panel's top edge and holds the TL1 plate in a 90-degree
 orientation across the panel width. The slot deliberately has clearance: SQ1 is
 an **orientation aid**, not a measurement of TL1 thickness.

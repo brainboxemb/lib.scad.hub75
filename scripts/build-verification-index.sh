@@ -17,7 +17,7 @@ local upper-left procedure; do not treat the STL files as self-explanatory.
 - [preview](fixtures/hub75-p5-64x32-top-left-profile-comb.png)
 - AMS multipart: [base STL](fixtures/hub75-p5-64x32-top-left-profile-comb-base.stl) + [raised markings STL](fixtures/hub75-p5-64x32-top-left-profile-comb-markings.stl)
 
-### SQ1 v0.1 square/alignment guide
+### SQ1 v0.2 square/alignment guide
 
 - [combined STL](fixtures/hub75-p5-64x32-top-left-alignment-guide.stl)
 - [preview](fixtures/hub75-p5-64x32-top-left-alignment-guide.png)

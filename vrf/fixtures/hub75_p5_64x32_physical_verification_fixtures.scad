@@ -17,7 +17,7 @@ function hub75_vrf_mounting_spacing_z(panel) =
     zs[1] - zs[0];
 
 function hub75_vrf_top_left_profile_comb_version() = "v0.2";
-function hub75_vrf_top_left_alignment_guide_version() = "v0.1";
+function hub75_vrf_top_left_alignment_guide_version() = "v0.2";
 function hub75_vrf_corner_radius_comparator_version() = "v0.1";
 
 function hub75_vrf_top_left_hole_from_top(panel) =
@@ -295,12 +295,13 @@ module hub75_vrf_top_left_alignment_guide_markings(
     translate([depth-0.02, -height/2, 0])
         rotate([0, 90, 0])
             linear_extrude(height=marking_height+0.02)
-                text(
-                    str("SQ1 ", version),
-                    size=2.4,
-                    halign="center",
-                    valign="center"
-                );
+                mirror([1, 0, 0])
+                    text(
+                        str("SQ1 ", version),
+                        size=2.4,
+                        halign="center",
+                        valign="center"
+                    );
 }
 
 module hub75_vrf_top_left_alignment_guide(panel) {
