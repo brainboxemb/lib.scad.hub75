@@ -1,0 +1,65 @@
+name: Temporary apply horizontal arrow inset
+
+on:
+  push:
+    branches:
+      - fix/orientation-arrow-inset
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/orientation-arrow-inset
+          fetch-depth: 0
+
+      - name: Apply source patch and remove temporary workflow
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad')
+          text = path.read_text(encoding='utf-8')
+
+          anchor = '''    module _pcb_arrow(x, z, direction = "down", arrow_scale = 0.55, arrow_color = [1, 1, 1, 1]) {\n'''
+          insert = '''    // The rear photograph is secondary placement evidence. Keep both horizontal\n    // markers at one consistent visual inset instead of reproducing the photo's\n    // slightly different offsets. At scale 0.50 the arrow extends 9 mm from its\n    // centre along X, leaving 12 mm of clear PCB between the visible arrow and\n    // the inside edge of the side rail.\n    orientation_horizontal_arrow_scale = 0.50;\n    orientation_horizontal_arrow_clearance = 12.0;\n    orientation_horizontal_arrow_x =\n        rear_frame_side_width\n        + 18 * orientation_horizontal_arrow_scale\n        + orientation_horizontal_arrow_clearance;\n\n\n'''
+          if text.count(anchor) != 1:
+              raise SystemExit('expected one _pcb_arrow anchor')
+          text = text.replace(anchor, insert + anchor, 1)
+
+          old_orientation = '''    module _orientation_arrows() {\n        // Rear-view portrait orientation, bays counted from top to bottom:\n        // bay 1: downward arrow beside the connector\n        // bay 2: right-pointing arrow at the right side\n        // bay 3: no arrow\n        // bay 4: downward arrow toward the power connector + right-pointing arrow\n\n        // Bay 1 (top): down arrow beside the HUB75 connector.\n        _pcb_arrow(\n            min(width - 28, data_connector_x + 38),\n            data_connector_z_top,\n            "down",\n            0.42\n        );\n\n        // Bay 2: right arrow close to the VISUAL right side in rear view.\n        // Rear viewing reverses the X direction on screen, so this uses the low-X side.\n        _pcb_arrow(\n            20,\n            (opening_z_min[2] + opening_z_max[2]) / 2,\n            "right",\n            0.50\n        );\n\n        // Bay 3 intentionally has no orientation arrow. The POWER connector\n        // itself is in this bay.\n\n        // Bay 4 (bottom): down arrow aligned in X with the bay-1 down arrow.\n        _pcb_arrow(\n            min(width - 28, data_connector_x + 38),\n            (opening_z_min[0] + opening_z_max[0]) / 2,\n            "down",\n            0.42\n        );\n\n        // Bay 4: right arrow close to the VISUAL right side, like the bay-2 marker.\n        _pcb_arrow(\n            20,\n            (opening_z_min[0] + opening_z_max[0]) / 2,\n            "right",\n            0.50\n        );\n    }\n'''
+          new_orientation = '''    module _orientation_arrows() {\n        // Rear-view portrait orientation, bays counted from top to bottom:\n        // bay 1: downward arrow beside the connector\n        // bay 2: right-pointing arrow at the right side\n        // bay 3: no arrow\n        // bay 4: downward arrow toward the power connector + right-pointing arrow\n\n        // Bay 1 (top): down arrow beside the HUB75 connector.\n        _pcb_arrow(\n            min(width - 28, data_connector_x + 38),\n            data_connector_z_top,\n            "down",\n            0.42\n        );\n\n        // Bay 2: right arrow on the VISUAL right side in rear view, with a\n        // consistent clear inset from the side rail. Rear viewing reverses the\n        // X direction on screen, so this uses the low-X side.\n        _pcb_arrow(\n            orientation_horizontal_arrow_x,\n            (opening_z_min[2] + opening_z_max[2]) / 2,\n            "right",\n            orientation_horizontal_arrow_scale\n        );\n\n        // Bay 3 intentionally has no orientation arrow. The POWER connector\n        // itself is in this bay.\n\n        // Bay 4 (bottom): down arrow aligned in X with the bay-1 down arrow.\n        _pcb_arrow(\n            min(width - 28, data_connector_x + 38),\n            (opening_z_min[0] + opening_z_max[0]) / 2,\n            "down",\n            0.42\n        );\n\n        // Bay 4: use the same horizontal inset as bay 2.\n        _pcb_arrow(\n            orientation_horizontal_arrow_x,\n            (opening_z_min[0] + opening_z_max[0]) / 2,\n            "right",\n            orientation_horizontal_arrow_scale\n        );\n    }\n'''
+          if text.count(old_orientation) != 1:
+              raise SystemExit('expected one production orientation block')
+          text = text.replace(old_orientation, new_orientation, 1)
+
+          old_bay2 = '''        } else if(view == HUB75_P5_64X32_PANEL_VIEW_ORIENTATION_BAY_2) {\n            _design_rear_structure_context();\n            _design_arrow_marker(\n                20,\n                (opening_z_min[2]+opening_z_max[2])/2,\n                "right",\n                0.50\n            );\n'''
+          new_bay2 = '''        } else if(view == HUB75_P5_64X32_PANEL_VIEW_ORIENTATION_BAY_2) {\n            _design_rear_structure_context();\n            _design_arrow_marker(\n                orientation_horizontal_arrow_x,\n                (opening_z_min[2]+opening_z_max[2])/2,\n                "right",\n                orientation_horizontal_arrow_scale\n            );\n'''
+          if text.count(old_bay2) != 1:
+              raise SystemExit('expected one bay-2 design block')
+          text = text.replace(old_bay2, new_bay2, 1)
+
+          old_bay4_marker = '''            _design_arrow_marker(\n                20,\n                (opening_z_min[0]+opening_z_max[0])/2,\n                "right",\n                0.50\n            );\n'''
+          new_bay4_marker = '''            _design_arrow_marker(\n                orientation_horizontal_arrow_x,\n                (opening_z_min[0]+opening_z_max[0])/2,\n                "right",\n                orientation_horizontal_arrow_scale\n            );\n'''
+          if text.count(old_bay4_marker) != 1:
+              raise SystemExit('expected one bay-4 horizontal design marker')
+          text = text.replace(old_bay4_marker, new_bay4_marker, 1)
+
+          path.write_text(text, encoding='utf-8')
+          Path('.github/workflows/tmp-apply-arrow-inset.yml').unlink()
+          PY
+
+      - name: Commit patch
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'fix: inset horizontal orientation arrows'
+          git push origin HEAD:fix/orientation-arrow-inset
