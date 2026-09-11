@@ -1,0 +1,190 @@
+schema: 1
+component: p5-64x32-panel
+status: planning
+
+# This is a verification catalogue, not raw measurement storage.
+# Raw readings/photos belong in the companion data repository. A future accepted
+# baseline may add evidence_commit and measured/accepted values here.
+
+features:
+  - id: ENV-WIDTH
+    priority: P0
+    feature: physical width
+    model_value_mm: 159.70
+    public_api: hub75_p5_64x32_panel_width
+    method: caliper across multiple positions
+    status: pending
+
+  - id: ENV-HEIGHT
+    priority: P0
+    feature: physical height
+    model_value_mm: 319.71
+    public_api: hub75_p5_64x32_panel_height
+    method: caliper across multiple positions
+    status: pending
+
+  - id: ENV-DEPTH
+    priority: P0
+    feature: overall depth / rear mounting plane
+    model_value_mm: 14.50
+    public_api: hub75_p5_64x32_panel_depth
+    method: front datum to rearmost mounting plane
+    status: pending
+
+  - id: MNT-EDGE-X
+    priority: P0
+    feature: mounting centre from left/right physical edge
+    model_value_mm: 7.85
+    public_api: hub75_p5_64x32_panel_hole_x_positions
+    fixture: corner-datum-gauge
+    status: pending
+
+  - id: MNT-EDGE-Z
+    priority: P0
+    feature: mounting centre from bottom/top physical edge
+    model_value_mm: 7.855
+    public_api: hub75_p5_64x32_panel_hole_z_positions
+    fixture: corner-datum-gauge
+    status: pending
+
+  - id: MNT-SPACING-X
+    priority: P0
+    feature: mounting column centre spacing
+    model_value_mm: 144.00
+    public_api: hub75_p5_64x32_panel_hole_x_positions
+    fixture: mounting-spacing-x-gauge
+    status: pending
+
+  - id: MNT-SPACING-Z
+    priority: P0
+    feature: adjacent mounting row centre spacing
+    model_value_mm: 152.00
+    public_api: hub75_p5_64x32_panel_hole_z_positions
+    fixture: mounting-spacing-z-gauge
+    status: pending
+
+  - id: MNT-HOLE-D
+    priority: P0
+    feature: mounting hole diameter
+    model_value_mm: 3.00
+    public_api: hub75_p5_64x32_panel_hole_diameter
+    status: pending
+
+  - id: MNT-TUBE-D
+    priority: P0
+    feature: mounting tube outer diameter
+    model_value_mm: 8.50
+    public_api: hub75_p5_64x32_panel_mounting_tube_outer_diameter
+    fixture: corner-datum-gauge
+    status: pending
+
+  - id: MNT-TUBE-PROTRUSION
+    priority: P0
+    feature: mounting tube protrusion beyond rear mounting plane
+    model_value_mm: 0.50
+    public_api: hub75_p5_64x32_panel_mounting_tube_protrusion
+    status: pending
+
+  - id: REAR-SIDE-RAIL
+    priority: P1
+    feature: side rail width at mounting plane
+    model_value_mm: 11.25234375
+    public_api: hub75_p5_64x32_panel_rear_side_rail_width_at_mounting_plane
+    fixture: rear-width-comb
+    status: pending
+
+  - id: REAR-END-RAIL
+    priority: P1
+    feature: normal end rail width at mounting plane
+    model_value_mm: 9.5011328125
+    public_api: hub75_p5_64x32_panel_rear_end_rail_width_at_mounting_plane
+    fixture: rear-width-comb
+    status: pending
+
+  - id: REAR-END-NARROW
+    priority: P1
+    feature: narrow end rail width at mounting plane
+    model_value_mm: 6.5011328125
+    public_api: hub75_p5_64x32_panel_rear_end_narrow_width_at_mounting_plane
+    fixture: rear-width-comb
+    status: pending
+
+  - id: REAR-CROSSBAR
+    priority: P1
+    feature: crossbar width
+    model_value_mm: 19.981875
+    public_api: hub75_p5_64x32_panel_rear_crossbar_width_at_mounting_plane
+    fixture: rear-width-comb
+    status: pending
+
+  - id: REAR-OPENING-R
+    priority: P1
+    feature: rear bay opening corner radius
+    model_value_mm: 4.990625
+    public_api: hub75_p5_64x32_panel_rear_opening_corner_radius
+    fixture: radius-comparator
+    status: pending
+
+  - id: REAR-TAPER
+    priority: P1
+    feature: continuous outer rear-wall taper
+    model_value: STEP-derived continuous profile
+    public_api: null
+    fixture: continuous-taper-profile
+    status: pending-api-decision
+
+  - id: LOCATOR-D
+    priority: P2
+    feature: locator pin diameter
+    model_value_mm: 3.00
+    public_api: hub75_p5_64x32_panel_locator_pin_diameter
+    status: pending
+
+  - id: LOCATOR-PROTRUSION
+    priority: P2
+    feature: locator pin protrusion
+    model_value_mm: 3.00
+    public_api: hub75_p5_64x32_panel_locator_pin_protrusion
+    status: pending
+
+  - id: BUSHING-OUTER-D
+    priority: P2
+    feature: reinforcement bushing outer diameter
+    model_value_mm: 14.00
+    public_api: hub75_p5_64x32_panel_reinforcement_bushing_outer_diameter
+    status: pending
+
+  - id: BUSHING-RECESS-D
+    priority: P2
+    feature: reinforcement recess diameter
+    model_value_mm: 10.00
+    public_api: hub75_p5_64x32_panel_reinforcement_bushing_recess_diameter
+    status: pending
+
+  - id: BUSHING-RECESS-DEPTH
+    priority: P2
+    feature: reinforcement recess depth
+    model_value_mm: 2.50
+    public_api: hub75_p5_64x32_panel_reinforcement_bushing_recess_depth
+    status: pending
+
+  - id: BUSHING-HOLE-D
+    priority: P2
+    feature: reinforcement blind-hole diameter
+    model_value_mm: 2.50
+    public_api: hub75_p5_64x32_panel_reinforcement_bushing_hole_diameter
+    status: pending
+
+  - id: BUSHING-HOLE-DEPTH
+    priority: P2
+    feature: reinforcement blind-hole depth
+    model_value_mm: 10.00
+    public_api: hub75_p5_64x32_panel_reinforcement_bushing_hole_depth
+    status: pending
+
+  - id: BUSHING-OFFSET
+    priority: P2
+    feature: reinforcement offset from mounting reference
+    model_value_mm: 11.00
+    public_api: hub75_p5_64x32_panel_reinforcement_bushing_offset
+    status: pending
