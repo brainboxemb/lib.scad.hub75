@@ -23,11 +23,16 @@ PR preview and production verification page are self-contained.
 EOF
 
 # Publish the operator procedure itself, not merely a link back to the source
-# branch. Source documentation points at prod/verification; replace that prefix
-# with relative paths so the same document works on dev/pr-*/verification too.
-sed \
-  -e '1s/^# /## /' \
+# branch. Shift its headings down one level so this generated page keeps one H1,
+# and rewrite production image links so the same document works on isolated PR
+# verification branches. The wording substitutions below keep the generated
+# procedure aligned with the current TL1 prototype while the source procedure is
+# being iterated in this PR.
+sed -E \
+  -e 's/^(#{1,5}) /\1# /' \
   -e 's#../../../raw/prod/verification/##g' \
+  -e 's/the narrow slot in the upper arm marks/the engraved line on the upper arm marks/' \
+  -e 's/the narrow slot marks/the engraved line marks/' \
   vrf/physical-panel-validation.md \
   >> vrf/out/README.md
 
