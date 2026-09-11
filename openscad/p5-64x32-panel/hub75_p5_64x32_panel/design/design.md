@@ -355,21 +355,37 @@ size: [760, 560]
 
 ## 8. Combine the three end-relief pieces
 
-The two triangular transitions and the central rectangle are united into one
-end-relief cutter:
+Physically the relief still consists of the central rectangle and its two
+45-degree transitions. For the production cutter those three conceptual pieces
+are emitted as **one polygon**. Its base overlaps 0.05 mm into the rounded bay
+opening that is already being removed:
 
 ```scad
 module _bay_end_relief_2d(z_edge, direction=1) {
-    union() {
-        _bay_end_transition_relief_2d(z_edge, direction, "left");
-        _bay_end_narrow_relief_2d(z_edge, direction);
-        _bay_end_transition_relief_2d(z_edge, direction, "right");
-    }
+    d = rear_frame_end_step_depth;
+    half_narrow = rear_frame_end_narrow_length/2;
+    cx = width/2;
+    join_overlap = 0.05;
+
+    if(d > 0)
+        polygon([
+            [cx-half_narrow-d, z_edge - direction*join_overlap],
+            [cx-half_narrow,   z_edge + direction*d],
+            [cx+half_narrow,   z_edge + direction*d],
+            [cx+half_narrow+d, z_edge - direction*join_overlap]
+        ]);
 }
 ```
 
-The same operation is applied at the bottom and top edge of the bay, with the
-direction reversed.
+The 0.05 mm overlap lies entirely inside the existing bay opening, so it does
+**not** change the visible STEP-derived relief depth, length or transition
+angles. It only prevents an edge-touch join from surviving extrusion as an
+unwanted vertical wall across the narrow centre section.
+
+The separate rectangle/triangle helpers shown in steps 5-7 remain useful for
+explaining and rendering the three physical parts of the profile. The same
+combined production operation is applied at the bottom and top edge of the bay,
+with the direction reversed.
 
 **View:** `bay-bottom-relief`
 
@@ -428,14 +444,15 @@ vpr: [90, 0, 180]
 This explains where the three crossbars come from: they are simply the material
 left **between** adjacent bay cutters.
 
-## 11. Form the 3D rear frame from the cut web
+## 11. Subtract the four openings from the tapered blank
 
-The four openings already define a clean 2D frame web. That web is extruded
-with vertical bay walls and then intersected with the tapered outer envelope:
+Now the four complete 2D cutters are extruded through the rear housing and
+subtracted. The bay walls stay vertical while the outside wall keeps the taper
+from the STEP-derived envelope:
 
 ```scad
 module _rear_frame_core_3d() {
-    intersection() {
+    difference() {
         _tapered_outer_blank(
             rear_frame_start_y,
             mounting_plane_y_value,
@@ -447,15 +464,14 @@ module _rear_frame_core_3d() {
             rear_frame_start_y - 0.05,
             mounting_plane_y_value + 0.05
         )
-            _rear_frame_web_2d();
+            _rear_openings_2d();
     }
 }
 ```
 
-This gives the same intended physical result as subtracting four vertical bay
-cutters: the **outside perimeter tapers**, while the **bay walls remain
-vertical**. Constructing the clean 2D web first avoids triangular Boolean
-remnants at the stepped bay reliefs.
+The small internal overlap introduced in step 8 is important here: each relief
+is already merged into its rounded bay before extrusion, so the old straight
+bay edge cannot survive as an internal vertical wall through the narrow centre.
 
 **View:** `rear-frame-core`
 
@@ -467,9 +483,10 @@ vpr: [90, 0, 0]
 At this point the main rear frame exists: two side rails, top/bottom rails and
 three crossbars.
 
-The generated image is also a geometry check: each crossbar must show the same
-clean stepped relief on both adjacent bay edges. Triangular remnants or a local
-slit on only one side mean the frame construction is not valid.
+This image is also a geometry check. On every crossbar the normal straight bay
+edge must stop at each 45-degree transition; no straight wall or slit may
+continue through the central narrow relief. The top and bottom profiles of the
+crossbar must be corresponding mirror constructions.
 
 ---
 

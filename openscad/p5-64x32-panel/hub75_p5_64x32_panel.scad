@@ -1325,8 +1325,9 @@ module _hub75_p5_64x32_panel_geometry(
 
     module _rear_frame_core_3d() {
         difference() {
-            // The outside wall tapers continuously from the rear-housing
-            // start to the mounting plane. The bay cutters remain vertical.
+            // The full outside wall tapers continuously from the 2.0 mm
+            // rear-housing start to the rear mounting plane. There is no
+            // artificial short chamfer followed by a straight wall.
             _tapered_outer_blank(
                 rear_frame_start_y,
                 mounting_plane_y_value,
@@ -1334,6 +1335,7 @@ module _hub75_p5_64x32_panel_geometry(
                 rear_outer_inset_actual
             );
 
+            // Keep the bay walls vertical, as in the STEP model.
             _rear_extrude_from_to(
                 rear_frame_start_y - 0.05,
                 mounting_plane_y_value + 0.05
