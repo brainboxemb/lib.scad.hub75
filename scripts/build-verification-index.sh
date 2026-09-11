@@ -7,30 +7,59 @@ cat > vrf/out/README.md <<'EOF'
 # HUB75 panel verification
 
 This branch is intended to be usable directly at the workbench. Start with the
-first physical procedure below; do not treat the STL files as self-explanatory.
+local upper-left procedure; do not treat the STL files as self-explanatory.
 
-## Downloads for Stage 1
+## Downloads for Stage 1 / 1B
 
-- [TL1 v0.1 profile comb STL](fixtures/hub75-p5-64x32-top-left-profile-comb.stl)
-- [TL1 fixture preview](fixtures/hub75-p5-64x32-top-left-profile-comb.png)
+### TL1 v0.2 profile comb
 
-The procedure below is generated from `vrf/physical-panel-validation.md` on the
-same source commit. Image links are rewritten to this verification branch so the
-PR preview and production verification page are self-contained.
+- [combined STL](fixtures/hub75-p5-64x32-top-left-profile-comb.stl)
+- [preview](fixtures/hub75-p5-64x32-top-left-profile-comb.png)
+- AMS multipart: [base STL](fixtures/hub75-p5-64x32-top-left-profile-comb-base.stl) + [raised markings STL](fixtures/hub75-p5-64x32-top-left-profile-comb-markings.stl)
+
+### SQ1 v0.1 square/alignment guide
+
+- [combined STL](fixtures/hub75-p5-64x32-top-left-alignment-guide.stl)
+- [preview](fixtures/hub75-p5-64x32-top-left-alignment-guide.png)
+- AMS multipart: [base STL](fixtures/hub75-p5-64x32-top-left-alignment-guide-base.stl) + [raised markings STL](fixtures/hub75-p5-64x32-top-left-alignment-guide-markings.stl)
+
+### R1 v0.1 radius comparator
+
+- [combined STL](fixtures/hub75-p5-64x32-corner-radius-comparator.stl)
+- [preview](fixtures/hub75-p5-64x32-corner-radius-comparator.png)
+- AMS multipart: [base STL](fixtures/hub75-p5-64x32-corner-radius-comparator-base.stl) + [raised markings STL](fixtures/hub75-p5-64x32-corner-radius-comparator-markings.stl)
+
+### 1:1 dimension sheet
+
+- [DXF](drawings/hub75-p5-64x32-top-left-dimensions.dxf)
+- [preview](drawings/hub75-p5-64x32-top-left-dimensions.png)
+
+The procedures below are generated from the source verification documents on the
+same commit. Image links are rewritten to this verification branch so PR previews
+and production verification remain self-contained.
 
 ---
 
 EOF
 
-# Publish the operator procedure itself, not merely a link back to the source
-# branch. Shift its headings down one level so this generated page keeps one H1,
-# and rewrite production image links so the same document works on isolated PR
-# verification branches.
-sed -E \
-  -e 's/^(#{1,5}) /\1# /' \
-  -e 's#../../../raw/prod/verification/##g' \
-  vrf/physical-panel-validation.md \
-  >> vrf/out/README.md
+publish_doc() {
+  local source="$1"
+  sed -E \
+    -e 's/^(#{1,5}) /\1# /' \
+    -e 's#../../../raw/prod/verification/##g' \
+    "$source" \
+    >> vrf/out/README.md
+}
+
+publish_doc vrf/physical-panel-validation.md
+
+cat >> vrf/out/README.md <<'EOF'
+
+---
+
+EOF
+
+publish_doc vrf/top-left/corner-detail-verification.md
 
 cat >> vrf/out/README.md <<'EOF'
 
