@@ -2,20 +2,418 @@
 
 ## Goal
 
-The current P5 64 × 32 model is coherent against the supplied drawing, STEP
-model and rear photograph, but it has not yet been systematically checked against
-a physical panel.
+The current P5 64 × 32 model is coherent against the supplied dimensional
+drawing, STEP model and rear photograph, but it has not yet been systematically
+checked against a physical panel.
 
-This verification phase has three goals:
+This document is an **operator procedure**. It should be possible to perform the
+checks with the real panel, normal measuring tools and the named printed helper
+without first reading the OpenSCAD source.
 
-1. measure the real panel and compare fit-critical geometry with the model;
-2. distinguish nominal specification values from sample-specific measurements;
-3. prove that project-specific mating parts can be built from the public library
-   API without reaching into private object fields.
+The first rule is deliberately simple:
 
-A successful OpenSCAD render is not physical verification.
+> Do not start by trying to verify the whole panel. Start with one recognizable
+> physical corner, understand every feature there, and only then repeat or extend
+> the method.
 
-## Evidence model
+## Before you start
+
+For the first verification session you need:
+
+- one physical P5 64 × 32 HUB75 panel;
+- one printed **TL1 v0.1** profile comb;
+- a digital caliper;
+- a usable depth/step measurement method for the 0.5 mm tube protrusion and the
+  reinforcement recess;
+- preferably suitable small pin/plug gauges for the 3.0 mm and 2.5 mm holes;
+- a phone/camera for side/profile evidence when something does not agree;
+- a sample identifier, initially for example `P5-64X32-001`.
+
+Do **not** change the CAD model while taking the first readings. Record a
+mismatch as `investigate` first. Also do not start with the long 144/152 mm
+spacing gauges; Stage 1 deliberately proves one understandable physical corner
+before moving across the whole panel.
+
+---
+
+# Stage 1 — upper-left corner, viewed from the rear
+
+This is the first verification area.
+
+<img src="../../../raw/prod/verification/plan/top-left-location.png" alt="Rear view with upper-left verification area marked" width="55%">
+
+Hold the real panel with the **rear/electronics side toward you** and the long
+320 mm direction vertical. The area outlined in the image is the upper-left
+corner used in this procedure.
+
+Do not rotate the procedure mentally to another corner. The reinforcement feature
+is asymmetric relative to the screw position, so this first procedure is tied to
+this exact corner.
+
+## What we want to prove here
+
+One small corner already tests several independent parts of the model:
+
+1. the physical top and left edge datums;
+2. the continuous front-to-rear taper at the top outer edge;
+3. the upper-left mounting-hole/tube centre in X and Z;
+4. mounting-tube outer diameter and screw-hole diameter;
+5. mounting-tube rear protrusion;
+6. the position of the separate reinforcement feature below the screw;
+7. reinforcement outer diameter, recess and blind hole.
+
+That is enough for the first physical session. The 144 mm / 152 mm spacing bars
+are useful later, but they are not the first thing the operator needs to
+understand.
+
+## Feature map
+
+<img src="../../../raw/prod/verification/plan/top-left-feature-map.png" alt="Upper-left rear feature map" width="72%">
+
+In the generated feature map:
+
+- **yellow** = physical top and left edge datums;
+- **red** = upper-left mounting tube / screw centre;
+- **blue** = separate reinforcement feature.
+
+The coloured geometry is explanatory overlay only. The gray/normal geometry is
+the actual library panel model.
+
+## Current model targets
+
+These are the values the physical observations will be compared against. They
+are not measurements of the real sample yet.
+
+| ID | Feature | Current model target | Source/API |
+| --- | --- | ---: | --- |
+| TL-01 | mounting centre from left physical edge | 7.850 mm | `hub75_p5_64x32_panel_hole_x_positions()` |
+| TL-02 | mounting centre from top physical edge | 7.855 mm | panel height + `hub75_p5_64x32_panel_hole_z_positions()` |
+| TL-03 | mounting tube outer diameter | 8.500 mm | `hub75_p5_64x32_panel_mounting_tube_outer_diameter()` |
+| TL-04 | screw hole diameter | 3.000 mm | `hub75_p5_64x32_panel_hole_diameter()` |
+| TL-05 | mounting tube protrusion behind mounting plane | 0.500 mm | `hub75_p5_64x32_panel_mounting_tube_protrusion()` |
+| TL-06 | reinforcement centre below screw centre | 11.000 mm | `hub75_p5_64x32_panel_reinforcement_bushing_offset()` |
+| TL-07 | reinforcement centre from top edge | 18.855 mm | TL-02 + TL-06 |
+| TL-08 | reinforcement outer diameter | 14.000 mm | `hub75_p5_64x32_panel_reinforcement_bushing_outer_diameter()` |
+| TL-09 | reinforcement recess diameter | 10.000 mm | `hub75_p5_64x32_panel_reinforcement_bushing_recess_diameter()` |
+| TL-10 | reinforcement recess depth | 2.500 mm | `hub75_p5_64x32_panel_reinforcement_bushing_recess_depth()` |
+| TL-11 | reinforcement blind-hole diameter | 2.500 mm | `hub75_p5_64x32_panel_reinforcement_bushing_hole_diameter()` |
+| TL-12 | reinforcement blind-hole depth | 10.000 mm | `hub75_p5_64x32_panel_reinforcement_bushing_hole_depth()` |
+| TL-13 | rear mounting plane | 14.500 mm from front datum | `hub75_p5_64x32_panel_depth()` |
+| TL-14 | rear top-edge inset | about 1.25 mm | `hub75_p5_64x32_panel_rear_outer_inset_z()` |
+| TL-15 | start of rear taper | 2.000 mm from front datum | `hub75_rear_taper_start_y()` |
+
+For the default model the rear taper therefore runs for about 12.5 mm, from the
+rear of the front-mask/PCB stack to the 14.5 mm mounting plane. The printed comb
+uses the same public values rather than copying a second independent set of
+numbers.
+
+---
+
+# The first printed helper: `TL1 v0.1`
+
+The first helper is intentionally small. Its nominal envelope is about
+**20.8 × 35 × 2.0 mm** and it is used next to the upper-left mounting column.
+
+<img src="../../../raw/prod/verification/fixtures/hub75-p5-64x32-top-left-profile-comb.png" alt="TL1 v0.1 top-left profile comb" width="72%">
+
+The helper is marked **`TL1 v0.1`** on the part itself. Always record that
+identifier/version with the measurement results. If the fixture geometry changes,
+its version must change too.
+
+The comb is **not** a precision substitute for a caliper and it does not fit over
+the mounting features. It stands beside them. Its job is to make the spatial
+relationships easy to inspect:
+
+- its long contact edge follows the expected top outer profile/taper;
+- its rear blade hangs behind the panel;
+- the upper witness hole/arm, engraved **S**, marks the expected screw centre
+  height;
+- the lower witness hole/arm, engraved **R**, marks the reinforcement centre
+  height;
+- the front edge of the witness arm represents the rear mounting plane;
+- the engraved line on the upper arm marks the expected 0.5 mm screw-tube tip.
+
+The round witness holes are centre indicators only. Do **not** use their printed
+diameter to accept or reject the physical screw or reinforcement diameter.
+
+## Print the helper
+
+Print it flat on its broad face:
+
+- nominal thickness: 2.0 mm;
+- no supports;
+- normal dimensional print profile;
+- do not scale the STL in the slicer.
+
+Before using it, record printer/material/profile and check that the printed part
+is flat. Measure its 2 mm thickness at a few places. If the part is visibly
+warped, do not use it for the taper check.
+
+---
+
+# How to place `TL1`
+
+<img src="../../../raw/prod/verification/plan/top-left-comb-use.png" alt="TL1 comb positioned on upper-left model corner" width="82%">
+
+The comb is used **perpendicular to the rear face**, not laid flat over the rear
+of the panel.
+
+1. Put the panel rear side toward you.
+2. Put the long lower profile of the comb on the physical **top edge**.
+3. Position the comb a few millimetres to the side of the upper-left mounting
+   tube so it does not collide with the tube itself.
+4. Let the rear witness blade hang behind the panel next to the mounting tube and
+   reinforcement feature.
+5. Do not force the helper down. A forced fit hides exactly the discrepancy we
+   are trying to see.
+
+The strict side view below shows the intended relationship more clearly.
+
+<img src="../../../raw/prod/verification/plan/top-left-comb-side.png" alt="Side view of TL1 comb on panel" width="82%">
+
+---
+
+# Check A — top outer profile / taper
+
+With the comb resting on the top edge, inspect the contact from front to rear.
+
+The expected sequence is:
+
+```text
+front physical top edge
+        ↓ straight through front/PCB stack
+rear taper starts at about Y=2.0 mm
+        ↓ continuous slope
+rear outer top edge is about 1.25 mm inward/down
+at the Y=14.5 mm mounting plane
+```
+
+Look for:
+
+- rocking of the comb;
+- a visible gap at the front section;
+- a visible gap along the sloped section;
+- contact at the front but not the rear, or vice versa;
+- an obvious short chamfer/step where the model expects a continuous slope.
+
+Record the result as `agrees`, `investigate`, or `not checked`. If it does not
+agree, photograph the comb and panel from the side before changing any model
+value.
+
+This is a **profile comparison**, not a measurement of a single magic angle.
+If a discrepancy exists we can then measure the relevant Y/Z points separately.
+
+---
+
+# Check B — screw centre height from the top edge
+
+Keep the comb seated on the top edge. View the upper witness hole/arm next to the
+real mounting tube.
+
+The real screw/tube centre should visually line up with the witness centre at:
+
+```text
+7.855 mm below the physical top edge
+```
+
+This is the Z-position check for TL-02.
+
+Do not decide based on a photograph with strong perspective. Look approximately
+square to the side of the witness blade, or photograph with the camera far enough
+away to reduce perspective error.
+
+For a numerical cross-check, measure the mounting tube OD first. If the tube is
+8.50 mm, the expected distance from the physical top edge to the **nearest tube
+tangent** is approximately:
+
+```text
+7.855 - 8.50/2 = 3.605 mm
+```
+
+That tangent measurement is a cross-check; the recorded model datum remains the
+centre position.
+
+---
+
+# Check C — screw centre position from the left edge
+
+The profile comb does not try to measure X and Z at the same time. That would
+make one small printed part unnecessarily sensitive to printer fit error.
+
+Measure the upper-left mounting tube position directly from the **left physical
+panel edge**.
+
+Expected centre position:
+
+```text
+7.850 mm from the left physical edge
+```
+
+Again, if the measured tube OD is 8.50 mm, a useful tangent cross-check is:
+
+```text
+7.850 - 8.50/2 = 3.600 mm
+```
+
+Record both the measured tube OD and the edge/tangent reading so the inferred
+centre is reproducible.
+
+---
+
+# Check D — mounting tube and screw hole
+
+Measure separately; do not let one printed fit decide all of these values.
+
+Expected values:
+
+```text
+mounting tube OD        8.50 mm
+through screw hole      3.00 mm
+rear protrusion         0.50 mm
+```
+
+For OD, take at least two readings at roughly perpendicular jaw orientations.
+For the hole, use the best available method: suitable pin/plug gauges are better
+than trying to infer a small bore accurately from normal caliper jaws.
+
+For rear protrusion, use the comb as a visual reference first. The front edge of
+the upper witness arm corresponds to the 14.5 mm rear mounting plane; the
+engraved line marks the modelled tube end 0.5 mm farther rearward. Confirm
+numerically with a depth/step method if the visual result is questionable.
+
+---
+
+# Check E — reinforcement position
+
+The separate reinforcement feature below the screw is deliberately checked in
+the same session because its relationship to the screw is important to mating
+parts.
+
+Expected centre relationship:
+
+```text
+same X centre as the upper-left screw
+11.000 mm downward/inward from the screw centre
+18.855 mm from the physical top edge
+```
+
+With `TL1` seated, the real reinforcement centre should line up with the lower
+witness hole/arm.
+
+This is a stronger first check than trying to infer its absolute position from a
+large full-panel measurement.
+
+---
+
+# Check F — reinforcement sizes
+
+Expected local dimensions:
+
+```text
+outer retained reinforcement region   Ø14.0 mm
+rear recess                            Ø10.0 mm × 2.5 mm deep
+blind hole                              Ø2.5 mm × 10.0 mm deep
+```
+
+At the upper-left corner the Ø14 outer feature approaches the tapered outside
+wall. Do not assume its horizontal visible outline must be a perfect complete
+circle: the model deliberately keeps the outside panel wall continuous. Prefer
+the unobstructed vertical diameter and the recess/hole dimensions for direct
+measurement.
+
+Record the centre relation separately from the diameters/depths. A correct
+centre does not prove a correct diameter, and vice versa.
+
+---
+
+# What to record for Stage 1
+
+Use one sample ID, for example `P5-64X32-001`.
+
+| ID | Reading / observation | Repeat | Result | Photo/note |
+| --- | --- | --- | --- | --- |
+| TL-01 | centre from left edge | ×3 where practical | pending | |
+| TL-02 | centre from top edge | ×3 where practical | pending | |
+| TL-03 | mounting tube OD | ≥2 orientations | pending | |
+| TL-04 | screw hole diameter | method noted | pending | |
+| TL-05 | tube protrusion | ≥2 | pending | |
+| TL-06/TL-07 | reinforcement centre relation | ≥2 | pending | |
+| TL-08 | reinforcement outer size | ≥2 | pending | |
+| TL-09/TL-10 | recess diameter/depth | ≥2 | pending | |
+| TL-11/TL-12 | blind-hole diameter/depth | method noted | pending | |
+| TL-14/TL-15 | top taper/profile | visual + photo | pending | |
+
+For each numerical measurement also record the measuring tool and its useful
+resolution. Do not copy the model target into the reading field when a feature
+was not actually measured.
+
+## Result words
+
+Use only these simple states during the first pass:
+
+- **agrees** — no meaningful discrepancy is visible/measured with the current
+  method;
+- **investigate** — the observation differs enough that we should repeat it or
+  use a better method before changing geometry;
+- **not checked** — the feature could not be measured reliably in this session.
+
+Do not invent a universal ±0.1 mm acceptance tolerance. Hole location, molded
+outer surfaces, printed helper fit and small bore measurement do not have the
+same uncertainty.
+
+---
+
+# Why the printed helper and caliper are both used
+
+A printed helper is strong at **relationships**: contact profile, relative centre
+height, and immediately visible mismatch. A caliper/pin/depth measurement is
+stronger for an individual number.
+
+The procedure therefore deliberately combines them:
+
+```text
+TL1 comb        shows where features should line up
+caliper/pin     measures the actual local dimension
+photo           preserves the physical observation
+model accessor  gives the value being tested
+```
+
+None of those four sources replaces the others.
+
+---
+
+# Stage 2 and later
+
+Only after Stage 1 is understandable and physically usable should the wider
+panel checks be performed.
+
+The existing helpers remain useful later:
+
+- 144 mm horizontal mounting-column spacing gauge;
+- 152 mm adjacent-row vertical spacing gauge;
+- corner/rear datum experiments;
+- rear-width comb;
+- radius comparator;
+- continuous-taper/profile fixtures for additional locations.
+
+The next logical extension after the upper-left corner is to repeat the same
+feature logic at another corner, then use the spacing gauges to prove that the
+local mounting datums form the expected full pattern.
+
+## Broader verification roadmap
+
+After local corner verification, continue in this order:
+
+1. physical envelope and complete mounting pattern;
+2. rear mating rail/end/crossbar widths;
+3. bay opening radii and stepped/narrow sections;
+4. locator pins and other local mating features;
+5. connector keep-outs;
+6. visual-only markings last.
+
+---
+
+# Evidence and the future data repository
 
 Keep three concepts separate for every dimension:
 
@@ -28,213 +426,30 @@ accepted library value
 ```
 
 A measurement on one panel is evidence about that sample. It does not silently
-replace a drawing-derived nominal value. If a measured value disagrees with the
-drawing or STEP model, record the disagreement first. Change library geometry
-only after the discrepancy is understood and the intended modelling rule is
-explicit.
+replace a drawing-derived nominal value.
 
-Each physical panel should get a stable sample ID, starting for example with:
+Raw measurements, photographs and sample identity should eventually live in the
+planned companion repository `lib.scad.hub75.data`. The repository is not needed
+until the first real measurement/evidence set exists. The creation decision and
+proposed structure are tracked in the library issue for the companion data
+repository.
 
-```text
-P5-64X32-001
-```
+Generated verification renders/STLs remain publication output below
+`vrf/out/`; they are not raw physical evidence.
 
-For every measurement record:
+---
 
-- sample ID;
-- feature ID;
-- measuring tool and, when useful, tool resolution/uncertainty;
-- at least three readings where repeatability can matter;
-- measurement method/reference edges;
-- photograph or sketch when the datum is not obvious;
-- mean/range or selected reading;
-- current model value/accessor;
-- result: pending / agrees / investigate / model-change-approved.
+# Completion criteria
 
-## Measurement order
+Do not call the whole P5 64 × 32 model physically verified after one corner.
+Stage 1 is complete when:
 
-Measure the fit-critical geometry first. Cosmetic rear details are deliberately
-last.
+1. the operator can identify and place `TL1 v0.1` without reading source code;
+2. every TL-01…TL-15 item that can reasonably be checked has a recorded result;
+3. questionable observations are photographed and marked `investigate`;
+4. no library dimension has been changed merely to make a printed helper fit;
+5. the procedure itself has been corrected if physical use shows that a datum or
+   placement instruction is ambiguous.
 
-### P0 — physical envelope and mounting pattern
-
-These dimensions affect every consumer and should be checked first.
-
-| Feature | Current model target | Primary check |
-| --- | ---: | --- |
-| physical width | 159.70 mm | caliper, several positions |
-| physical height | 319.71 mm | caliper, several positions |
-| overall depth | 14.50 mm | front datum to rearmost mounting plane |
-| left/right hole centre from side edge | 7.85 mm | edge-to-centre / corner datum gauge |
-| bottom/top hole centre from end edge | 7.855 mm | edge-to-centre / corner datum gauge |
-| horizontal mounting spacing | 144.00 mm | left ↔ right hole/boss centres |
-| adjacent vertical row spacing | 152.00 mm | bottom ↔ middle and middle ↔ top |
-| mounting-hole diameter | 3.00 mm | pin/caliper check |
-| mounting tube outer diameter | 8.50 mm | caliper + fit gauge |
-| mounting tube protrusion | 0.50 mm | depth/step measurement |
-
-The full bottom-to-top mounting span does not need a 304 mm printed gauge: the
-same 152 mm adjacent-row gauge can be checked twice. A direct caliper/reference
-measurement of the complete span is still useful as a cross-check.
-
-### P1 — rear mating geometry
-
-These dimensions drive coupler guides and should be confirmed before treating
-project fit as final.
-
-| Feature | Current model target | Public API |
-| --- | ---: | --- |
-| side rail width at mounting plane | ~11.252 mm | `hub75_p5_64x32_panel_rear_side_rail_width_at_mounting_plane()` |
-| end rail width at mounting plane | ~9.501 mm | `hub75_p5_64x32_panel_rear_end_rail_width_at_mounting_plane()` |
-| narrow end width at mounting plane | ~6.501 mm | `hub75_p5_64x32_panel_rear_end_narrow_width_at_mounting_plane()` |
-| crossbar width | ~19.982 mm | `hub75_p5_64x32_panel_rear_crossbar_width_at_mounting_plane()` |
-| bay opening corner radius | ~4.991 mm | `hub75_p5_64x32_panel_rear_opening_corner_radius()` |
-| rear outer inset | model-derived | `hub75_p5_64x32_panel_rear_outer_inset_x/z()` |
-| continuous outer taper | STEP-derived | profile measurement / profile fixture |
-| narrow end section length | 30 mm reference | direct measurement |
-
-For the taper, measure at more than one Y depth. A correct rear-plane width alone
-cannot prove that the continuous profile between the PCB/rear-frame start and the
-mounting plane is correct.
-
-### P2 — local mating features
-
-| Feature | Current model target |
-| --- | ---: |
-| locator pin diameter | 3.00 mm |
-| locator pin protrusion | 3.00 mm |
-| reinforcement outer diameter | 14.00 mm |
-| reinforcement recess diameter | 10.00 mm |
-| reinforcement recess depth | 2.50 mm |
-| reinforcement blind-hole diameter | 2.50 mm |
-| reinforcement blind-hole depth | 10.00 mm |
-| reinforcement offset | 11.00 mm |
-
-Besides diameter/depth, record centre positions relative to nearby mounting-hole
-centres or physical edges. Relative dimensions are often more useful for mating
-parts than absolute coordinates.
-
-### P3 — connector keep-outs
-
-Confirm connector position, width, height and rear projection where a bracket or
-coupler can approach them. Electrical/cosmetic details that never constrain a
-mating part do not need the same metrology effort.
-
-### P4 — visual-only details
-
-Orientation arrows and other purely visual features remain secondary evidence.
-They are not required to declare the mechanical model verified.
-
-## Radius measurements
-
-Do not infer a radius from a single chord measurement when the feature can be
-checked directly.
-
-Use a printed radius comparator as a first-pass discriminator, but do not treat
-the nominal CAD radius of the printed gauge as metrology-grade evidence. Record
-printer/material/profile and measure the printed comparator itself where the
-result matters. A metal radius gauge, profile scan/photo with a scale reference,
-or repeatable coordinate measurement is stronger evidence.
-
-The first comparator should cover the expected rear-opening radius with nearby
-alternatives, for example 4.0, 4.5, 5.0, 5.5 and 6.0 mm, and provide both
-concave and convex references so inner and outer radii can be compared.
-
-## Public-API verification
-
-The existing `test/hub75_p5_64x32_panel_api.scad` proves software regression: it
-asserts that current accessors return current expected values. That is useful but
-circular for physical validation.
-
-Physical/API verification should therefore use an independent accepted baseline:
-
-```text
-physical measurements / source evidence
-        ↓
-accepted verification baseline
-        ↓
-public API probe
-        ↓
-comparison test
-```
-
-The public probe must import the component with `use <...>` and use only public
-functions. It should emit at least:
-
-- envelope dimensions;
-- mounting-hole positions and spacing;
-- mounting plane;
-- rail/end/crossbar widths;
-- opening corner radius;
-- boss and locator dimensions;
-- reinforcement dimensions relevant to consumers.
-
-A small mating coupon must also be constructed only from public accessors. If a
-reasonable consumer fixture cannot be built without reading private object
-fields, that is an API-design finding: either a public accessor is missing or
-that feature should deliberately not be part of the public mating contract.
-
-## Acceptance rule
-
-Do not use a single global tolerance for every feature.
-
-Classify findings by function:
-
-- **location-critical** — mounting-hole centres, locator centres;
-- **fit-critical** — boss OD, rail/crossbar widths, radii, taper;
-- **clearance-critical** — connector keep-outs;
-- **visual** — markings and non-mating details.
-
-Set acceptance tolerances only after the measurement method and print/process
-capability are known. The first measurement round is for collecting evidence,
-not forcing every reading into a preselected ± value.
-
-## Companion data repository
-
-Recommended name: `lib.scad.hub75.data`.
-
-Suggested structure:
-
-```text
-lib.scad.hub75.data/
-├── README.md
-├── source/
-│   └── p5-64x32/
-│       ├── drawings/
-│       ├── step/
-│       └── metadata/
-├── samples/
-│   └── P5-64X32-001/
-│       ├── sample.yml
-│       ├── measurements.yml
-│       └── photos/
-├── derived/
-│   └── p5-64x32/
-│       └── accepted-reference.yml
-└── assets/
-    └── non-authoritative supporting material
-```
-
-`source/` is original input/evidence, `samples/` records what was actually
-measured, `derived/` contains normalized findings, and `assets/` is explicitly
-non-authoritative supporting material.
-
-If redistribution rights for a supplied STEP/PDF/photo are unclear, do not put
-the binary in a public repository. Store provenance, filename/hash and an
-external/private reference instead.
-
-The library should pin or record the exact data-repository commit used to accept
-a baseline, but normal consumers of `lib.scad.hub75` should not need to clone the
-large/raw data repository.
-
-## Completion criteria
-
-The P5 64 × 32 model is physically verified when:
-
-1. all P0 and P1 entries have physical evidence;
-2. unresolved discrepancies are documented rather than hidden;
-3. location- and fit-critical public accessors agree with the accepted baseline;
-4. the small public-API mating coupons fit the real panel as intended;
-5. verification evidence is reproducible from a named sample and data commit;
-6. any library geometry corrections have their own reviewed change and do not
-   get mixed into the measurement-data commit.
+The complete model is physically verified only after the later envelope,
+mounting-pattern and rear-mating stages have equivalent evidence.

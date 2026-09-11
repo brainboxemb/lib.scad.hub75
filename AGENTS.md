@@ -107,6 +107,40 @@ manual.md           usage, placement/reference dimensions, API and views
 Every generated image used in design documentation should expose its stable view
 name so the same view can be selected during debugging.
 
+## Physical verification documentation
+
+`vrf/` must be written as an executable physical procedure, not only as a list
+of dimensions or planned fixtures. Assume the person performing verification has
+the real panel, normal measuring tools and the printed helper, but has not read
+the OpenSCAD source.
+
+Start locally. Prove one recognizable area of the panel before introducing long
+spacing bars or a large catalogue of unrelated checks.
+
+Every physical verification procedure must show and explain:
+
+1. which side/orientation and exact physical area is being checked;
+2. the datum surfaces/edges used to position the measurement or helper;
+3. a feature map naming each feature that will be checked;
+4. the required tool or printed helper and its visible version marking;
+5. exactly how the helper is placed on the real panel;
+6. the expected model value and the public accessor/source behind that value;
+7. what the operator records;
+8. what counts as `agrees`, `investigate` or `not checked`.
+
+A printable verification helper is incomplete until documentation includes both
+a clear render of the helper by itself and a render showing it in the intended
+position on the model. Prefer additional close-up/section renders where they make
+contact, taper or depth checks unambiguous.
+
+Printed helpers should be small and question-specific. Do not combine unrelated
+measurements merely to reduce the number of STLs. Put a short stable identifier
+and fixture version on the physical part, for example `TL1 v0.1`, so recorded
+measurements can identify the exact helper that was used.
+
+Generated verification images/STLs are evidence and belong below `vrf/out/` on
+the configured verification publication branch, not on `main`.
+
 ## Render architecture
 
 Keep render adapters small. They translate stable view names and call the public
