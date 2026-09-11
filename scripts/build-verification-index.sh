@@ -35,10 +35,13 @@ local upper-left procedure; do not treat the STL files as self-explanatory.
 - [preview](fixtures/hub75-p5-64x32-outer-corner-radius-comparator.png)
 - AMS multipart: [base STL](fixtures/hub75-p5-64x32-outer-corner-radius-comparator-base.stl) + [raised markings STL](fixtures/hub75-p5-64x32-outer-corner-radius-comparator-markings.stl)
 
-### 1:1 dimension sheet
+### Dimensioned reference sheet
 
 - [DXF](drawings/hub75-p5-64x32-top-left-dimensions.dxf)
 - [preview](drawings/hub75-p5-64x32-top-left-dimensions.png)
+
+The DXF/PNG are dimensioned illustrations and CAD references. A paper print is
+**not** a dimensional gauge because printer/driver scaling is not controlled.
 
 The procedures below are generated from the source verification documents on the
 same commit. Image links are rewritten to this verification branch so PR previews
