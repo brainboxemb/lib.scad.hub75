@@ -1,6 +1,6 @@
-// 1:1 rear-corner verification drawing generated from public HUB75 accessors.
-// The left drawing is true-size model geometry. The right table and lower side
-// profile explain exactly which nominal values the operator is checking.
+// Rear-corner verification drawing generated from public HUB75 accessors.
+// Geometry is expressed in real model millimetres, but any PNG or paper print is
+// illustrative only. Printer/driver scaling must never be used as metrology.
 
 use <../../../openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad>
 
@@ -88,9 +88,8 @@ reinforcement_outer_clip = inset_x - reinforcement_edge_extent;
 reinforcement_bay_projection = reinforcement_inside_extent - opening_x;
 
 _vrf_label("HUB75 P5 64x32 - TOP-LEFT REAR VERIFICATION", [-14, 13], 3.2);
-_vrf_label("TL-DWG v0.2 / dimensions in mm / left geometry is 1:1", [-14, 9.5], 2.1);
+_vrf_label("TL-DWG v0.3 / dimensions in mm / illustrative reference", [-14, 9.5], 2.1);
 
-// 1:1 rear-view local corner.
 _vrf_line([0, 0], [46, 0], 0.45);
 _vrf_line([0, 0], [0, -46], 0.45);
 _vrf_label("DATUM A - PHYSICAL TOP EDGE", [23, 1.8], 1.9, "center");
@@ -124,24 +123,17 @@ _vrf_line([hole_x+tube_d/2, -hole_top], [29, -6.0], 0.16);
 _vrf_label(str("TL-03 OD ", _vrf_fmt(tube_d), " / TL-04 HOLE ", _vrf_fmt(hole_d)), [30, -6.0], 1.65);
 
 _vrf_line([hole_x+reinforcement_d/2, -reinforcement_top], [29, -22.0], 0.16);
-_vrf_label(
-    str("TL-08 OD ", _vrf_fmt(reinforcement_d), " / TL-09 RECESS ", _vrf_fmt(reinforcement_recess_d)),
-    [30, -22.0], 1.65
-);
+_vrf_label(str("TL-08 OD ", _vrf_fmt(reinforcement_d), " / TL-09 RECESS ", _vrf_fmt(reinforcement_recess_d)), [30, -22.0], 1.65);
 _vrf_label(str("TL-11 BLIND HOLE ", _vrf_fmt(reinforcement_hole_d)), [30, -24.7], 1.65);
 
 _vrf_line([opening_x+opening_r*0.3, -(opening_top+opening_r*0.3)], [29, -14.0], 0.16);
 _vrf_label(str("CR-02 BAY CORNER R", _vrf_fmt(opening_r)), [30, -14.0], 1.65);
 
-_vrf_label(
-    str("REAR PERIMETER  X=", _vrf_fmt(inset_x), "  Z=", _vrf_fmt(inset_z)),
-    [3, -34.0], 1.65
-);
+_vrf_label(str("REAR PERIMETER  X=", _vrf_fmt(inset_x), "  Z=", _vrf_fmt(inset_z)), [3, -34.0], 1.65);
 _vrf_label("CR-01 OUTER CORNER: R0 (VERIFY)", [3, -36.8], 1.55);
 _vrf_label(str("RF-01 OUTER CLIP ~= ", _vrf_fmt(reinforcement_outer_clip)), [3, -49.0], 1.65);
 _vrf_label(str("RF-02 BAY PROJECTION ~= ", _vrf_fmt(reinforcement_bay_projection)), [3, -52.0], 1.65);
 
-// Nominal-value table, deliberately separated from true-size geometry.
 legend_x = 72;
 legend_y = 5.5;
 legend_step = 3.15;
@@ -177,16 +169,8 @@ profile_taper_start = taper_start * profile_scale;
 
 _vrf_label("SIDE PROFILE - TOP OUTER WALL", [profile_origin[0], profile_origin[1]+7], 2.1);
 _vrf_line(profile_origin, [profile_origin[0]+profile_taper_start, profile_origin[1]], 0.35);
-_vrf_line(
-    [profile_origin[0]+profile_taper_start, profile_origin[1]],
-    [profile_origin[0]+profile_depth, profile_origin[1]-profile_inset],
-    0.35
-);
-_vrf_line(
-    [profile_origin[0], profile_origin[1]-6],
-    [profile_origin[0]+profile_depth, profile_origin[1]-6],
-    0.18
-);
+_vrf_line([profile_origin[0]+profile_taper_start, profile_origin[1]], [profile_origin[0]+profile_depth, profile_origin[1]-profile_inset], 0.35);
+_vrf_line([profile_origin[0], profile_origin[1]-6], [profile_origin[0]+profile_depth, profile_origin[1]-6], 0.18);
 _vrf_label(str("TL-15 taper starts Y=", _vrf_fmt(taper_start)), [profile_origin[0], profile_origin[1]-9], 1.65);
 _vrf_label(str("TL-13 rear mounting plane Y=", _vrf_fmt(depth)), [profile_origin[0], profile_origin[1]-12], 1.65);
 _vrf_label(str("TL-14 rear top inset=", _vrf_fmt(inset_z)), [profile_origin[0], profile_origin[1]-15], 1.65);
