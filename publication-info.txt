@@ -1,0 +1,40 @@
+Publication context : pull_request
+Publication kind    : verification
+Publication branch  : dev/pr-19/verification
+
+Source
+------
+Repository          : brainboxemb/lib.scad.hub75
+Ref type            : pull_request
+Ref                 : feature/pr-19-corner-verification
+Commit              : eb81dcc794e7dedf1fb2c483fb620ec67293bfc3
+Triggered by        : brainboxemb
+Workflow run        : https://github.com/brainboxemb/lib.scad.hub75/actions/runs/34676886094
+
+Tooling
+-------
+SCAD toolchain image: ghcr.io/brainboxemb/scad-toolchain:v0.4.1
+SCAD toolchain ver. : v0.4.1
+tool.scad-project   : v0.9.12
+
+Git submodules
+--------------
+tools/tool.scad-project : ba93e9165f8c23df3f867c2ae7fa160187166d9d
+
+Runtime components
+------------------
+SCAD toolchain
+==============
+OpenSCAD   : OpenSCAD version 2026.09.09.nightly
+PythonSCAD : PythonSCAD version 1.1.2
+Python     : Python 3.12.3
+Git        : git version 2.43.0
+SCons      : 4.11.1
+BOSL2      : v2.0.752
+pybosl2    : 0.6.7
+Shapely    : 2.1.2
+docsgen    : 2.0.55
+Pillow     : 12.3.0
+OPENSCADPATH: /opt/openscad-libraries
+BOSL2_ROOT  : /opt/openscad-libraries/BOSL2
+PYTHONPATH : /__w/lib.scad.hub75/lib.scad.hub75/tools/tool.scad-project/src:/opt/python-libs
