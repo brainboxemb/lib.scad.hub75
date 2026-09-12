@@ -1,0 +1,18 @@
+# Generated build output
+
+This directory contains generated output for a successful project build.
+It is generated automatically and should not be edited manually.
+
+## Contents
+
+- [Design documentation](design/README.md)
+- [PNG renders](png/README.md)
+
+## Publication
+
+- Context: `pull_request`
+- Source: pull_request `feature/pr-19-corner-verification`
+- Generated branch: `dev/pr-19/build`
+- Policy: mutable snapshot; replaced by the next successful publication
+
+See `publication-info.txt` for the exact source commit, tooling and runtime provenance.
