@@ -43,9 +43,11 @@ local upper-left procedure; do not treat the STL files as self-explanatory.
 The DXF/PNG are dimensioned illustrations and CAD references. A paper print is
 **not** a dimensional gauge because printer/driver scaling is not controlled.
 
-The procedures below are generated from the source verification documents on the
-same commit. Image links are rewritten to this verification branch so PR previews
-and production verification remain self-contained.
+The workbench instructions now start with one small test case. The purpose of
+this pilot is to agree on a clear format before adding more physical checks.
+
+The source Markdown contains both English and Dutch. Image links are rewritten
+to this verification branch so the generated package remains self-contained.
 
 ---
 
@@ -53,26 +55,14 @@ EOF
 
 publish_doc() {
   local source="$1"
-  # SQ1 v0.2 is a marking-only revision of the same fit geometry. Keep the
-  # workbench publication on the current printable identifier while the draft
-  # source procedure is being iterated in this PR.
   sed -E \
     -e 's/^(#{1,5}) /\1# /' \
     -e 's#../../../raw/prod/verification/##g' \
-    -e 's/SQ1 v0\.1/SQ1 v0.2/g' \
     "$source" \
     >> vrf/out/README.md
 }
 
-publish_doc vrf/physical-panel-validation.md
-
-cat >> vrf/out/README.md <<'EOF'
-
----
-
-EOF
-
-publish_doc vrf/top-left/corner-detail-verification.md
+publish_doc vrf/top-left/test-case-pilot.md
 
 cat >> vrf/out/README.md <<'EOF'
 
