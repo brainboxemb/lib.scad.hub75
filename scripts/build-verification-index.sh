@@ -1,13 +1,22 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-mkdir -p vrf/out
+mkdir -p vrf/out/test-cases
 
 cat > vrf/out/README.md <<'EOF'
 # HUB75 panel verification
 
-This branch is intended to be usable directly at the workbench. Start with the
-local upper-left procedure; do not treat the STL files as self-explanatory.
+This branch is intended to be usable directly at the workbench. Start with one
+test case in the language you prefer.
+
+## Test cases
+
+- [SQ-01 — Hold TL1 square with SQ1 (English)](test-cases/sq-01-hold-tl1-square-with-sq1.en.md)
+- [SQ-01 — TL1 haaks plaatsen met SQ1 (Nederlands)](test-cases/sq-01-tl1-haaks-plaatsen-met-sq1.nl.md)
+- [Test case template / Testcase-sjabloon](test-case-template.md)
+
+Each test case answers one question. Design history, CI status and unrelated
+measurements stay outside the test case.
 
 ## Downloads for Stage 1 / 1B
 
@@ -43,31 +52,6 @@ local upper-left procedure; do not treat the STL files as self-explanatory.
 The DXF/PNG are dimensioned illustrations and CAD references. A paper print is
 **not** a dimensional gauge because printer/driver scaling is not controlled.
 
-The workbench instructions now start with one small test case. The purpose of
-this pilot is to agree on a clear format before adding more physical checks.
-
-The source Markdown contains both English and Dutch. Image links are rewritten
-to this verification branch so the generated package remains self-contained.
-
----
-
-EOF
-
-publish_doc() {
-  local source="$1"
-  sed -E \
-    -e 's/^(#{1,5}) /\1# /' \
-    -e 's#../../../raw/prod/verification/##g' \
-    "$source" \
-    >> vrf/out/README.md
-}
-
-publish_doc vrf/top-left/test-case-pilot.md
-
-cat >> vrf/out/README.md <<'EOF'
-
----
-
 ## Later-stage fixture downloads
 
 These helpers remain available, but they are intentionally secondary to the
@@ -79,3 +63,21 @@ local corner procedure above.
 
 Generated verification output belongs on the configured verification branch.
 EOF
+
+cp vrf/test-case-template.md vrf/out/test-case-template.md
+
+publish_test_case() {
+  local source="$1"
+  local target="$2"
+  sed -E \
+    -e 's#../../../../raw/prod/verification/#../#g' \
+    "$source" > "$target"
+}
+
+publish_test_case \
+  vrf/top-left/test-cases/sq-01-hold-tl1-square-with-sq1.en.md \
+  vrf/out/test-cases/sq-01-hold-tl1-square-with-sq1.en.md
+
+publish_test_case \
+  vrf/top-left/test-cases/sq-01-tl1-haaks-plaatsen-met-sq1.nl.md \
+  vrf/out/test-cases/sq-01-tl1-haaks-plaatsen-met-sq1.nl.md
