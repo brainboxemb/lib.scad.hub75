@@ -4,11 +4,8 @@ set -euo pipefail
 repo_root="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
 cd "$repo_root"
 
-mkdir -p vrf/out/fixtures vrf/out/plan
+mkdir -p vrf/out/fixtures vrf/out/plan vrf/out/drawings
 
-# OpenSCAD may exit successfully while emitting a completely unusable model after
-# an unknown function/undef propagation. Treat those warnings as verification
-# failures; ordinary camera notices remain allowed.
 run_openscad_checked() {
   local log
   log="$(mktemp)"
@@ -43,8 +40,17 @@ render_stl() {
       "$source"
 }
 
-# Auto-fitted preview for a standalone fixture. These sources intentionally do
-# not define a documentary camera; fitting the complete helper is desirable.
+render_dxf() {
+  local output="$1"
+  local source="$2"
+
+  run_openscad_checked \
+    xvfb-run -a openscad \
+      --enable=object-function \
+      -o "$output" \
+      "$source"
+}
+
 render_png_autofit() {
   local output="$1"
   local source="$2"
@@ -62,9 +68,6 @@ render_png_autofit() {
       "$source"
 }
 
-# Operator-plan views define $vpr/$vpt/$vpd in their .scad adapters. Do not add
-# --autocenter/--viewall here: those CLI flags replace the carefully selected
-# local framing and can make a close-up blank or shrink it to a dot.
 render_png_camera() {
   local output="$1"
   local source="$2"
@@ -84,19 +87,70 @@ render_stl \
   vrf/out/hub75-p5-64x32-panel-api.stl \
   test/hub75_p5_64x32_panel_api.scad
 
-# First operator procedure: one recognizable top-left rear corner.
+# TL1 v0.2: combined one-colour STL plus aligned AMS base/markings parts.
 render_stl \
   vrf/out/fixtures/hub75-p5-64x32-top-left-profile-comb.stl \
   vrf/fixtures/export/top-left-profile-comb.scad
+render_stl \
+  vrf/out/fixtures/hub75-p5-64x32-top-left-profile-comb-base.stl \
+  vrf/fixtures/export/top-left-profile-comb-base.scad
+render_stl \
+  vrf/out/fixtures/hub75-p5-64x32-top-left-profile-comb-markings.stl \
+  vrf/fixtures/export/top-left-profile-comb-markings.scad
 render_png_autofit \
   vrf/out/fixtures/hub75-p5-64x32-top-left-profile-comb.png \
   vrf/fixtures/export/top-left-profile-comb.scad \
   900,500
 
+# SQ1 v0.2 square/orientation guide.
+render_stl \
+  vrf/out/fixtures/hub75-p5-64x32-top-left-alignment-guide.stl \
+  vrf/fixtures/export/top-left-alignment-guide.scad
+render_stl \
+  vrf/out/fixtures/hub75-p5-64x32-top-left-alignment-guide-base.stl \
+  vrf/fixtures/export/top-left-alignment-guide-base.scad
+render_stl \
+  vrf/out/fixtures/hub75-p5-64x32-top-left-alignment-guide-markings.stl \
+  vrf/fixtures/export/top-left-alignment-guide-markings.scad
+render_png_autofit \
+  vrf/out/fixtures/hub75-p5-64x32-top-left-alignment-guide.png \
+  vrf/fixtures/render/top-left-alignment-guide-preview.scad \
+  900,500
+
+# R1 v0.1: convex probes for the concave ~R5 bay-opening corner.
+render_stl \
+  vrf/out/fixtures/hub75-p5-64x32-corner-radius-comparator.stl \
+  vrf/fixtures/export/corner-radius-comparator.scad
+render_stl \
+  vrf/out/fixtures/hub75-p5-64x32-corner-radius-comparator-base.stl \
+  vrf/fixtures/export/corner-radius-comparator-base.scad
+render_stl \
+  vrf/out/fixtures/hub75-p5-64x32-corner-radius-comparator-markings.stl \
+  vrf/fixtures/export/corner-radius-comparator-markings.scad
+render_png_autofit \
+  vrf/out/fixtures/hub75-p5-64x32-corner-radius-comparator.png \
+  vrf/fixtures/export/corner-radius-comparator.scad \
+  1100,520
+
+# R2 v0.3: concave notches for checking the real external rear-corner radius.
+render_stl \
+  vrf/out/fixtures/hub75-p5-64x32-outer-corner-radius-comparator.stl \
+  vrf/fixtures/export/outer-corner-radius-comparator.scad
+render_stl \
+  vrf/out/fixtures/hub75-p5-64x32-outer-corner-radius-comparator-base.stl \
+  vrf/fixtures/export/outer-corner-radius-comparator-base.scad
+render_stl \
+  vrf/out/fixtures/hub75-p5-64x32-outer-corner-radius-comparator-markings.stl \
+  vrf/fixtures/export/outer-corner-radius-comparator-markings.scad
+render_png_autofit \
+  vrf/out/fixtures/hub75-p5-64x32-outer-corner-radius-comparator.png \
+  vrf/fixtures/export/outer-corner-radius-comparator.scad \
+  1100,480
+
 render_png_camera \
   vrf/out/plan/top-left-location.png \
   vrf/top-left/render/top-left-location.scad \
-  520,900
+  720,620
 render_png_camera \
   vrf/out/plan/top-left-feature-map.png \
   vrf/top-left/render/top-left-feature-map.scad \
@@ -109,8 +163,28 @@ render_png_camera \
   vrf/out/plan/top-left-comb-side.png \
   vrf/top-left/render/top-left-comb-side.scad \
   900,500
+render_png_camera \
+  vrf/out/plan/top-left-comb-square-use.png \
+  vrf/top-left/render/top-left-comb-square-use.scad \
+  900,620
+render_png_camera \
+  vrf/out/plan/top-left-radius-reinforcement.png \
+  vrf/top-left/render/top-left-radius-reinforcement.scad \
+  820,720
+render_png_camera \
+  vrf/out/plan/top-left-r2-use.png \
+  vrf/top-left/render/top-left-r2-use.scad \
+  900,720
 
-# Secondary helpers retained for later stages of the plan.
+render_dxf \
+  vrf/out/drawings/hub75-p5-64x32-top-left-dimensions.dxf \
+  vrf/top-left/drawing/top-left-dimension-sheet.scad
+render_png_camera \
+  vrf/out/drawings/hub75-p5-64x32-top-left-dimensions.png \
+  vrf/top-left/render/top-left-dimension-sheet.scad \
+  1600,900
+
+# Secondary helpers retained for later stages.
 render_stl \
   vrf/out/fixtures/hub75-p5-64x32-corner-datum-gauge.stl \
   vrf/fixtures/export/corner-datum-gauge.scad

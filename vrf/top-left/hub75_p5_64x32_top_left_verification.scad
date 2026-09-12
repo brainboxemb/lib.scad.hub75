@@ -1,14 +1,12 @@
-// Focused render helpers for the first physical verification procedure.
+// Focused render helpers for the physical upper-left verification procedure.
 // These helpers do not duplicate panel geometry: the complete production panel
-// is built through the public API and the render adapters frame the area with an
-// explicit camera.
+// is rendered through the public API and overlays/fixtures consume public accessors.
 
 use <../../openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad>
 use <../fixtures/hub75_p5_64x32_physical_verification_fixtures.scad>
 
-// "Top-left" in this verification plan always means left as the operator sees
-// the panel from the REAR. Looking from the rear mirrors native model X, so the
-// visually left mounting column is the second/high-X public mounting position.
+// "Top-left" always means left as the operator sees the panel from the REAR.
+// Looking from the rear mirrors native model X, so visually left is high-X.
 function hub75_vrf_top_left_x(panel) =
     hub75_p5_64x32_panel_hole_x_positions_centered(panel)[1];
 
@@ -21,6 +19,16 @@ function hub75_vrf_top_left_reinforcement_z(panel) =
 
 function hub75_vrf_overlay_y(panel) =
     hub75_p5_64x32_panel_depth(panel) + 4.5;
+
+// Verification images use the same neutral/light documentation rendering as the
+// library design document. The physical/default model remains black; this only
+// improves contrast between panel geometry and coloured operator overlays.
+module hub75_vrf_plan_panel(panel) {
+    hub75_p5_64x32_panel_render(
+        panel,
+        view = hub75_p5_64x32_panel_view_id("rear")
+    );
+}
 
 module _hub75_vrf_rear_ring(x, y, z, outer_d, inner_d, thickness=0.7) {
     translate([x, y, z])
@@ -46,7 +54,7 @@ module hub75_vrf_top_left_location(panel, area_width=46, area_height=56) {
     rear_left = width/2;
     top = height/2;
 
-    hub75_p5_64x32_panel_build(panel);
+    hub75_vrf_plan_panel(panel);
 
     _hub75_vrf_rear_rect_frame(
         rear_left - area_width,
@@ -61,8 +69,7 @@ module hub75_vrf_top_left_feature_map(panel, datum_length=38) {
     width = hub75_p5_64x32_panel_width(panel);
     height = hub75_p5_64x32_panel_height(panel);
     tube_d = hub75_p5_64x32_panel_mounting_tube_outer_diameter(panel);
-    reinforcement_d =
-        hub75_p5_64x32_panel_reinforcement_bushing_outer_diameter(panel);
+    reinforcement_d = hub75_p5_64x32_panel_reinforcement_bushing_outer_diameter(panel);
     x = hub75_vrf_top_left_x(panel);
     z_screw = hub75_vrf_top_left_z(panel);
     z_reinforcement = hub75_vrf_top_left_reinforcement_z(panel);
@@ -70,11 +77,8 @@ module hub75_vrf_top_left_feature_map(panel, datum_length=38) {
     top = height/2;
     oy = hub75_vrf_overlay_y(panel);
 
-    hub75_p5_64x32_panel_build(panel);
+    hub75_vrf_plan_panel(panel);
 
-    // Yellow datum references: short segments along the physical top and the
-    // operator's left edge. They float behind the rear-most panel details so
-    // the real rail and mounting geometry stay visible underneath.
     color([1.0, 0.78, 0.08]) {
         translate([rear_left-datum_length, oy, top-0.5])
             cube([datum_length, 0.7, 1.0]);
@@ -82,51 +86,147 @@ module hub75_vrf_top_left_feature_map(panel, datum_length=38) {
             cube([1.0, 0.7, datum_length]);
     }
 
-    // Red = mounting tube / screw-hole centre.
     color([0.95, 0.12, 0.08])
         _hub75_vrf_rear_ring(
-            x,
-            oy+0.5,
-            z_screw,
-            tube_d+2.4,
-            tube_d+0.8
+            x, oy+0.5, z_screw,
+            tube_d+2.4, tube_d+0.8
         );
 
-    // Blue = separate reinforcement feature 11 mm inward from the screw centre.
     color([0.10, 0.38, 1.0])
         _hub75_vrf_rear_ring(
-            x,
-            oy+0.5,
-            z_reinforcement,
-            reinforcement_d+2.4,
-            reinforcement_d+0.8
+            x, oy+0.5, z_reinforcement,
+            reinforcement_d+2.4, reinforcement_d+0.8
         );
+}
+
+// Rear-view detail map for the next physical questions: the bay's concave
+// R~5 corner, the separate Ø14 reinforcement footprint, and the sharp rear
+// perimeter corner currently implied by the model.
+module hub75_vrf_top_left_radius_reinforcement_map(panel) {
+    width = hub75_p5_64x32_panel_width(panel);
+    height = hub75_p5_64x32_panel_height(panel);
+    inset_x = hub75_p5_64x32_panel_rear_outer_inset_x(panel);
+    inset_z = hub75_p5_64x32_panel_rear_outer_inset_z(panel);
+    side_rail = hub75_p5_64x32_panel_rear_side_rail_width_at_mounting_plane(panel);
+    end_rail = hub75_p5_64x32_panel_rear_end_rail_width_at_mounting_plane(panel);
+    r = hub75_p5_64x32_panel_rear_opening_corner_radius(panel);
+    reinforcement_d = hub75_p5_64x32_panel_reinforcement_bushing_outer_diameter(panel);
+    rear_left = width/2;
+    top = height/2;
+    local_open_x = inset_x + side_rail;
+    local_open_z = inset_z + end_rail;
+    local_cx = local_open_x + r;
+    local_cz = local_open_z + r;
+    oy = hub75_vrf_overlay_y(panel);
+
+    hub75_vrf_plan_panel(panel);
+
+    // Magenta beads trace the nominal bay-opening radius without obscuring the
+    // production edge underneath.
+    color([0.95, 0.12, 0.75])
+        for(a=[90:6:180]) {
+            lx = local_cx + r*cos(a);
+            lz = local_cz - r*sin(a);
+            gx = rear_left - lx;
+            gz = top - lz;
+            translate([gx, oy+0.7, gz])
+                rotate([90, 0, 0])
+                    cylinder(h=0.8, d=0.9, center=true, $fn=24);
+        }
+
+    // Blue ring identifies the reinforcement footprint that intrudes into the
+    // bay while remaining clipped by the continuous external wall.
+    color([0.05, 0.45, 1.0])
+        _hub75_vrf_rear_ring(
+            hub75_vrf_top_left_x(panel),
+            oy+0.8,
+            hub75_vrf_top_left_reinforcement_z(panel),
+            reinforcement_d+1.8,
+            reinforcement_d+0.5
+        );
+
+    // Yellow short L marks the current sharp rear-perimeter corner (R0) at the
+    // mounting plane. If the real moulding is rounded here, that is new evidence.
+    color([1.0, 0.78, 0.08]) {
+        translate([rear_left-inset_x-8, oy+0.9, top-inset_z-0.45])
+            cube([8, 0.7, 0.9]);
+        translate([rear_left-inset_x-0.45, oy+0.9, top-inset_z-8])
+            cube([0.9, 0.7, 8]);
+    }
 }
 
 // Place the print-flat profile comb in its real use orientation.
 // Local comb axes: X=front->rear, Y=down from top, Z=print thickness.
 // Global panel axes: X=width, Y=front->rear, Z=height.
+//
+// This mapping must be a proper rotation, not a reflection. With local X mapped
+// to +global Y and local Y mapped to -global Z, local Z necessarily maps to
+// -global X. The previous +global-X mapping mirrored the printable fixture in
+// the explanatory assembly, which made directional markings appear backwards.
+function _hub75_vrf_top_left_use_matrix(comb_x, top) = [
+    [0,  0, -1, comb_x],
+    [1,  0,  0, 0],
+    [0, -1,  0, top],
+    [0,  0,  0, 1]
+];
+
+function _hub75_vrf_rotation_determinant(m) =
+      m[0][0] * (m[1][1]*m[2][2] - m[1][2]*m[2][1])
+    - m[0][1] * (m[1][0]*m[2][2] - m[1][2]*m[2][0])
+    + m[0][2] * (m[1][0]*m[2][1] - m[1][1]*m[2][0]);
+
 module hub75_vrf_top_left_profile_comb_on_panel(panel) {
     top = hub75_p5_64x32_panel_height(panel)/2;
     screw_x = hub75_vrf_top_left_x(panel);
     tube_d = hub75_p5_64x32_panel_mounting_tube_outer_diameter(panel);
+    comb_thickness = 2.0;
+    tube_clearance = 0.4;
+    comb_x = screw_x - tube_d/2 - tube_clearance;
+    placement = _hub75_vrf_top_left_use_matrix(comb_x, top);
+    det = _hub75_vrf_rotation_determinant(placement);
 
-    // Put the 2 mm plate just inward of the tube. That keeps it on the physical
-    // panel edge/profile while leaving the tube itself unobstructed.
-    comb_x = screw_x - tube_d/2 - 2.4;
+    assert(
+        abs(det - 1) < 1e-9,
+        str("TL1 placement must be a proper rotation (det=+1); got ", det)
+    )
+        multmatrix(placement)
+            hub75_vrf_top_left_profile_comb(panel, thickness=comb_thickness);
+}
 
-    multmatrix([
-        [0,  0, 1, comb_x],
-        [1,  0, 0, 0],
-        [0, -1, 0, top],
-        [0,  0, 0, 1]
-    ])
-        hub75_vrf_top_left_profile_comb(panel);
+module hub75_vrf_top_left_alignment_guide_on_panel(panel) {
+    top = hub75_p5_64x32_panel_height(panel)/2;
+    screw_x = hub75_vrf_top_left_x(panel);
+    tube_d = hub75_p5_64x32_panel_mounting_tube_outer_diameter(panel);
+    comb_thickness = 2.0;
+    tube_clearance = 0.4;
+    comb_x = screw_x - tube_d/2 - tube_clearance;
+    placement = _hub75_vrf_top_left_use_matrix(comb_x, top);
+    det = _hub75_vrf_rotation_determinant(placement);
+
+    assert(
+        abs(det - 1) < 1e-9,
+        str("SQ1 placement must be a proper rotation (det=+1); got ", det)
+    )
+        multmatrix(placement)
+            // SQ1's slot is centred on local Z=0; TL1 occupies local Z=0..2 mm.
+            // Shift SQ1 by half the TL1 thickness so its slot is centred on TL1.
+            translate([0, 0, comb_thickness/2])
+                hub75_vrf_top_left_alignment_guide(panel);
 }
 
 module hub75_vrf_top_left_comb_use(panel) {
-    hub75_p5_64x32_panel_build(panel);
+    hub75_vrf_plan_panel(panel);
 
     color([1.0, 0.48, 0.05])
         hub75_vrf_top_left_profile_comb_on_panel(panel);
+}
+
+module hub75_vrf_top_left_comb_square_use(panel) {
+    hub75_vrf_plan_panel(panel);
+
+    color([1.0, 0.48, 0.05])
+        hub75_vrf_top_left_profile_comb_on_panel(panel);
+
+    color([0.05, 0.72, 0.82])
+        hub75_vrf_top_left_alignment_guide_on_panel(panel);
 }

@@ -16,7 +16,9 @@ function hub75_vrf_mounting_spacing_z(panel) =
     let(zs = hub75_p5_64x32_panel_hole_z_positions(panel))
     zs[1] - zs[0];
 
-function hub75_vrf_top_left_profile_comb_version() = "v0.1";
+function hub75_vrf_top_left_profile_comb_version() = "v0.2";
+function hub75_vrf_top_left_alignment_guide_version() = "v0.2";
+function hub75_vrf_corner_radius_comparator_version() = "v0.1";
 
 function hub75_vrf_top_left_hole_from_top(panel) =
     hub75_p5_64x32_panel_height(panel)
@@ -53,13 +55,6 @@ module _hub75_vrf_spacing_bar(
     }
 }
 
-// A rear-mounted corner datum gauge. The two fences wrap around the physical
-// outer corner; the clearance opening is centred on the bottom-left mounting
-// datum and clears the reinforcement ring around that mounting position.
-//
-// This older helper is retained for later comparison work. The first operator
-// procedure now starts with the top-left profile comb below because that helper
-// has an explicit placement/use procedure and checks one local area at a time.
 module hub75_vrf_corner_datum_gauge(
     panel,
     plate_size = 32,
@@ -76,17 +71,11 @@ module hub75_vrf_corner_datum_gauge(
     span = plate_size - outer_min;
     center = (outer_min + plate_size) / 2;
 
-    // Keep the physical datum construction in edge-based local coordinates,
-    // then centre only the completed fixture for stable preview framing.
     translate([-center, -center, 0])
         difference() {
             union() {
-                // Rear reference plate.
                 translate([outer_min, outer_min, 0])
                     cube([span, span, plate_thickness]);
-
-                // Side and end fences. Their inside faces sit edge_clearance outside
-                // the nominal physical X/Z panel edges.
                 translate([outer_min, outer_min, 0])
                     cube([fence_thickness, span, fence_height]);
                 translate([outer_min, outer_min, 0])
@@ -102,8 +91,6 @@ module hub75_vrf_corner_datum_gauge(
         }
 }
 
-// Horizontal mounting-column spacing fixture. The openings clear the Ø14-ish
-// reinforcement rings so the fixture primarily tests centre spacing.
 module hub75_vrf_mounting_spacing_x_gauge(
     panel,
     opening_clearance = 0.8,
@@ -124,8 +111,6 @@ module hub75_vrf_mounting_spacing_x_gauge(
     );
 }
 
-// Adjacent-row vertical spacing fixture. It can be used on bottom-middle and
-// middle-top, avoiding one very long 304 mm print.
 module hub75_vrf_mounting_spacing_z_gauge(
     panel,
     opening_clearance = 0.8,
@@ -146,17 +131,6 @@ module hub75_vrf_mounting_spacing_z_gauge(
     );
 }
 
-// First physical-verification helper: a thin profile comb for the upper-left
-// corner when the panel is viewed from the rear.
-//
-// Local 2D coordinates are deliberately human-readable:
-//   X = front -> rear depth of the real panel
-//   Y = distance downward from the physical top edge
-//
-// The comb is printed flat at 2 mm thickness. In use it stands perpendicular to
-// the rear face, with the long lower edge of the top rail resting on the actual
-// top edge/profile. The rear witness blade hangs behind the panel next to the
-// upper-left mounting column.
 module _hub75_vrf_top_left_profile_comb_2d(
     panel,
     rail_height = 4.0,
@@ -172,15 +146,12 @@ module _hub75_vrf_top_left_profile_comb_2d(
     screw_from_top = hub75_vrf_top_left_hole_from_top(panel);
     reinforcement_from_top = hub75_vrf_top_left_reinforcement_from_top(panel);
 
-    blade_x0 = rear_plane + protrusion + rear_clearance;
+    blade_x0 = rear_plane + protrusion + 0.8;
     blade_x1 = blade_x0 + blade_depth;
     arm_x0 = rear_plane + 0.05;
 
     difference() {
         union() {
-            // The lower edge follows the expected physical top profile:
-            // straight through the front/PCB stack, then the continuous rear
-            // taper to the mounting plane.
             polygon([
                 [0, -rail_height],
                 [rear_start, -rail_height],
@@ -192,24 +163,18 @@ module _hub75_vrf_top_left_profile_comb_2d(
                 [0, 0]
             ]);
 
-            // Rear witness blade. It sits behind the panel, not over the rear
-            // rail, so the operator can compare the real centres next to it.
             translate([blade_x0, rear_inset-rail_height])
                 square([
                     blade_depth,
                     blade_height + rail_height - rear_inset
                 ]);
 
-            // Witness arms at the modelled screw and reinforcement centre
-            // heights. Their front edge is the nominal rear mounting plane.
             translate([arm_x0, screw_from_top-witness_width/2])
                 square([blade_x1-arm_x0, witness_width]);
             translate([arm_x0, reinforcement_from_top-witness_width/2])
                 square([blade_x1-arm_x0, witness_width]);
         }
 
-        // Round witness holes give an exact visual centre reference without
-        // turning printer hole-size error into a false panel-diameter result.
         translate([blade_x0 + blade_depth/2, screw_from_top])
             circle(d=1.5, $fn=32);
         translate([blade_x0 + blade_depth/2, reinforcement_from_top])
@@ -217,11 +182,16 @@ module _hub75_vrf_top_left_profile_comb_2d(
     }
 }
 
-module hub75_vrf_top_left_profile_comb(
+module hub75_vrf_top_left_profile_comb_base(panel, thickness = 2.0) {
+    linear_extrude(height=thickness)
+        _hub75_vrf_top_left_profile_comb_2d(panel);
+}
+
+module hub75_vrf_top_left_profile_comb_markings(
     panel,
     thickness = 2.0,
     version = hub75_vrf_top_left_profile_comb_version(),
-    engraving_depth = 0.35
+    marking_height = 0.50
 ) {
     rear_plane = hub75_p5_64x32_panel_depth(panel);
     protrusion = hub75_p5_64x32_panel_mounting_tube_protrusion(panel);
@@ -229,50 +199,195 @@ module hub75_vrf_top_left_profile_comb(
     reinforcement_from_top = hub75_vrf_top_left_reinforcement_from_top(panel);
     blade_x0 = rear_plane + protrusion + 0.8;
     blade_center_x = blade_x0 + 2.5;
-    marker_depth = engraving_depth + 0.05;
+    z0 = thickness - 0.02;
+    h = marking_height + 0.02;
+
+    // Keep both text rows fully on the narrow blade so the combined STL remains
+    // one connected solid while retaining large FDM-readable characters.
+    translate([blade_center_x, 22.8, z0])
+        linear_extrude(height=h)
+            rotate(90)
+                text(
+                    "TL1",
+                    size=3.5,
+                    halign="center",
+                    valign="center"
+                );
+
+    translate([blade_center_x, 28.2, z0])
+        linear_extrude(height=h)
+            rotate(90)
+                text(
+                    version,
+                    size=2.5,
+                    halign="center",
+                    valign="center"
+                );
+
+    for(mark = [
+        [screw_from_top, "S"],
+        [reinforcement_from_top, "R"]
+    ])
+        translate([blade_x0 + 0.85, mark[0] + 2.1, z0])
+            linear_extrude(height=h)
+                text(
+                    mark[1],
+                    size=2.4,
+                    halign="center",
+                    valign="center"
+                );
+
+    translate([
+        rear_plane + protrusion - 0.18,
+        screw_from_top - 0.8,
+        z0
+    ])
+        cube([0.36, 1.6, h]);
+}
+
+module hub75_vrf_top_left_profile_comb(
+    panel,
+    thickness = 2.0,
+    version = hub75_vrf_top_left_profile_comb_version(),
+    marking_height = 0.50
+) {
+    union() {
+        hub75_vrf_top_left_profile_comb_base(panel, thickness);
+        hub75_vrf_top_left_profile_comb_markings(
+            panel,
+            thickness,
+            version,
+            marking_height
+        );
+    }
+}
+
+// SQ1 is a U-shaped orientation shoe. The slot is open at the panel side so it
+// can slide over TL1, while a 1.6 mm bridge keeps both feet one printable part.
+module hub75_vrf_top_left_alignment_guide_base(
+    panel,
+    comb_thickness = 2.0,
+    slot_clearance = 0.30,
+    width = 18.0,
+    depth = 1.80,
+    height = 6.0,
+    slot_depth = 4.4
+) {
+    slot = comb_thickness + slot_clearance;
 
     difference() {
-        linear_extrude(height=thickness)
-            _hub75_vrf_top_left_profile_comb_2d(panel);
+        translate([0, -height, -width/2])
+            cube([depth, height, width]);
 
-        // Engrave, rather than add, the fixture identity so the exported STL
-        // remains one connected printable solid.
-        translate([blade_center_x, 27, thickness-engraving_depth])
-            linear_extrude(height=marker_depth)
-                rotate(90)
-                    text(
-                        str("TL1 ", version),
-                        size=2.2,
-                        halign="center",
-                        valign="center"
-                    );
+        translate([-0.1, -slot_depth, -slot/2])
+            cube([depth+0.2, slot_depth+0.1, slot]);
+    }
+}
 
-        // Shallow face engraving for the two witness levels.
-        for(mark = [
-            [screw_from_top, "S"],
-            [reinforcement_from_top, "R"]
-        ])
-            translate([
-                blade_x0 + 0.9,
-                mark[0] + 2.0,
-                thickness-engraving_depth
-            ])
-                linear_extrude(height=marker_depth)
-                    text(
-                        mark[1],
-                        size=1.7,
-                        halign="center",
-                        valign="center"
-                    );
+module hub75_vrf_top_left_alignment_guide_markings(
+    panel,
+    width = 18.0,
+    depth = 1.80,
+    height = 6.0,
+    version = hub75_vrf_top_left_alignment_guide_version(),
+    marking_height = 0.50
+) {
+    // The centre of this face is interrupted by the open TL1 slot. Keep every
+    // glyph on solid material instead of bridging text across that opening.
+    // After the Y rotation, 2D X maps to -local Z, so +/-5 mm centres the two
+    // labels on the two solid wings either side of the slot.
+    translate([depth-0.02, -height/2, 0])
+        rotate([0, 90, 0])
+            linear_extrude(height=marking_height+0.02)
+                union() {
+                    translate([-5.0, 0])
+                        text(
+                            "SQ1",
+                            size=2.1,
+                            halign="center",
+                            valign="center"
+                        );
+                    translate([5.0, 0])
+                        text(
+                            version,
+                            size=1.8,
+                            halign="center",
+                            valign="center"
+                        );
+                }
+}
 
-        // The front edge of the upper witness arm is the rear mounting plane.
-        // A shallow engraved line 0.5 mm farther rearward marks the expected
-        // end of the mounting tube without cutting the arm into two pieces.
-        translate([
-            rear_plane + protrusion - 0.12,
-            screw_from_top - 0.7,
-            thickness-engraving_depth
-        ])
-            cube([0.24, 1.4, marker_depth]);
+module hub75_vrf_top_left_alignment_guide(panel) {
+    union() {
+        hub75_vrf_top_left_alignment_guide_base(panel);
+        hub75_vrf_top_left_alignment_guide_markings(panel);
+    }
+}
+
+module _hub75_vrf_radius_probe_2d(size, radius) {
+    rr = min(radius, size/2 - 0.1);
+    offset(r=rr)
+        square([size-2*rr, size-2*rr], center=true);
+}
+
+module hub75_vrf_corner_radius_comparator_base(
+    panel,
+    thickness = 2.0,
+    probe_size = 15.0,
+    spacing = 20.0,
+    handle_height = 12.0
+) {
+    target = hub75_p5_64x32_panel_rear_opening_corner_radius(panel);
+    radii = [max(0.1, target-0.5), target, target+0.5];
+    total_w = 2*spacing + probe_size;
+
+    linear_extrude(height=thickness)
+        union() {
+            translate([-total_w/2, -handle_height])
+                square([total_w, handle_height]);
+
+            for(i=[0:2])
+                translate([(i-1)*spacing, probe_size/2])
+                    _hub75_vrf_radius_probe_2d(probe_size, radii[i]);
+        }
+}
+
+module hub75_vrf_corner_radius_comparator_markings(
+    panel,
+    thickness = 2.0,
+    probe_size = 15.0,
+    spacing = 20.0,
+    handle_height = 12.0,
+    version = hub75_vrf_corner_radius_comparator_version(),
+    marking_height = 0.50
+) {
+    z0 = thickness - 0.02;
+    h = marking_height + 0.02;
+    labels = ["R4.5", "R5.0", "R5.5"];
+
+    for(i=[0:2])
+        translate([(i-1)*spacing, -3.2, z0])
+            linear_extrude(height=h)
+                text(
+                    labels[i],
+                    size=2.6,
+                    halign="center",
+                    valign="center"
+                );
+
+    translate([0, -9.0, z0])
+        linear_extrude(height=h)
+            text(
+                str("R1 ", version),
+                size=2.7,
+                halign="center",
+                valign="center"
+            );
+}
+
+module hub75_vrf_corner_radius_comparator(panel) {
+    union() {
+        hub75_vrf_corner_radius_comparator_base(panel);
+        hub75_vrf_corner_radius_comparator_markings(panel);
     }
 }
