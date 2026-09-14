@@ -2,14 +2,15 @@
 
 Functional changes to released `lib.scad.hub75` versions.
 
-## Unreleased
+## v0.1.3
 
 ### Changed
 
-- Upgrade repository tooling to `tool.scad-project` v0.9.12 and pin Build, Verify, Release and PR cleanup to its exact commit.
-- Publish pull-request previews to isolated `dev/pr-<number>/build` and `dev/pr-<number>/verification` branches instead of shared `dev/*` branches.
-- Run normal Build/Verify workflows on pull requests and `main` pushes, avoiding duplicate feature-branch push builds, and clean PR preview/source branches when the pull request closes.
-- Defer generic branch, pull-request and publication-agent guidance to the pinned `tools/tool.scad-project/AGENTS.md` policy.
+- Complete the repository tooling migration from the v0.9.12-era `tool.scad-project` contract to released `v0.12.0`.
+- Pin `project.yml`, the `tools/tool.scad-project` gitlink, and Build/Verify/Release/PR-cleanup reusable workflows to the exact v0.12.0 source commit.
+- Keep pull-request previews isolated under `dev/pr-<number>/build` and `dev/pr-<number>/verification`, with cleanup after PR close.
+- Continue to run normal Build/Verify workflows on pull requests and `main` pushes, avoiding duplicate feature-branch push builds.
+- Preserve the current panel API, SCons build configuration and main-branch verification behaviour; ongoing physical-verification work in PR #19 remains a separate development stream.
 
 ## v0.1.2
 

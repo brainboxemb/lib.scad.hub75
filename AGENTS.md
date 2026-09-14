@@ -4,13 +4,16 @@ Persistent guidance for automated coding agents working in `lib.scad.hub75`.
 
 ## Generic workflow policy
 
-Before branch, pull-request, publication or release work, read the pinned
-`tools/tool.scad-project/AGENTS.md`. Its pull-request-first change workflow and
+Before SCAD branch, pull-request, publication or release work, read the pinned
+`tools/tool.scad-project/AGENTS.md`. Its SCAD project change workflow and
 publication lifecycle are authoritative for this consumer.
 
+Generic bootstrap, dependency registration/status/update and Git-submodule ref
+resolution belong to the pinned `tools/tool.git-project`. Do not reimplement
+those operations in this repository or in `tool.scad-project`.
+
 This root file adds HUB75-library-specific guidance only. It must not contradict
-or duplicate changing generic branch/PR/publication rules from the pinned tool
-policy.
+or duplicate changing generic conventions from the pinned tooling policies.
 
 ## Repository purpose
 
@@ -23,13 +26,21 @@ Use:
 
 ```text
 component source + design documentation     geometry/API intent
-project.yml                                 tool/dependency policy
+project.yml                                 generic profile/dependency policy
+project.scad.yml                            SCAD build/publication policy
 .gitlinks / .gitmodules                     resolved dependency state
+.github/workflows/*.yml                     exact reusable SCAD workflow refs
 source references noted in design docs      dimensional authority
 ```
 
-Do not duplicate volatile `tool.scad-project` versions in this file. The active
-release is declared in `project.yml` and resolved by the gitlink/workflow refs.
+`tools/tool.git-project` is a bootstrap special case: its parent gitlink is the
+authoritative exact pin and it must not recursively list itself in `project.yml`.
+
+`tool.scad-project` is a normal managed dependency in `project.yml`. Keep its
+dependency ref, gitlink and Build/Verify/Release/PR-cleanup workflow refs aligned
+to the same exact commit.
+
+Do not duplicate volatile tooling versions in this file.
 
 ## OpenSCAD architecture
 
@@ -175,17 +186,45 @@ across files must be exposed through functions or parameters.
 Do not create one accessor per view constant; keep one stable view-name-to-ID
 conversion path.
 
-## Tooling and publication
+## Dependencies, bootstrap and publication
 
-Pin `tool.scad-project` under `tools/tool.scad-project` as declared in
-`project.yml`. Use thin reusable workflow callers and direct-only submodule
-checkout. Generic branch naming, pull-request previews, cleanup and release
-lifecycle are governed by the pinned tool policy.
+Direct tooling gitlinks are:
+
+```text
+tools/tool.git-project     bootstrap engine, directly pinned
+tools/tool.scad-project    managed SCAD tooling dependency
+```
+
+Normal checkout is direct-only; do not recursively initialize development
+dependencies owned by either tool repository.
+
+Root bootstrap launchers must remain exact copies of the canonical generic
+consumer files from the pinned `tool.git-project`:
+
+```text
+bootstrap.ps1  <- tools/tool.git-project/bootstrap/consumer-bootstrap.ps1
+bootstrap.sh   <- tools/tool.git-project/bootstrap/consumer-bootstrap.sh
+```
+
+Root update launchers must remain exact copies of the thin SCAD consumer
+wrappers from the pinned `tool.scad-project`:
+
+```text
+update-repo.ps1 <- tools/tool.scad-project/bootstrap/consumer-update.ps1
+update-repo.sh  <- tools/tool.scad-project/bootstrap/consumer-update.sh
+```
+
+Generic dependency movement is delegated to `tool.git-project`;
+`tool.scad-project` owns only the SCAD-specific follow-up, including reusable
+workflow alignment.
+
+Use thin reusable workflow callers. Generic branch naming, pull-request previews,
+cleanup and release lifecycle are governed by the pinned SCAD tool policy and
+`project.scad.yml`.
 
 Generated build and verification output do not belong on `main`.
 
-Root bootstrap/update scripts are canonical copies from `tool.scad-project` and
-must remain Python-free during bootstrap.
+Bootstrap remains Python-free and depends only on Git plus PowerShell/bash.
 
 ## Commit identity
 
