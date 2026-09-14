@@ -23,7 +23,7 @@ De eerste ontwikkelversie van deze testcase gebruikte TL1 v0.2 en SQ1 v0.2 in PR
 
 Plaats het paneel met de achterzijde/elektronicazijde naar je toe en de 320 mm-richting verticaal. Gebruik de fysieke linkerbovenhoek die in de bestaande verificatie-output is gemarkeerd.
 
-<img src="../../../../../raw/prod/verification/plan/top-left-location.png" alt="Linkerbovenhoek voor de controle aan de achterzijde van het paneel" width="52%">
+<img src="https://raw.githubusercontent.com/brainboxemb/lib.scad.hub75/prod/verification/plan/top-left-location.png" alt="Linkerbovenhoek voor de controle aan de achterzijde van het paneel" width="52%">
 
 | # | Handeling | Verwacht |
 | ---: | --- | --- |
