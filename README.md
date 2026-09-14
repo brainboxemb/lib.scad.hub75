@@ -31,6 +31,7 @@ These angled presentation images are dedicated build outputs from the current `p
 - [HUB75 panel manual/reference](openscad/p5-64x32-panel/manual.md)
 - [Generated HUB75 panel design documentation](https://github.com/brainboxemb/lib.scad.hub75/blob/prod/build/design/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md)
 - [HUB75 panel OpenSCAD source](openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad)
+- [Physical verification work](vrf/README.md)
 - [Latest generated build](../../tree/prod/build)
 - [Functional verification](../../tree/prod/verification)
 - [Changelog](CHANGELOG.md)
@@ -108,6 +109,8 @@ The design narrative is reader-first: it explains the physical feature and geome
 ## Verification
 
 `test/hub75_p5_64x32_panel_api.scad` exercises the public object API, checks derived values and builds the complete panel. Successful functional evidence is published to `prod/verification`.
+
+In parallel, the library is building up **physical dimension verification against real HUB75 hardware**. That work is deliberately broken into small test cases: one physical question, one repeatable procedure and one recorded result at a time. The first defined case, SQ-01, checks whether TL1 can be positioned squarely and repeatably with an SQ1 alignment helper; it does not yet prove the TL1 profile dimensions themselves. See [`vrf/README.md`](vrf/README.md) for the current approach and testcase links.
 
 A release reruns Build and Verify against the exact release source before publishing immutable snapshots under:
 
