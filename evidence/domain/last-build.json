@@ -1,0 +1,55 @@
+{
+  "backend_signature": "18cf80f91f90fd15c506dc066617ff4214fbb6ff3983583e8305e69336147290",
+  "engine": "scons",
+  "kind": "build",
+  "manifest_schema_version": 1,
+  "outcome_counts": {
+    "BUILT": 2,
+    "CACHE_RESTORED": 0,
+    "CURRENT": 0,
+    "ERROR": 0
+  },
+  "provenance": {
+    "cache": {
+      "exact_hit": null,
+      "matched_key": null,
+      "namespace": null,
+      "primary_key": null
+    },
+    "source_commit_sha": "5f2ed2ae3e6901e10c1b14efeed5285bdde779da",
+    "tool_commit_sha": null,
+    "tool_version": "0.13.1",
+    "toolchain_image": "ghcr.io/brainboxemb/scad-toolchain:v0.4.1",
+    "toolchain_version": "v0.4.1",
+    "workflow_version": "v0.13.1"
+  },
+  "schema": "scad-project.build-decisions",
+  "schema_version": 1,
+  "target_count": 2,
+  "targets": [
+    {
+      "action_executed": true,
+      "existed_before": false,
+      "exists_after": true,
+      "outcome": "BUILT",
+      "output": "bld/png/hub75-p5-64x32-panel-front-angled.png",
+      "sources": [
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/render/hub75-p5-64x32-panel-front-angled.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"
+      ],
+      "target_spec_digest": "123c546dc13fe2969caa8303e7b90b2bea0ed005e343ba49981f4dd27f84b220"
+    },
+    {
+      "action_executed": true,
+      "existed_before": false,
+      "exists_after": true,
+      "outcome": "BUILT",
+      "output": "bld/png/hub75-p5-64x32-panel-rear-angled.png",
+      "sources": [
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/render/hub75-p5-64x32-panel-rear-angled.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"
+      ],
+      "target_spec_digest": "30fcd43401ce8a9d519b1c521f033a6df6e90092e87ae976c9947268886d875e"
+    }
+  ]
+}
