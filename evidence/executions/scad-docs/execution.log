@@ -1,0 +1,45 @@
+SCAD producer execution
+=======================
+
+Capability: scad.docs
+Action: design-build
+Source revision: 740e8039cac401d49e21a6a9eef122c9671f9a5c
+Owner: brainboxemb/tool.scad-project
+Owner revision: b86b2be325f64847b8d91b7f2596bfd4e4ffb7f2
+tool.scad-project version: 0.14.3
+Status: success
+
+Domain evidence: ../../domain/last-design-build.json
+
+Decision report kind: design
+Build engine: scons
+Targets: 26
+Outcomes: BUILT=26, CACHE_RESTORED=0, CURRENT=0, ERROR=0
+
+Target decisions:
+- BUILT: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/01-front.png
+- BUILT: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/02-rear.png
+- BUILT: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/03-front-mask.png
+- BUILT: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/04-front-stack.png
+- BUILT: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/05-taper-body.png
+- BUILT: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/06-bay-rounded-corner.png
+- BUILT: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/07-narrow-end-width.png
+- BUILT: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/08-narrow-transition-left.png
+- BUILT: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/09-narrow-transition-right.png
+- BUILT: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/10-bay-bottom-relief.png
+- BUILT: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/11-bay-1.png
+- BUILT: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/12-rear-openings.png
+- BUILT: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/13-rear-frame-core.png
+- BUILT: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/14-reinforcement-solids.png
+- BUILT: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/15-recess-bottom.png
+- BUILT: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/16-rear-recess-3d.png
+- BUILT: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/17-rear-after-recess.png
+- BUILT: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/18-mounting-relief-single.png
+- BUILT: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/19-mounting-tube-single.png
+- BUILT: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/20-mounting-tubes.png
+- BUILT: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/21-reinforcement-inner-recess.png
+- BUILT: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/22-reinforcement-blind-hole.png
+- BUILT: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/23-locator-upper-left.png
+- BUILT: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/24-data-connector-bottom.png
+- BUILT: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/25-data-connectors.png
+- BUILT: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/26-power-connector.png
