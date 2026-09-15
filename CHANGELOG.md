@@ -2,6 +2,15 @@
 
 Functional changes to released `lib.scad.hub75` versions.
 
+## Unreleased
+
+### Changed
+
+- Upgrade repository tooling to released `tool.scad-project v0.13.1` and align the tool gitlink plus Production/Release/PR-cleanup reusable workflow pins to its exact source commit.
+- Replace separate normal Build and Verify heavy workflows with the common Moon-gated single-host SCAD production lifecycle: lightweight host preflight, at most one explicit SCAD Docker process, host-side validation/staging and same-job Build/Verification publication after the container exits.
+- Add a HUB75-specific Moon graph with real independent `scad.build`, `scad.docs` and `scad.verify` producer domains while keeping current presentation renders, generated design documentation, API verification and physical-verification output responsibilities intact.
+- Keep the physical verification procedures and SQ testcase content unchanged; this migration changes repository execution/orchestration only.
+
 ## v0.1.3
 
 ### Changed
