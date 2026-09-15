@@ -1,0 +1,585 @@
+[ WARN 2026-09-15 13:43:57.314] moon_app::queries::changed_files  Detected a shallow checkout while comparing against an explicit base, changed files may be inaccurate. A full Git history is recommended, e.g. a fetch depth of 0. 
+[ WARN 13:43:57.318] moon_vcs::git::git_client  Unable to resolve a merge base between the base and head revisions, so diffing directly against the base, which may include changes outside of this range. This can happen with shallow clones, or when the base hasn't been fetched.  base="f2811be518388dfec36f065e696864c0bea1d5d5" head="5f2ed2ae3e6901e10c1b14efeed5285bdde779da"
+▮▮▮▮ consumer:scad.build (c5183ecc)
+▮▮▮▮ consumer:scad.docs (2a397187)
+▮▮▮▮ consumer:scad.verify (d2be7ac1)
+consumer:scad.build | SCons build engine: 2 target(s), cache=/work/.cache/scad-project/scons
+consumer:scad.build | + scons -Q -f /work/tools/tool.scad-project/src/scad_project/scons_driver.py SCAD_PROJECT_MANIFEST=/work/.cache/scad-project/state/build-manifest.json
+consumer:scad.build | _action(["bld/png/hub75-p5-64x32-panel-front-angled.png"], ["openscad/p5-64x32-panel/hub75_p5_64x32_panel/render/hub75-p5-64x32-panel-front-angled.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
+consumer:scad.build | + xvfb-run -a openscad --enable=object-function --render --autocenter --viewall --imgsize=1000,1600 -o /work/bld/png/hub75-p5-64x32-panel-front-angled.png /work/openscad/p5-64x32-panel/hub75_p5_64x32_panel/render/hub75-p5-64x32-panel-front-angled.scad
+consumer:scad.build | WARNING: Viewall and autocenter disabled in favor of $vp*
+consumer:scad.build | Geometries in cache: 176
+consumer:scad.build | Geometry cache size in bytes: 1397984
+consumer:scad.build | CGAL Polyhedrons in cache: 39
+consumer:scad.build | CGAL cache size in bytes: 15404500
+consumer:scad.build | Total rendering time: 0:00:00.709
+consumer:scad.build |    Top level object is a 3D object (manifold):
+consumer:scad.build |    Status:     NoError
+consumer:scad.build |    Genus:      -3
+consumer:scad.build |    Vertices:     6233
+consumer:scad.build |    Facets:      12450
+consumer:scad.build | SCons built: bld/png/hub75-p5-64x32-panel-front-angled.png
+consumer:scad.build | _action(["bld/png/hub75-p5-64x32-panel-rear-angled.png"], ["openscad/p5-64x32-panel/hub75_p5_64x32_panel/render/hub75-p5-64x32-panel-rear-angled.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
+consumer:scad.build | + xvfb-run -a openscad --enable=object-function --render --autocenter --viewall --imgsize=1000,1600 -o /work/bld/png/hub75-p5-64x32-panel-rear-angled.png /work/openscad/p5-64x32-panel/hub75_p5_64x32_panel/render/hub75-p5-64x32-panel-rear-angled.scad
+consumer:scad.build | WARNING: Viewall and autocenter disabled in favor of $vp*
+consumer:scad.build | Geometries in cache: 176
+consumer:scad.build | Geometry cache size in bytes: 1397984
+consumer:scad.build | CGAL Polyhedrons in cache: 39
+consumer:scad.build | CGAL cache size in bytes: 15404500
+consumer:scad.build | Total rendering time: 0:00:00.562
+consumer:scad.build |    Top level object is a 3D object (manifold):
+consumer:scad.build |    Status:     NoError
+consumer:scad.build |    Genus:      -3
+consumer:scad.build |    Vertices:     6233
+consumer:scad.build |    Facets:      12450
+consumer:scad.build | SCons built: bld/png/hub75-p5-64x32-panel-rear-angled.png
+consumer:scad.build | SCons summary: targets=2 built=2 cache-restored=0 current=0 error=0
+consumer:scad.build |   built: bld/png/hub75-p5-64x32-panel-front-angled.png
+consumer:scad.build |   built: bld/png/hub75-p5-64x32-panel-rear-angled.png
+consumer:scad.build | build: OK
+▮▮▮▮ consumer:scad.build (2s 10ms, c5183ecc)
+consumer:scad.verify | + openscad-docsgen -m -T /work/openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad
+consumer:scad.verify | Parsing...
+consumer:scad.verify |   /work/openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad
+consumer:scad.verify | No log requests to process
+consumer:scad.verify | + openscad-docsgen -m -T /work/openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad
+consumer:scad.verify | Parsing...
+consumer:scad.verify |   /work/openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad
+consumer:scad.verify | No log requests to process
+consumer:scad.verify | + bash scripts/run-verification.sh
+consumer:scad.verify | Repository bootstrap and production ownership: OK
+consumer:scad.verify | ECHO: "hub75_p5_64x32_panel_width", 159.7
+consumer:scad.verify | ECHO: "hub75_p5_64x32_panel_height", 319.71
+consumer:scad.verify | ECHO: "hub75_p5_64x32_panel_rear_grid_gap_x", 2.79531
+consumer:scad.verify | Geometries in cache: 176
+consumer:scad.verify | Geometry cache size in bytes: 980192
+consumer:scad.verify | CGAL Polyhedrons in cache: 39
+consumer:scad.verify | CGAL cache size in bytes: 13124000
+consumer:scad.verify | Total rendering time: 0:00:00.229
+consumer:scad.verify |    Top level object is a 3D object (manifold):
+consumer:scad.verify |    Status:     NoError
+consumer:scad.verify |    Genus:      -3
+consumer:scad.verify |    Vertices:     5365
+consumer:scad.verify |    Facets:      10714
+consumer:scad.verify | WARNING: Viewall and autocenter disabled in favor of $vp*
+consumer:scad.verify | Geometries in cache: 24
+consumer:scad.verify | Geometry cache size in bytes: 348968
+consumer:scad.verify | CGAL Polyhedrons in cache: 2
+consumer:scad.verify | CGAL cache size in bytes: 700500
+consumer:scad.verify | Total rendering time: 0:00:00.074
+consumer:scad.verify |    Top level object is a 3D object (manifold):
+consumer:scad.verify |    Status:     NoError
+consumer:scad.verify |    Genus:      2
+consumer:scad.verify |    Vertices:     1736
+consumer:scad.verify |    Facets:       3476
+consumer:scad.verify | WARNING: Viewall and autocenter disabled in favor of $vp*
+consumer:scad.verify | Geometries in cache: 24
+consumer:scad.verify | Geometry cache size in bytes: 348968
+consumer:scad.verify | CGAL Polyhedrons in cache: 2
+consumer:scad.verify | CGAL cache size in bytes: 700500
+consumer:scad.verify | Total rendering time: 0:00:00.142
+consumer:scad.verify |    Top level object is a 3D object (manifold):
+consumer:scad.verify |    Status:     NoError
+consumer:scad.verify |    Genus:      2
+consumer:scad.verify |    Vertices:     1736
+consumer:scad.verify |    Facets:       3476
+consumer:scad.verify | WARNING: Viewall and autocenter disabled in favor of $vp*
+consumer:scad.verify | Geometries in cache: 182
+consumer:scad.verify | Geometry cache size in bytes: 1309040
+consumer:scad.verify | CGAL Polyhedrons in cache: 41
+consumer:scad.verify | CGAL cache size in bytes: 16318250
+consumer:scad.verify | Total rendering time: 0:00:00.336
+consumer:scad.verify |    Top level object is a 3D object (manifold):
+consumer:scad.verify |    Status:     NoError
+consumer:scad.verify |    Genus:      -3
+consumer:scad.verify |    Vertices:     6057
+consumer:scad.verify |    Facets:      12098
+consumer:scad.verify | WARNING: Viewall and autocenter disabled in favor of $vp*
+consumer:scad.verify | Geometries in cache: 184
+consumer:scad.verify | Geometry cache size in bytes: 1372576
+consumer:scad.verify | CGAL Polyhedrons in cache: 49
+consumer:scad.verify | CGAL cache size in bytes: 17284750
+consumer:scad.verify | Total rendering time: 0:00:00.349
+consumer:scad.verify |    Top level object is a 3D object (manifold):
+consumer:scad.verify |    Status:     NoError
+consumer:scad.verify |    Genus:      -1
+consumer:scad.verify |    Vertices:     6859
+consumer:scad.verify |    Facets:      13710
+consumer:scad.verify | WARNING: Viewall and autocenter disabled in favor of $vp*
+consumer:scad.verify | Geometries in cache: 200
+consumer:scad.verify | Geometry cache size in bytes: 1652872
+consumer:scad.verify | CGAL Polyhedrons in cache: 44
+consumer:scad.verify | CGAL cache size in bytes: 18308250
+consumer:scad.verify | Total rendering time: 0:00:00.377
+consumer:scad.verify |    Top level object is a 3D object (manifold):
+consumer:scad.verify |    Status:     NoError
+consumer:scad.verify |    Genus:      -1
+consumer:scad.verify |    Vertices:     7769
+consumer:scad.verify |    Facets:      15530
+consumer:scad.verify | WARNING: Viewall and autocenter disabled in favor of $vp*
+consumer:scad.verify | Geometries in cache: 200
+consumer:scad.verify | Geometry cache size in bytes: 1652872
+consumer:scad.verify | CGAL Polyhedrons in cache: 44
+consumer:scad.verify | CGAL cache size in bytes: 18308250
+consumer:scad.verify | Total rendering time: 0:00:00.374
+consumer:scad.verify |    Top level object is a 3D object (manifold):
+consumer:scad.verify |    Status:     NoError
+consumer:scad.verify |    Genus:      -1
+consumer:scad.verify |    Vertices:     7769
+consumer:scad.verify |    Facets:      15530
+consumer:scad.verify | WARNING: Viewall and autocenter disabled in favor of $vp*
+consumer:scad.verify | Geometries in cache: 8
+consumer:scad.verify | Geometry cache size in bytes: 37760
+consumer:scad.verify | CGAL Polyhedrons in cache: 3
+consumer:scad.verify | CGAL cache size in bytes: 114000
+consumer:scad.verify | Total rendering time: 0:00:00.006
+consumer:scad.verify |    Top level object is a 3D object (manifold):
+consumer:scad.verify |    Status:     NoError
+consumer:scad.verify |    Genus:      1
+consumer:scad.verify |    Vertices:      216
+consumer:scad.verify |    Facets:        432
+consumer:scad.verify | WARNING: Viewall and autocenter disabled in favor of $vp*
+consumer:scad.verify | Geometries in cache: 8
+consumer:scad.verify | Geometry cache size in bytes: 37760
+consumer:scad.verify | CGAL Polyhedrons in cache: 3
+consumer:scad.verify | CGAL cache size in bytes: 114000
+consumer:scad.verify | Total rendering time: 0:00:00.130
+consumer:scad.verify |    Top level object is a 3D object (manifold):
+consumer:scad.verify |    Status:     NoError
+consumer:scad.verify |    Genus:      1
+consumer:scad.verify |    Vertices:      216
+consumer:scad.verify |    Facets:        432
+consumer:scad.verify | ECHO: "hub75_vrf_mounting_spacing_x_mm", 144
+consumer:scad.verify | WARNING: Viewall and autocenter disabled in favor of $vp*
+consumer:scad.verify | Geometries in cache: 6
+consumer:scad.verify | Geometry cache size in bytes: 97872
+consumer:scad.verify | CGAL Polyhedrons in cache: 3
+consumer:scad.verify | CGAL cache size in bytes: 290000
+consumer:scad.verify | Total rendering time: 0:00:00.011
+consumer:scad.verify |    Top level object is a 3D object (manifold):
+consumer:scad.verify |    Status:     NoError
+consumer:scad.verify |    Genus:      2
+consumer:scad.verify |    Vertices:      580
+consumer:scad.verify |    Facets:       1164
+consumer:scad.verify | ECHO: "hub75_vrf_mounting_spacing_x_mm", 144
+consumer:scad.verify | WARNING: Viewall and autocenter disabled in favor of $vp*
+consumer:scad.verify | Geometries in cache: 6
+consumer:scad.verify | Geometry cache size in bytes: 97872
+consumer:scad.verify | CGAL Polyhedrons in cache: 3
+consumer:scad.verify | CGAL cache size in bytes: 290000
+consumer:scad.verify | Total rendering time: 0:00:00.108
+consumer:scad.verify |    Top level object is a 3D object (manifold):
+consumer:scad.verify |    Status:     NoError
+consumer:scad.verify |    Genus:      2
+consumer:scad.verify |    Vertices:      580
+consumer:scad.verify |    Facets:       1164
+consumer:scad.verify | ECHO: "hub75_vrf_mounting_spacing_z_mm", 152
+consumer:scad.verify | WARNING: Viewall and autocenter disabled in favor of $vp*
+consumer:scad.verify | Geometries in cache: 6
+consumer:scad.verify | Geometry cache size in bytes: 97872
+consumer:scad.verify | CGAL Polyhedrons in cache: 3
+consumer:scad.verify | CGAL cache size in bytes: 290000
+consumer:scad.verify | Total rendering time: 0:00:00.012
+consumer:scad.verify |    Top level object is a 3D object (manifold):
+consumer:scad.verify |    Status:     NoError
+consumer:scad.verify |    Genus:      2
+consumer:scad.verify |    Vertices:      580
+consumer:scad.verify |    Facets:       1164
+consumer:scad.verify | ECHO: "hub75_vrf_mounting_spacing_z_mm", 152
+consumer:scad.verify | WARNING: Viewall and autocenter disabled in favor of $vp*
+consumer:scad.verify | Geometries in cache: 6
+consumer:scad.verify | Geometry cache size in bytes: 97872
+consumer:scad.verify | CGAL Polyhedrons in cache: 3
+consumer:scad.verify | CGAL cache size in bytes: 290000
+consumer:scad.verify | Total rendering time: 0:00:00.103
+consumer:scad.verify |    Top level object is a 3D object (manifold):
+consumer:scad.verify |    Status:     NoError
+consumer:scad.verify |    Genus:      2
+consumer:scad.verify |    Vertices:      580
+consumer:scad.verify |    Facets:       1164
+consumer:scad.verify | + bash scripts/build-verification-index.sh
+consumer:scad.verify | verify: OK
+▮▮▮▮ consumer:scad.verify (5s 150ms, d2be7ac1)
+▮▮▮▮ consumer:scad.verification-provenance (d9db97d0)
+consumer:scad.verification-provenance | publication info: vrf/out/publication-info.txt
+▮▮▮▮ consumer:scad.verification-provenance (601ms, d9db97d0)
+consumer:scad.docs | SCons design engine: 26 target(s), cache=/work/.cache/scad-project/scons
+consumer:scad.docs | + scons -Q -f /work/tools/tool.scad-project/src/scad_project/design_scons_driver.py SCAD_PROJECT_MANIFEST=/work/.cache/scad-project/state/design-manifest.json
+consumer:scad.docs | _action([".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/01-front.png"], [".cache/scad-project/state/design-entrypoints/62e7591a1252236c.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
+consumer:scad.docs | + xvfb-run -a openscad --enable=object-function --render --camera=0.0,0.0,0.0,85.0,0.0,40.0,0.0 --autocenter --viewall --imgsize=640,480 -o /work/.cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/01-front.png /work/.cache/scad-project/state/design-entrypoints/62e7591a1252236c.scad
+consumer:scad.docs | Geometries in cache: 98
+consumer:scad.docs | Geometry cache size in bytes: 1040440
+consumer:scad.docs | CGAL Polyhedrons in cache: 34
+consumer:scad.docs | CGAL cache size in bytes: 15163000
+consumer:scad.docs | Total rendering time: 0:00:00.309
+consumer:scad.docs |    Top level object is a 3D object (manifold):
+consumer:scad.docs |    Status:     NoError
+consumer:scad.docs |    Genus:      6
+consumer:scad.docs |    Vertices:     5566
+consumer:scad.docs |    Facets:      11152
+consumer:scad.docs | SCons design built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/01-front.png
+consumer:scad.docs | _action([".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/02-rear.png"], [".cache/scad-project/state/design-entrypoints/c7894326d69fdbcc.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
+consumer:scad.docs | + xvfb-run -a openscad --enable=object-function --render --camera=0.0,0.0,0.0,85.0,0.0,220.0,0.0 --autocenter --viewall --imgsize=640,480 -o /work/.cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/02-rear.png /work/.cache/scad-project/state/design-entrypoints/c7894326d69fdbcc.scad
+consumer:scad.docs | Geometries in cache: 172
+consumer:scad.docs | Geometry cache size in bytes: 1394560
+consumer:scad.docs | CGAL Polyhedrons in cache: 38
+consumer:scad.docs | CGAL cache size in bytes: 15541500
+consumer:scad.docs | Total rendering time: 0:00:00.439
+consumer:scad.docs |    Top level object is a 3D object (manifold):
+consumer:scad.docs |    Status:     NoError
+consumer:scad.docs |    Genus:      3
+consumer:scad.docs |    Vertices:     6373
+consumer:scad.docs |    Facets:      12754
+consumer:scad.docs | SCons design built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/02-rear.png
+consumer:scad.docs | _action([".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/03-front-mask.png"], [".cache/scad-project/state/design-entrypoints/172c133ef8a05e82.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
+consumer:scad.docs | + xvfb-run -a openscad --enable=object-function --render --camera=0.0,0.0,0.0,68.0,0.0,32.0,0.0 --autocenter --viewall --imgsize=640,480 -o /work/.cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/03-front-mask.png /work/.cache/scad-project/state/design-entrypoints/172c133ef8a05e82.scad
+consumer:scad.docs | Geometries in cache: 3
+consumer:scad.docs | Geometry cache size in bytes: 2568
+consumer:scad.docs | CGAL Polyhedrons in cache: 0
+consumer:scad.docs | CGAL cache size in bytes: 0
+consumer:scad.docs | Total rendering time: 0:00:00.101
+consumer:scad.docs | Top level object is a 3D object (PolySet):
+consumer:scad.docs |    Convex:       yes
+consumer:scad.docs |    Facets:         6
+consumer:scad.docs | SCons design built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/03-front-mask.png
+consumer:scad.docs | _action([".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/04-front-stack.png"], [".cache/scad-project/state/design-entrypoints/04bca457fc18afdd.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
+consumer:scad.docs | + xvfb-run -a openscad --enable=object-function --render --camera=0.0,0.0,0.0,68.0,0.0,212.0,0.0 --autocenter --viewall --imgsize=640,480 -o /work/.cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/04-front-stack.png /work/.cache/scad-project/state/design-entrypoints/04bca457fc18afdd.scad
+consumer:scad.docs | Geometries in cache: 4
+consumer:scad.docs | Geometry cache size in bytes: 3424
+consumer:scad.docs | CGAL Polyhedrons in cache: 2
+consumer:scad.docs | CGAL cache size in bytes: 6000
+consumer:scad.docs | Total rendering time: 0:00:00.086
+consumer:scad.docs |    Top level object is a 3D object (manifold):
+consumer:scad.docs |    Status:     NoError
+consumer:scad.docs |    Genus:      0
+consumer:scad.docs |    Vertices:       12
+consumer:scad.docs |    Facets:         20
+consumer:scad.docs | SCons design built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/04-front-stack.png
+consumer:scad.docs | _action([".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/05-taper-body.png"], [".cache/scad-project/state/design-entrypoints/2d30231092b727b9.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
+consumer:scad.docs | + xvfb-run -a openscad --enable=object-function --render --camera=0.0,0.0,0.0,68.0,0.0,212.0,0.0 --autocenter --viewall --imgsize=640,480 -o /work/.cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/05-taper-body.png /work/.cache/scad-project/state/design-entrypoints/2d30231092b727b9.scad
+consumer:scad.docs | Geometries in cache: 4
+consumer:scad.docs | Geometry cache size in bytes: 3424
+consumer:scad.docs | CGAL Polyhedrons in cache: 3
+consumer:scad.docs | CGAL cache size in bytes: 11000
+consumer:scad.docs | Total rendering time: 0:00:00.104
+consumer:scad.docs |    Top level object is a 3D object (manifold):
+consumer:scad.docs |    Status:     NoError
+consumer:scad.docs |    Genus:      0
+consumer:scad.docs |    Vertices:       16
+consumer:scad.docs |    Facets:         28
+consumer:scad.docs | SCons design built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/05-taper-body.png
+consumer:scad.docs | _action([".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/06-bay-rounded-corner.png"], [".cache/scad-project/state/design-entrypoints/01e2e3a44420f503.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
+consumer:scad.docs | + xvfb-run -a openscad --enable=object-function --render --camera=-67.0,10.0,-149.0,68.0,0.0,212.0,58.0 --imgsize=480,360 -o /work/.cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/06-bay-rounded-corner.png /work/.cache/scad-project/state/design-entrypoints/01e2e3a44420f503.scad
+consumer:scad.docs | Geometries in cache: 35
+consumer:scad.docs | Geometry cache size in bytes: 434624
+consumer:scad.docs | CGAL Polyhedrons in cache: 6
+consumer:scad.docs | CGAL cache size in bytes: 1404000
+consumer:scad.docs | Total rendering time: 0:00:00.108
+consumer:scad.docs |    Top level object is a 3D object (manifold):
+consumer:scad.docs |    Status:     NoError
+consumer:scad.docs |    Genus:      0
+consumer:scad.docs |    Vertices:     1202
+consumer:scad.docs |    Facets:       2400
+consumer:scad.docs | SCons design built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/06-bay-rounded-corner.png
+consumer:scad.docs | _action([".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/07-narrow-end-width.png"], [".cache/scad-project/state/design-entrypoints/98260fdaa36d501b.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
+consumer:scad.docs | + xvfb-run -a openscad --enable=object-function --render --camera=0.0,10.0,-149.0,68.0,0.0,212.0,105.0 --imgsize=480,360 -o /work/.cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/07-narrow-end-width.png /work/.cache/scad-project/state/design-entrypoints/98260fdaa36d501b.scad
+consumer:scad.docs | Geometries in cache: 36
+consumer:scad.docs | Geometry cache size in bytes: 342608
+consumer:scad.docs | CGAL Polyhedrons in cache: 6
+consumer:scad.docs | CGAL cache size in bytes: 1343000
+consumer:scad.docs | Total rendering time: 0:00:00.127
+consumer:scad.docs |    Top level object is a 3D object (manifold):
+consumer:scad.docs |    Status:     NoError
+consumer:scad.docs |    Genus:      -1
+consumer:scad.docs |    Vertices:     1080
+consumer:scad.docs |    Facets:       2152
+consumer:scad.docs | SCons design built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/07-narrow-end-width.png
+consumer:scad.docs | _action([".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/08-narrow-transition-left.png"], [".cache/scad-project/state/design-entrypoints/7ae89aeade1db1f5.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
+consumer:scad.docs | + xvfb-run -a openscad --enable=object-function --render --camera=-17.0,10.0,-149.0,68.0,0.0,212.0,78.0 --imgsize=480,360 -o /work/.cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/08-narrow-transition-left.png /work/.cache/scad-project/state/design-entrypoints/7ae89aeade1db1f5.scad
+consumer:scad.docs | Geometries in cache: 36
+consumer:scad.docs | Geometry cache size in bytes: 341824
+consumer:scad.docs | CGAL Polyhedrons in cache: 6
+consumer:scad.docs | CGAL cache size in bytes: 1342000
+consumer:scad.docs | Total rendering time: 0:00:00.106
+consumer:scad.docs |    Top level object is a 3D object (manifold):
+consumer:scad.docs |    Status:     NoError
+consumer:scad.docs |    Genus:      -1
+consumer:scad.docs |    Vertices:     1078
+consumer:scad.docs |    Facets:       2148
+consumer:scad.docs | SCons design built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/08-narrow-transition-left.png
+consumer:scad.docs | _action([".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/09-narrow-transition-right.png"], [".cache/scad-project/state/design-entrypoints/700d640d4f15d3b2.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
+consumer:scad.docs | + xvfb-run -a openscad --enable=object-function --render --camera=17.0,10.0,-149.0,68.0,0.0,212.0,78.0 --imgsize=480,360 -o /work/.cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/09-narrow-transition-right.png /work/.cache/scad-project/state/design-entrypoints/700d640d4f15d3b2.scad
+consumer:scad.docs | Geometries in cache: 36
+consumer:scad.docs | Geometry cache size in bytes: 341824
+consumer:scad.docs | CGAL Polyhedrons in cache: 6
+consumer:scad.docs | CGAL cache size in bytes: 1342000
+consumer:scad.docs | Total rendering time: 0:00:00.112
+consumer:scad.docs |    Top level object is a 3D object (manifold):
+consumer:scad.docs |    Status:     NoError
+consumer:scad.docs |    Genus:      -1
+consumer:scad.docs |    Vertices:     1078
+consumer:scad.docs |    Facets:       2148
+consumer:scad.docs | SCons design built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/09-narrow-transition-right.png
+consumer:scad.docs | _action([".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/10-bay-bottom-relief.png"], [".cache/scad-project/state/design-entrypoints/37c752c34c473434.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
+consumer:scad.docs | + xvfb-run -a openscad --enable=object-function --render --camera=0.0,10.0,-149.0,68.0,0.0,212.0,120.0 --imgsize=480,360 -o /work/.cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/10-bay-bottom-relief.png /work/.cache/scad-project/state/design-entrypoints/37c752c34c473434.scad
+consumer:scad.docs | Geometries in cache: 35
+consumer:scad.docs | Geometry cache size in bytes: 342464
+consumer:scad.docs | CGAL Polyhedrons in cache: 6
+consumer:scad.docs | CGAL cache size in bytes: 1342000
+consumer:scad.docs | Total rendering time: 0:00:00.102
+consumer:scad.docs |    Top level object is a 3D object (manifold):
+consumer:scad.docs |    Status:     NoError
+consumer:scad.docs |    Genus:      0
+consumer:scad.docs |    Vertices:     1078
+consumer:scad.docs |    Facets:       2152
+consumer:scad.docs | SCons design built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/10-bay-bottom-relief.png
+consumer:scad.docs | _action([".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/11-bay-1.png"], [".cache/scad-project/state/design-entrypoints/32ed28766d6ed2c5.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
+consumer:scad.docs | + xvfb-run -a openscad --enable=object-function --render --camera=0.0,10.0,-120.0,68.0,0.0,212.0,190.0 --imgsize=480,360 -o /work/.cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/11-bay-1.png /work/.cache/scad-project/state/design-entrypoints/32ed28766d6ed2c5.scad
+consumer:scad.docs | Geometries in cache: 36
+consumer:scad.docs | Geometry cache size in bytes: 436688
+consumer:scad.docs | CGAL Polyhedrons in cache: 6
+consumer:scad.docs | CGAL cache size in bytes: 1404000
+consumer:scad.docs | Total rendering time: 0:00:00.130
+consumer:scad.docs |    Top level object is a 3D object (manifold):
+consumer:scad.docs |    Status:     NoError
+consumer:scad.docs |    Genus:      0
+consumer:scad.docs |    Vertices:     1202
+consumer:scad.docs |    Facets:       2400
+consumer:scad.docs | SCons design built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/11-bay-1.png
+consumer:scad.docs | _action([".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/12-rear-openings.png"], [".cache/scad-project/state/design-entrypoints/ff21f1d204bacb87.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
+consumer:scad.docs | + xvfb-run -a openscad --enable=object-function --render --camera=0.0,0.0,0.0,90.0,0.0,180.0,0.0 --autocenter --viewall --imgsize=640,480 -o /work/.cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/12-rear-openings.png /work/.cache/scad-project/state/design-entrypoints/ff21f1d204bacb87.scad
+consumer:scad.docs | Geometries in cache: 35
+consumer:scad.docs | Geometry cache size in bytes: 744320
+consumer:scad.docs | CGAL Polyhedrons in cache: 6
+consumer:scad.docs | CGAL cache size in bytes: 1339000
+consumer:scad.docs | Total rendering time: 0:00:00.135
+consumer:scad.docs |    Top level object is a 3D object (manifold):
+consumer:scad.docs |    Status:     NoError
+consumer:scad.docs |    Genus:      0
+consumer:scad.docs |    Vertices:     1072
+consumer:scad.docs |    Facets:       2140
+consumer:scad.docs | SCons design built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/12-rear-openings.png
+consumer:scad.docs | _action([".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/13-rear-frame-core.png"], [".cache/scad-project/state/design-entrypoints/07bc060f9b54946e.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
+consumer:scad.docs | + xvfb-run -a openscad --enable=object-function --render --camera=0.0,0.0,0.0,90.0,0.0,180.0,0.0 --autocenter --viewall --imgsize=640,480 -o /work/.cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/13-rear-frame-core.png /work/.cache/scad-project/state/design-entrypoints/07bc060f9b54946e.scad
+consumer:scad.docs | Geometries in cache: 29
+consumer:scad.docs | Geometry cache size in bytes: 337136
+consumer:scad.docs | CGAL Polyhedrons in cache: 3
+consumer:scad.docs | CGAL cache size in bytes: 798000
+consumer:scad.docs | Total rendering time: 0:00:00.097
+consumer:scad.docs |    Top level object is a 3D object (manifold):
+consumer:scad.docs |    Status:     NoError
+consumer:scad.docs |    Genus:      4
+consumer:scad.docs |    Vertices:     1064
+consumer:scad.docs |    Facets:       2140
+consumer:scad.docs | SCons design built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/13-rear-frame-core.png
+consumer:scad.docs | _action([".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/14-reinforcement-solids.png"], [".cache/scad-project/state/design-entrypoints/ec0b16f3c6832467.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
+consumer:scad.docs | + xvfb-run -a openscad --enable=object-function --render --camera=-72.0,10.0,-141.0,68.0,0.0,212.0,100.0 --imgsize=480,360 -o /work/.cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/14-reinforcement-solids.png /work/.cache/scad-project/state/design-entrypoints/ec0b16f3c6832467.scad
+consumer:scad.docs | Geometries in cache: 39
+consumer:scad.docs | Geometry cache size in bytes: 426336
+consumer:scad.docs | CGAL Polyhedrons in cache: 10
+consumer:scad.docs | CGAL cache size in bytes: 2194000
+consumer:scad.docs | Total rendering time: 0:00:00.149
+consumer:scad.docs |    Top level object is a 3D object (manifold):
+consumer:scad.docs |    Status:     NoError
+consumer:scad.docs |    Genus:      0
+consumer:scad.docs |    Vertices:     1234
+consumer:scad.docs |    Facets:       2464
+consumer:scad.docs | SCons design built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/14-reinforcement-solids.png
+consumer:scad.docs | _action([".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/15-recess-bottom.png"], [".cache/scad-project/state/design-entrypoints/3d1c3d31f0e64cf1.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
+consumer:scad.docs | + xvfb-run -a openscad --enable=object-function --render --camera=0.0,10.0,-149.0,68.0,0.0,212.0,125.0 --imgsize=480,360 -o /work/.cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/15-recess-bottom.png /work/.cache/scad-project/state/design-entrypoints/3d1c3d31f0e64cf1.scad
+consumer:scad.docs | Geometries in cache: 50
+consumer:scad.docs | Geometry cache size in bytes: 442736
+consumer:scad.docs | CGAL Polyhedrons in cache: 10
+consumer:scad.docs | CGAL cache size in bytes: 2468500
+consumer:scad.docs | Total rendering time: 0:00:00.159
+consumer:scad.docs |    Top level object is a 3D object (manifold):
+consumer:scad.docs |    Status:     NoError
+consumer:scad.docs |    Genus:      0
+consumer:scad.docs |    Vertices:     1250
+consumer:scad.docs |    Facets:       2496
+consumer:scad.docs | SCons design built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/15-recess-bottom.png
+consumer:scad.docs | _action([".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/16-rear-recess-3d.png"], [".cache/scad-project/state/design-entrypoints/b2db3747b5e65c8d.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
+consumer:scad.docs | + xvfb-run -a openscad --enable=object-function --render --camera=0.0,0.0,0.0,68.0,0.0,212.0,0.0 --autocenter --viewall --imgsize=640,480 -o /work/.cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/16-rear-recess-3d.png /work/.cache/scad-project/state/design-entrypoints/b2db3747b5e65c8d.scad
+consumer:scad.docs | Geometries in cache: 81
+consumer:scad.docs | Geometry cache size in bytes: 834976
+consumer:scad.docs | CGAL Polyhedrons in cache: 10
+consumer:scad.docs | CGAL cache size in bytes: 2924000
+consumer:scad.docs | Total rendering time: 0:00:00.158
+consumer:scad.docs |    Top level object is a 3D object (manifold):
+consumer:scad.docs |    Status:     NoError
+consumer:scad.docs |    Genus:      0
+consumer:scad.docs |    Vertices:     2161
+consumer:scad.docs |    Facets:       4318
+consumer:scad.docs | SCons design built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/16-rear-recess-3d.png
+consumer:scad.docs | _action([".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/17-rear-after-recess.png"], [".cache/scad-project/state/design-entrypoints/02561fe86518f64a.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
+consumer:scad.docs | + xvfb-run -a openscad --enable=object-function --render --camera=-72.0,10.0,-141.0,68.0,0.0,212.0,130.0 --imgsize=480,360 -o /work/.cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/17-rear-after-recess.png /work/.cache/scad-project/state/design-entrypoints/02561fe86518f64a.scad
+consumer:scad.docs | Geometries in cache: 78
+consumer:scad.docs | Geometry cache size in bytes: 745000
+consumer:scad.docs | CGAL Polyhedrons in cache: 8
+consumer:scad.docs | CGAL cache size in bytes: 2921750
+consumer:scad.docs | Total rendering time: 0:00:00.137
+consumer:scad.docs |    Top level object is a 3D object (manifold):
+consumer:scad.docs |    Status:     NoError
+consumer:scad.docs |    Genus:      4
+consumer:scad.docs |    Vertices:     2311
+consumer:scad.docs |    Facets:       4634
+consumer:scad.docs | SCons design built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/17-rear-after-recess.png
+consumer:scad.docs | _action([".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/18-mounting-relief-single.png"], [".cache/scad-project/state/design-entrypoints/a90cdd47cc00fabd.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
+consumer:scad.docs | + xvfb-run -a openscad --enable=object-function --render --camera=-72.0,10.0,-152.0,68.0,0.0,212.0,90.0 --imgsize=480,360 -o /work/.cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/18-mounting-relief-single.png /work/.cache/scad-project/state/design-entrypoints/a90cdd47cc00fabd.scad
+consumer:scad.docs | Geometries in cache: 86
+consumer:scad.docs | Geometry cache size in bytes: 798616
+consumer:scad.docs | CGAL Polyhedrons in cache: 11
+consumer:scad.docs | CGAL cache size in bytes: 3999250
+consumer:scad.docs | Total rendering time: 0:00:00.150
+consumer:scad.docs |    Top level object is a 3D object (manifold):
+consumer:scad.docs |    Status:     NoError
+consumer:scad.docs |    Genus:      0
+consumer:scad.docs |    Vertices:     2219
+consumer:scad.docs |    Facets:       4434
+consumer:scad.docs | SCons design built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/18-mounting-relief-single.png
+consumer:scad.docs | _action([".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/19-mounting-tube-single.png"], [".cache/scad-project/state/design-entrypoints/fd7d786edee056ee.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
+consumer:scad.docs | + xvfb-run -a openscad --enable=object-function --render --camera=-72.0,10.0,-152.0,68.0,0.0,212.0,90.0 --imgsize=480,360 -o /work/.cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/19-mounting-tube-single.png /work/.cache/scad-project/state/design-entrypoints/fd7d786edee056ee.scad
+consumer:scad.docs | Geometries in cache: 99
+consumer:scad.docs | Geometry cache size in bytes: 1041648
+consumer:scad.docs | CGAL Polyhedrons in cache: 14
+consumer:scad.docs | CGAL cache size in bytes: 5223500
+consumer:scad.docs | Total rendering time: 0:00:00.166
+consumer:scad.docs |    Top level object is a 3D object (manifold):
+consumer:scad.docs |    Status:     NoError
+consumer:scad.docs |    Genus:      0
+consumer:scad.docs |    Vertices:     2749
+consumer:scad.docs |    Facets:       5494
+consumer:scad.docs | SCons design built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/19-mounting-tube-single.png
+consumer:scad.docs | _action([".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/20-mounting-tubes.png"], [".cache/scad-project/state/design-entrypoints/2b2bc54bc2a75016.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
+consumer:scad.docs | + xvfb-run -a openscad --enable=object-function --render --camera=0.0,0.0,0.0,68.0,0.0,212.0,0.0 --autocenter --viewall --imgsize=640,480 -o /work/.cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/20-mounting-tubes.png /work/.cache/scad-project/state/design-entrypoints/2b2bc54bc2a75016.scad
+consumer:scad.docs | Geometries in cache: 109
+consumer:scad.docs | Geometry cache size in bytes: 1130848
+consumer:scad.docs | CGAL Polyhedrons in cache: 22
+consumer:scad.docs | CGAL cache size in bytes: 6887500
+consumer:scad.docs | Total rendering time: 0:00:00.179
+consumer:scad.docs |    Top level object is a 3D object (manifold):
+consumer:scad.docs |    Status:     NoError
+consumer:scad.docs |    Genus:      0
+consumer:scad.docs |    Vertices:     3789
+consumer:scad.docs |    Facets:       7574
+consumer:scad.docs | SCons design built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/20-mounting-tubes.png
+consumer:scad.docs | _action([".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/21-reinforcement-inner-recess.png"], [".cache/scad-project/state/design-entrypoints/d8d4904346dbf745.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
+consumer:scad.docs | + xvfb-run -a openscad --enable=object-function --render --camera=-72.0,10.0,-141.0,68.0,0.0,212.0,100.0 --imgsize=480,360 -o /work/.cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/21-reinforcement-inner-recess.png /work/.cache/scad-project/state/design-entrypoints/d8d4904346dbf745.scad
+consumer:scad.docs | Geometries in cache: 117
+consumer:scad.docs | Geometry cache size in bytes: 1218336
+consumer:scad.docs | CGAL Polyhedrons in cache: 24
+consumer:scad.docs | CGAL cache size in bytes: 8949750
+consumer:scad.docs | Total rendering time: 0:00:00.190
+consumer:scad.docs |    Top level object is a 3D object (manifold):
+consumer:scad.docs |    Status:     NoError
+consumer:scad.docs |    Genus:      0
+consumer:scad.docs |    Vertices:     4557
+consumer:scad.docs |    Facets:       9110
+consumer:scad.docs | SCons design built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/21-reinforcement-inner-recess.png
+consumer:scad.docs | _action([".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/22-reinforcement-blind-hole.png"], [".cache/scad-project/state/design-entrypoints/3b491a7074f6160d.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
+consumer:scad.docs | + xvfb-run -a openscad --enable=object-function --render --camera=-72.0,10.0,-141.0,68.0,0.0,212.0,100.0 --imgsize=480,360 -o /work/.cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/22-reinforcement-blind-hole.png /work/.cache/scad-project/state/design-entrypoints/3b491a7074f6160d.scad
+consumer:scad.docs | Geometries in cache: 125
+consumer:scad.docs | Geometry cache size in bytes: 1284320
+consumer:scad.docs | CGAL Polyhedrons in cache: 26
+consumer:scad.docs | CGAL cache size in bytes: 10892000
+consumer:scad.docs | Total rendering time: 0:00:00.203
+consumer:scad.docs |    Top level object is a 3D object (manifold):
+consumer:scad.docs |    Status:     NoError
+consumer:scad.docs |    Genus:      0
+consumer:scad.docs |    Vertices:     5133
+consumer:scad.docs |    Facets:      10262
+consumer:scad.docs | SCons design built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/22-reinforcement-blind-hole.png
+consumer:scad.docs | _action([".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/23-locator-upper-left.png"], [".cache/scad-project/state/design-entrypoints/9eb58150bf2d3116.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
+consumer:scad.docs | + xvfb-run -a openscad --enable=object-function --render --camera=-75.0,10.0,110.0,68.0,0.0,212.0,95.0 --imgsize=480,360 -o /work/.cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/23-locator-upper-left.png /work/.cache/scad-project/state/design-entrypoints/9eb58150bf2d3116.scad
+consumer:scad.docs | Geometries in cache: 129
+consumer:scad.docs | Geometry cache size in bytes: 1317312
+consumer:scad.docs | CGAL Polyhedrons in cache: 26
+consumer:scad.docs | CGAL cache size in bytes: 11564000
+consumer:scad.docs | Total rendering time: 0:00:00.203
+consumer:scad.docs |    Top level object is a 3D object (manifold):
+consumer:scad.docs |    Status:     NoError
+consumer:scad.docs |    Genus:      -1
+consumer:scad.docs |    Vertices:     5229
+consumer:scad.docs |    Facets:      10450
+consumer:scad.docs | SCons design built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/23-locator-upper-left.png
+consumer:scad.docs | _action([".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/24-data-connector-bottom.png"], [".cache/scad-project/state/design-entrypoints/2c2fc572c467e4e3.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
+consumer:scad.docs | + xvfb-run -a openscad --enable=object-function --render --camera=0.0,10.0,-113.5,68.0,0.0,212.0,135.0 --imgsize=480,360 -o /work/.cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/24-data-connector-bottom.png /work/.cache/scad-project/state/design-entrypoints/2c2fc572c467e4e3.scad
+consumer:scad.docs | Geometries in cache: 132
+consumer:scad.docs | Geometry cache size in bytes: 1319880
+consumer:scad.docs | CGAL Polyhedrons in cache: 30
+consumer:scad.docs | CGAL cache size in bytes: 14492500
+consumer:scad.docs | Total rendering time: 0:00:00.211
+consumer:scad.docs |    Top level object is a 3D object (manifold):
+consumer:scad.docs |    Status:     NoError
+consumer:scad.docs |    Genus:      -3
+consumer:scad.docs |    Vertices:     5333
+consumer:scad.docs |    Facets:      10650
+consumer:scad.docs | SCons design built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/24-data-connector-bottom.png
+consumer:scad.docs | _action([".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/25-data-connectors.png"], [".cache/scad-project/state/design-entrypoints/46469c99191b3b00.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
+consumer:scad.docs | + xvfb-run -a openscad --enable=object-function --render --camera=0.0,0.0,0.0,68.0,0.0,212.0,0.0 --autocenter --viewall --imgsize=640,480 -o /work/.cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/25-data-connectors.png /work/.cache/scad-project/state/design-entrypoints/46469c99191b3b00.scad
+consumer:scad.docs | Geometries in cache: 134
+consumer:scad.docs | Geometry cache size in bytes: 1321592
+consumer:scad.docs | CGAL Polyhedrons in cache: 30
+consumer:scad.docs | CGAL cache size in bytes: 14496500
+consumer:scad.docs | Total rendering time: 0:00:00.220
+consumer:scad.docs |    Top level object is a 3D object (manifold):
+consumer:scad.docs |    Status:     NoError
+consumer:scad.docs |    Genus:      -4
+consumer:scad.docs |    Vertices:     5341
+consumer:scad.docs |    Facets:      10662
+consumer:scad.docs | SCons design built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/25-data-connectors.png
+consumer:scad.docs | _action([".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/26-power-connector.png"], [".cache/scad-project/state/design-entrypoints/436d423c0dd7abff.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md", "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
+consumer:scad.docs | + xvfb-run -a openscad --enable=object-function --render --camera=-26.949,10.0,-31.971,68.0,0.0,212.0,130.0 --imgsize=480,360 -o /work/.cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/26-power-connector.png /work/.cache/scad-project/state/design-entrypoints/436d423c0dd7abff.scad
+consumer:scad.docs | Geometries in cache: 132
+consumer:scad.docs | Geometry cache size in bytes: 1319880
+consumer:scad.docs | CGAL Polyhedrons in cache: 30
+consumer:scad.docs | CGAL cache size in bytes: 14492500
+consumer:scad.docs | Total rendering time: 0:00:00.209
+consumer:scad.docs |    Top level object is a 3D object (manifold):
+consumer:scad.docs |    Status:     NoError
+consumer:scad.docs |    Genus:      -3
+consumer:scad.docs |    Vertices:     5333
+consumer:scad.docs |    Facets:      10650
+consumer:scad.docs | SCons design built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/26-power-connector.png
+consumer:scad.docs | SCons design summary: targets=26 built=26 cache-restored=0 current=0 error=0
+consumer:scad.docs |   built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/01-front.png
+consumer:scad.docs |   built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/02-rear.png
+consumer:scad.docs |   built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/03-front-mask.png
+consumer:scad.docs |   built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/04-front-stack.png
+consumer:scad.docs |   built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/05-taper-body.png
+consumer:scad.docs |   built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/06-bay-rounded-corner.png
+consumer:scad.docs |   built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/07-narrow-end-width.png
+consumer:scad.docs |   built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/08-narrow-transition-left.png
+consumer:scad.docs |   built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/09-narrow-transition-right.png
+consumer:scad.docs |   built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/10-bay-bottom-relief.png
+consumer:scad.docs |   built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/11-bay-1.png
+consumer:scad.docs |   built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/12-rear-openings.png
+consumer:scad.docs |   built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/13-rear-frame-core.png
+consumer:scad.docs |   built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/14-reinforcement-solids.png
+consumer:scad.docs |   built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/15-recess-bottom.png
+consumer:scad.docs |   built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/16-rear-recess-3d.png
+consumer:scad.docs |   built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/17-rear-after-recess.png
+consumer:scad.docs |   built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/18-mounting-relief-single.png
+consumer:scad.docs |   built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/19-mounting-tube-single.png
+consumer:scad.docs |   built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/20-mounting-tubes.png
+consumer:scad.docs |   built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/21-reinforcement-inner-recess.png
+consumer:scad.docs |   built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/22-reinforcement-blind-hole.png
+consumer:scad.docs |   built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/23-locator-upper-left.png
+consumer:scad.docs |   built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/24-data-connector-bottom.png
+consumer:scad.docs |   built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/25-data-connectors.png
+consumer:scad.docs |   built: .cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/26-power-connector.png
+consumer:scad.docs | Generated design documentation: bld/design
+consumer:scad.docs | design build: OK
+▮▮▮▮ consumer:scad.docs (8s 74ms, 2a397187)
+▮▮▮▮ consumer:scad.build-index (8de7f859)
+consumer:scad.build-index | build index: bld/README.md
+▮▮▮▮ consumer:scad.build-index (96ms, 8de7f859)
+▮▮▮▮ consumer:scad.build-provenance (277907fa)
+consumer:scad.build-provenance | publication info: bld/publication-info.txt
+▮▮▮▮ consumer:scad.build-provenance (516ms, 277907fa)
+▮▮▮▮ consumer:scad.ci (67633a6d)
+▮▮▮▮ consumer:scad.ci (4ms, 67633a6d)
+
+Tasks: 7 completed
+ Time: 8s 805ms
+
