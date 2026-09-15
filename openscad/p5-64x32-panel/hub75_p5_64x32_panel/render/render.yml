@@ -1,3 +1,4 @@
 # Standalone P5 panel previews use the panel's portrait aspect ratio.
+# Migration 004 Step 6 Build-only qualification probe.
 defaults:
   image_size: [1000, 1600]
