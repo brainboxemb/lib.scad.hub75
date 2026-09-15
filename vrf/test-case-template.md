@@ -38,3 +38,5 @@ Describe the starting position and anything that must already be true.
 - Observed: `...`
 - Evidence: `...`
 - Follow-up: `...`
+
+<!-- Migration 004 Step 6 Verify-only qualification probe. -->
