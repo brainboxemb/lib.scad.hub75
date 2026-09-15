@@ -4,6 +4,15 @@ Functional changes to released `lib.scad.hub75` versions.
 
 ## Unreleased
 
+### Changed
+
+- Migrate the library to released `tool.git-project v0.2.8`, `tool.scad-project v0.14.2` and the SCAD toolchain v0.5.0 runtime family.
+- Replace the consumer-authored Migration-004 Moon lifecycle graph with inherited `scad.docs`, `scad.build` and `scad.verify` capabilities plus HUB75-specific source-impact inputs.
+- Preserve the OpenSCAD-only `build_engine.engine: scons` configuration so HUB75 qualifies the focused runtime and scoped SCons reuse path independently from the parallel clamps direct/full-runtime canary.
+- Use the Migration-005 thin production caller and generic v0.2.8 PR-preview cleanup; normal CI retains compact orchestration evidence instead of duplicate complete output artifacts.
+- Extend functional verification to enforce the released foundation pins, inherited capability model, OpenSCAD-only focused-runtime intent and SCons canary contract.
+- Keep the physical verification procedures, fixture geometry and SQ testcase content unchanged; this migration changes execution/orchestration only.
+
 ## v0.1.4
 
 ### Changed
