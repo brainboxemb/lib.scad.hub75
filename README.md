@@ -112,6 +112,18 @@ The design narrative is reader-first: it explains the physical feature and geome
 
 In parallel, the library is building up **physical dimension verification against real HUB75 hardware**. That work is deliberately broken into small test cases: one physical question, one repeatable procedure and one recorded result at a time. The first defined case, SQ-01, checks whether TL1 can be positioned squarely and repeatably with an SQ1 alignment helper; it does not yet prove the TL1 profile dimensions themselves. See [`vrf/README.md`](vrf/README.md) for the current approach and testcase links.
 
+## Normal CI orchestration
+
+Normal pull-request and `main` production uses the common Moon-gated SCAD lifecycle. A lightweight host preflight first decides whether any SCAD producer is affected. An unrelated change can therefore stop before the SCAD image is pulled. Relevant changes run the publication-ready graph in one explicit SCAD Docker process, after which the host validates and publishes the generated Build and Verification trees.
+
+HUB75 intentionally has three real producer domains rather than copying the smaller clamp-library graph:
+
+- `scad.build` — the standalone front/rear presentation renders under `bld/png`;
+- `scad.docs` — generated design documentation under `bld/design`;
+- `scad.verify` — API verification plus the generated physical-verification fixtures and plan images under `vrf/out`.
+
+These producers are logically independent inputs to the normal aggregate lifecycle. Physical verification procedures, fixture definitions and testcase content remain owned by this library; the shared tooling only provides the execution and publication mechanics.
+
 A release reruns Build and Verify against the exact release source before publishing immutable snapshots under:
 
 ```text
