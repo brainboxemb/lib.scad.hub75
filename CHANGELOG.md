@@ -4,6 +4,8 @@ Functional changes to released `lib.scad.hub75` versions.
 
 ## Unreleased
 
+## v0.1.4
+
 ### Changed
 
 - Upgrade repository tooling to released `tool.scad-project v0.13.1` and align the tool gitlink plus Production/Release/PR-cleanup reusable workflow pins to its exact source commit.
