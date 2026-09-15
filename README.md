@@ -112,17 +112,51 @@ The design narrative is reader-first: it explains the physical feature and geome
 
 In parallel, the library is building up **physical dimension verification against real HUB75 hardware**. That work is deliberately broken into small test cases: one physical question, one repeatable procedure and one recorded result at a time. The first defined case, SQ-01, checks whether TL1 can be positioned squarely and repeatably with an SQ1 alignment helper; it does not yet prove the TL1 profile dimensions themselves. See [`vrf/README.md`](vrf/README.md) for the current approach and testcase links.
 
-## Normal CI orchestration
+## Migration 005 capability model
 
-Normal pull-request and `main` production uses the common Moon-gated SCAD lifecycle. A lightweight host preflight first decides whether any SCAD producer is affected. An unrelated change can therefore stop before the SCAD image is pulled. Relevant changes run the publication-ready graph in one explicit SCAD Docker process, after which the host validates and publishes the generated Build and Verification trees.
+Normal pull-request and `main` production uses the released Migration-005 lifecycle from `tool.scad-project v0.14.2`.
 
-HUB75 intentionally has three real producer domains rather than copying the smaller clamp-library graph:
+HUB75 exposes three real capabilities:
 
-- `scad.build` — the standalone front/rear presentation renders under `bld/png`;
-- `scad.docs` — generated design documentation under `bld/design`;
-- `scad.verify` — API verification plus the generated physical-verification fixtures and plan images under `vrf/out`.
+```text
+scad.docs
+    generated design documentation
 
-These producers are logically independent inputs to the normal aggregate lifecycle. Physical verification procedures, fixture definitions and testcase content remain owned by this library; the shared tooling only provides the execution and publication mechanics.
+scad.build
+    standalone front/rear presentation renders
+
+scad.verify
+    API verification plus physical-verification fixtures and plan images
+```
+
+Root `moon.yml` selects these inherited capabilities through `workspace.inheritedTasks.include` and adds only HUB75-specific source-impact inputs. Shared commands, standard outputs and Moon cache policy are inherited through:
+
+```text
+.moon/tasks/scad.yml
+    -> tools/tool.scad-project/moon/tasks/scad.yml
+```
+
+Consumer-authored Migration-004 lifecycle tasks such as build-index/provenance, `scad.production-impact` and `scad.ci` are no longer part of the repository graph.
+
+One host-side Moon affected query can stop unrelated changes before acquiring a CAD runtime. When work is affected, the shared planner derives runtime/cache policy from `project.scad.yml` and materializes the required capabilities in at most one CAD process.
+
+This repository deliberately stays **OpenSCAD-only** and keeps:
+
+```yaml
+build_engine:
+  engine: scons
+```
+
+so it is the Migration-005 focused-runtime/SCons canary. The planner should select `ghcr.io/brainboxemb/scad-toolchain-openscad:v0.5.0`; applicable normal SCons cache transport remains enabled. Verification-SCons transport is only expected when configured verification render/export targets genuinely populate it—command-only verification must not create a cache transport requirement merely because the project uses SCons for normal Build/docs work.
+
+Moon and SCons therefore have distinct jobs:
+
+```text
+Moon     coarse capability impact + whole-capability reuse
+SCons    fine-grained target reuse inside executing SCons capabilities
+```
+
+Normal successful CI publishes changed Build/Verification families and retains compact orchestration evidence instead of uploading another complete copy of those output trees as Actions artifacts.
 
 A release reruns Build and Verify against the exact release source before publishing immutable snapshots under:
 
@@ -135,9 +169,41 @@ and creating the matching annotated source tag and GitHub Release bundles.
 
 ## Project tooling
 
-The current `tool.scad-project` dependency is declared in `project.yml`, locked by the `tools/tool.scad-project` gitlink and matched by the reusable workflow commit pins. Keep those three representations aligned.
+Repository-level Git/dependency policy and SCAD-domain policy remain split:
 
-Bootstrap and dependency updates are Python-free:
+```text
+project.yml
+    generic project/profile/dependency policy
+
+project.scad.yml
+    SCAD paths, OpenSCAD/build-engine, verification and publication policy
+
+moon.yml
+    visible capabilities + HUB75-specific source-impact boundaries
+
+.moon/tasks/scad.yml
+    inherited shared SCAD capability implementation
+```
+
+The released foundation is locked in three complementary forms:
+
+```text
+project.yml
+    tool.scad-project ref: v0.14.2
+
+tools/tool.scad-project
+    exact source: 5712324ea9e3a7c81ba1b79013f2758f52b219cf
+
+.github/workflows/scad.yml / release.yml
+    exact reusable workflow source: 5712324ea9e3a7c81ba1b79013f2758f52b219cf
+
+tools/tool.git-project
+    exact source: 7c43f37e7b07cfb57638a1d1dad2501de09ba7eb
+```
+
+PR-preview cleanup uses released `tool.git-project v0.2.8`.
+
+Bootstrap and dependency updates remain Python-free:
 
 ```powershell
 .\bootstrap.ps1
