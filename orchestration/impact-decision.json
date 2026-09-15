@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "tool": "tool.git-project/moon-affected",
+  "moon_version": "moon 2.5.4",
+  "task": "consumer:scad.docs",
+  "base": "2eaaa540e3658bd3821eb6ec0f2d0352cbefff48",
+  "head": "7aa7a70a45e026e5d9ddc8474eaf819d8f106c85",
+  "affected": true,
+  "status": "conservative",
+  "reason": "moon-changed-files-query-failed"
+}

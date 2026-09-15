@@ -1,0 +1,23 @@
+Publication context : pull_request
+Publication kind    : verification
+Publication branch  : dev/pr-29/verification
+
+Source
+------
+Repository          : brainboxemb/lib.scad.hub75
+Ref type            : pull_request
+Ref                 : feature/pr-29-migration-005-capability-lifecycle
+Commit              : e6798c4d766a89c9f7e4c712fba494ecfe912d6a
+Triggered by        : brainboxemb
+Workflow run        : https://github.com/brainboxemb/lib.scad.hub75/actions/runs/35026885840
+
+Tooling
+-------
+SCAD toolchain image: ghcr.io/brainboxemb/scad-toolchain-openscad:v0.5.0
+SCAD toolchain ver. : v0.5.0
+tool.scad-project   : v0.14.3
+
+Git submodules
+--------------
+tools/tool.git-project : 7c43f37e7b07cfb57638a1d1dad2501de09ba7eb
+tools/tool.scad-project : b86b2be325f64847b8d91b7f2596bfd4e4ffb7f2

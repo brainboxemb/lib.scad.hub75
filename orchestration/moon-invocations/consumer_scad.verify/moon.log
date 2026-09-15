@@ -1,0 +1,168 @@
+[ WARN 2026-09-15 21:41:07.511] moon_app::queries::changed_files  Detected a shallow checkout, unable to run Git commands to determine changed files. 
+[ WARN 21:41:07.511] moon_app::queries::changed_files  A full Git history is required for affected checks, falling back to an empty files list. 
+consumer:scad.verify | + openscad-docsgen -m -T /work/openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad
+consumer:scad.verify | Parsing...
+consumer:scad.verify |   /work/openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad
+consumer:scad.verify | No log requests to process
+consumer:scad.verify | + openscad-docsgen -m -T /work/openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad
+consumer:scad.verify | Parsing...
+consumer:scad.verify |   /work/openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad
+consumer:scad.verify | No log requests to process
+consumer:scad.verify | + bash scripts/run-verification.sh
+consumer:scad.verify | ECHO: "hub75_p5_64x32_panel_width", 159.7
+consumer:scad.verify | ECHO: "hub75_p5_64x32_panel_height", 319.71
+consumer:scad.verify | ECHO: "hub75_p5_64x32_panel_rear_grid_gap_x", 2.79531
+consumer:scad.verify | Geometries in cache: 176
+consumer:scad.verify | Geometry cache size in bytes: 980192
+consumer:scad.verify | CGAL Polyhedrons in cache: 39
+consumer:scad.verify | CGAL cache size in bytes: 13124000
+consumer:scad.verify | Total rendering time: 0:00:00.118
+consumer:scad.verify |    Top level object is a 3D object (manifold):
+consumer:scad.verify |    Status:     NoError
+consumer:scad.verify |    Genus:      -3
+consumer:scad.verify |    Vertices:     5365
+consumer:scad.verify |    Facets:      10714
+consumer:scad.verify | WARNING: Viewall and autocenter disabled in favor of $vp*
+consumer:scad.verify | Geometries in cache: 24
+consumer:scad.verify | Geometry cache size in bytes: 348968
+consumer:scad.verify | CGAL Polyhedrons in cache: 2
+consumer:scad.verify | CGAL cache size in bytes: 700500
+consumer:scad.verify | Total rendering time: 0:00:00.028
+consumer:scad.verify |    Top level object is a 3D object (manifold):
+consumer:scad.verify |    Status:     NoError
+consumer:scad.verify |    Genus:      2
+consumer:scad.verify |    Vertices:     1736
+consumer:scad.verify |    Facets:       3476
+consumer:scad.verify | WARNING: Viewall and autocenter disabled in favor of $vp*
+consumer:scad.verify | Geometries in cache: 24
+consumer:scad.verify | Geometry cache size in bytes: 348968
+consumer:scad.verify | CGAL Polyhedrons in cache: 2
+consumer:scad.verify | CGAL cache size in bytes: 700500
+consumer:scad.verify | Total rendering time: 0:00:00.092
+consumer:scad.verify |    Top level object is a 3D object (manifold):
+consumer:scad.verify |    Status:     NoError
+consumer:scad.verify |    Genus:      2
+consumer:scad.verify |    Vertices:     1736
+consumer:scad.verify |    Facets:       3476
+consumer:scad.verify | WARNING: Viewall and autocenter disabled in favor of $vp*
+consumer:scad.verify | Geometries in cache: 182
+consumer:scad.verify | Geometry cache size in bytes: 1309040
+consumer:scad.verify | CGAL Polyhedrons in cache: 41
+consumer:scad.verify | CGAL cache size in bytes: 16318250
+consumer:scad.verify | Total rendering time: 0:00:00.210
+consumer:scad.verify |    Top level object is a 3D object (manifold):
+consumer:scad.verify |    Status:     NoError
+consumer:scad.verify |    Genus:      -3
+consumer:scad.verify |    Vertices:     6057
+consumer:scad.verify |    Facets:      12098
+consumer:scad.verify | WARNING: Viewall and autocenter disabled in favor of $vp*
+consumer:scad.verify | Geometries in cache: 184
+consumer:scad.verify | Geometry cache size in bytes: 1372576
+consumer:scad.verify | CGAL Polyhedrons in cache: 49
+consumer:scad.verify | CGAL cache size in bytes: 17284750
+consumer:scad.verify | Total rendering time: 0:00:00.217
+consumer:scad.verify |    Top level object is a 3D object (manifold):
+consumer:scad.verify |    Status:     NoError
+consumer:scad.verify |    Genus:      -1
+consumer:scad.verify |    Vertices:     6859
+consumer:scad.verify |    Facets:      13710
+consumer:scad.verify | WARNING: Viewall and autocenter disabled in favor of $vp*
+consumer:scad.verify | Geometries in cache: 200
+consumer:scad.verify | Geometry cache size in bytes: 1652872
+consumer:scad.verify | CGAL Polyhedrons in cache: 44
+consumer:scad.verify | CGAL cache size in bytes: 18308250
+consumer:scad.verify | Total rendering time: 0:00:00.215
+consumer:scad.verify |    Top level object is a 3D object (manifold):
+consumer:scad.verify |    Status:     NoError
+consumer:scad.verify |    Genus:      -1
+consumer:scad.verify |    Vertices:     7769
+consumer:scad.verify |    Facets:      15530
+consumer:scad.verify | WARNING: Viewall and autocenter disabled in favor of $vp*
+consumer:scad.verify | Geometries in cache: 200
+consumer:scad.verify | Geometry cache size in bytes: 1652872
+consumer:scad.verify | CGAL Polyhedrons in cache: 44
+consumer:scad.verify | CGAL cache size in bytes: 18308250
+consumer:scad.verify | Total rendering time: 0:00:00.206
+consumer:scad.verify |    Top level object is a 3D object (manifold):
+consumer:scad.verify |    Status:     NoError
+consumer:scad.verify |    Genus:      -1
+consumer:scad.verify |    Vertices:     7769
+consumer:scad.verify |    Facets:      15530
+consumer:scad.verify | WARNING: Viewall and autocenter disabled in favor of $vp*
+consumer:scad.verify | Geometries in cache: 8
+consumer:scad.verify | Geometry cache size in bytes: 37760
+consumer:scad.verify | CGAL Polyhedrons in cache: 3
+consumer:scad.verify | CGAL cache size in bytes: 114000
+consumer:scad.verify | Total rendering time: 0:00:00.004
+consumer:scad.verify |    Top level object is a 3D object (manifold):
+consumer:scad.verify |    Status:     NoError
+consumer:scad.verify |    Genus:      1
+consumer:scad.verify |    Vertices:      216
+consumer:scad.verify |    Facets:        432
+consumer:scad.verify | WARNING: Viewall and autocenter disabled in favor of $vp*
+consumer:scad.verify | Geometries in cache: 8
+consumer:scad.verify | Geometry cache size in bytes: 37760
+consumer:scad.verify | CGAL Polyhedrons in cache: 3
+consumer:scad.verify | CGAL cache size in bytes: 114000
+consumer:scad.verify | Total rendering time: 0:00:00.070
+consumer:scad.verify |    Top level object is a 3D object (manifold):
+consumer:scad.verify |    Status:     NoError
+consumer:scad.verify |    Genus:      1
+consumer:scad.verify |    Vertices:      216
+consumer:scad.verify |    Facets:        432
+consumer:scad.verify | ECHO: "hub75_vrf_mounting_spacing_x_mm", 144
+consumer:scad.verify | WARNING: Viewall and autocenter disabled in favor of $vp*
+consumer:scad.verify | Geometries in cache: 6
+consumer:scad.verify | Geometry cache size in bytes: 97872
+consumer:scad.verify | CGAL Polyhedrons in cache: 3
+consumer:scad.verify | CGAL cache size in bytes: 290000
+consumer:scad.verify | Total rendering time: 0:00:00.007
+consumer:scad.verify |    Top level object is a 3D object (manifold):
+consumer:scad.verify |    Status:     NoError
+consumer:scad.verify |    Genus:      2
+consumer:scad.verify |    Vertices:      580
+consumer:scad.verify |    Facets:       1164
+consumer:scad.verify | ECHO: "hub75_vrf_mounting_spacing_x_mm", 144
+consumer:scad.verify | WARNING: Viewall and autocenter disabled in favor of $vp*
+consumer:scad.verify | Geometries in cache: 6
+consumer:scad.verify | Geometry cache size in bytes: 97872
+consumer:scad.verify | CGAL Polyhedrons in cache: 3
+consumer:scad.verify | CGAL cache size in bytes: 290000
+consumer:scad.verify | Total rendering time: 0:00:00.070
+consumer:scad.verify |    Top level object is a 3D object (manifold):
+consumer:scad.verify |    Status:     NoError
+consumer:scad.verify |    Genus:      2
+consumer:scad.verify |    Vertices:      580
+consumer:scad.verify |    Facets:       1164
+consumer:scad.verify | ECHO: "hub75_vrf_mounting_spacing_z_mm", 152
+consumer:scad.verify | WARNING: Viewall and autocenter disabled in favor of $vp*
+consumer:scad.verify | Geometries in cache: 6
+consumer:scad.verify | Geometry cache size in bytes: 97872
+consumer:scad.verify | CGAL Polyhedrons in cache: 3
+consumer:scad.verify | CGAL cache size in bytes: 290000
+consumer:scad.verify | Total rendering time: 0:00:00.007
+consumer:scad.verify |    Top level object is a 3D object (manifold):
+consumer:scad.verify |    Status:     NoError
+consumer:scad.verify |    Genus:      2
+consumer:scad.verify |    Vertices:      580
+consumer:scad.verify |    Facets:       1164
+consumer:scad.verify | ECHO: "hub75_vrf_mounting_spacing_z_mm", 152
+consumer:scad.verify | WARNING: Viewall and autocenter disabled in favor of $vp*
+consumer:scad.verify | Geometries in cache: 6
+consumer:scad.verify | Geometry cache size in bytes: 97872
+consumer:scad.verify | CGAL Polyhedrons in cache: 3
+consumer:scad.verify | CGAL cache size in bytes: 290000
+consumer:scad.verify | Total rendering time: 0:00:00.070
+consumer:scad.verify |    Top level object is a 3D object (manifold):
+consumer:scad.verify |    Status:     NoError
+consumer:scad.verify |    Genus:      2
+consumer:scad.verify |    Vertices:      580
+consumer:scad.verify |    Facets:       1164
+consumer:scad.verify | HUB75 functional verification output written to vrf/out
+consumer:scad.verify | + bash scripts/build-verification-index.sh
+consumer:scad.verify | verify: OK
+▮▮▮▮ consumer:scad.verify (cached, 7ms, cdaac747)
+
+Tasks: 1 completed (1 cached)
+ Time: 39ms ❯❯❯❯ to the moon
+

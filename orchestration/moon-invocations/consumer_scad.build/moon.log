@@ -1,0 +1,41 @@
+[ WARN 2026-09-15 21:41:07.361] moon_app::queries::changed_files  Detected a shallow checkout, unable to run Git commands to determine changed files. 
+[ WARN 21:41:07.361] moon_app::queries::changed_files  A full Git history is required for affected checks, falling back to an empty files list. 
+consumer:scad.build | SCons build engine: 2 target(s), cache=/work/.cache/scad-project/scons
+consumer:scad.build | + scons -Q -f /work/tools/tool.scad-project/src/scad_project/scons_driver.py SCAD_PROJECT_MANIFEST=/work/.cache/scad-project/state/build-manifest.json
+consumer:scad.build | _action(["bld/png/hub75-p5-64x32-panel-front-angled.png"], ["openscad/p5-64x32-panel/hub75_p5_64x32_panel/render/hub75-p5-64x32-panel-front-angled.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
+consumer:scad.build | + xvfb-run -a openscad --enable=object-function --render --autocenter --viewall --imgsize=1000,1600 -o /work/bld/png/hub75-p5-64x32-panel-front-angled.png /work/openscad/p5-64x32-panel/hub75_p5_64x32_panel/render/hub75-p5-64x32-panel-front-angled.scad
+consumer:scad.build | WARNING: Viewall and autocenter disabled in favor of $vp*
+consumer:scad.build | Geometries in cache: 176
+consumer:scad.build | Geometry cache size in bytes: 1397984
+consumer:scad.build | CGAL Polyhedrons in cache: 39
+consumer:scad.build | CGAL cache size in bytes: 15404500
+consumer:scad.build | Total rendering time: 0:00:00.237
+consumer:scad.build |    Top level object is a 3D object (manifold):
+consumer:scad.build |    Status:     NoError
+consumer:scad.build |    Genus:      -3
+consumer:scad.build |    Vertices:     6233
+consumer:scad.build |    Facets:      12450
+consumer:scad.build | SCons built: bld/png/hub75-p5-64x32-panel-front-angled.png
+consumer:scad.build | _action(["bld/png/hub75-p5-64x32-panel-rear-angled.png"], ["openscad/p5-64x32-panel/hub75_p5_64x32_panel/render/hub75-p5-64x32-panel-rear-angled.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
+consumer:scad.build | + xvfb-run -a openscad --enable=object-function --render --autocenter --viewall --imgsize=1000,1600 -o /work/bld/png/hub75-p5-64x32-panel-rear-angled.png /work/openscad/p5-64x32-panel/hub75_p5_64x32_panel/render/hub75-p5-64x32-panel-rear-angled.scad
+consumer:scad.build | WARNING: Viewall and autocenter disabled in favor of $vp*
+consumer:scad.build | Geometries in cache: 176
+consumer:scad.build | Geometry cache size in bytes: 1397984
+consumer:scad.build | CGAL Polyhedrons in cache: 39
+consumer:scad.build | CGAL cache size in bytes: 15404500
+consumer:scad.build | Total rendering time: 0:00:00.238
+consumer:scad.build |    Top level object is a 3D object (manifold):
+consumer:scad.build |    Status:     NoError
+consumer:scad.build |    Genus:      -3
+consumer:scad.build |    Vertices:     6233
+consumer:scad.build |    Facets:      12450
+consumer:scad.build | SCons built: bld/png/hub75-p5-64x32-panel-rear-angled.png
+consumer:scad.build | SCons summary: targets=2 built=2 cache-restored=0 current=0 error=0
+consumer:scad.build |   built: bld/png/hub75-p5-64x32-panel-front-angled.png
+consumer:scad.build |   built: bld/png/hub75-p5-64x32-panel-rear-angled.png
+consumer:scad.build | build: OK
+▮▮▮▮ consumer:scad.build (cached, 2a3264b1)
+
+Tasks: 1 completed (1 cached)
+ Time: 18ms ❯❯❯❯ to the moon
+
