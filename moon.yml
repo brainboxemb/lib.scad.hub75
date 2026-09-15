@@ -18,16 +18,10 @@ tasks:
 
   scad.verify:
     inputs:
-      - 'openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad'
+      - 'openscad/**/*.scad'
       - 'test/**'
-      - 'vrf/README.md'
-      - 'vrf/fixtures/**'
-      - 'vrf/top-left/**'
-      - 'vrf/measurement-catalog.yml'
-      - 'vrf/physical-panel-validation.md'
-      - 'vrf/test-case-template.md'
-      - 'scripts/run-verification.sh'
-      - 'scripts/build-verification-index.sh'
+      - 'vrf/**'
+      - 'scripts/**'
       - 'bootstrap.sh'
       - 'bootstrap.ps1'
       - 'update-repo.sh'
