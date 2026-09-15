@@ -156,3 +156,5 @@ Normal checkout initializes direct dependencies only. When this library is consu
 Repository-specific agent guidance is in [`AGENTS.md`](AGENTS.md).
 
 The model, code and documentation were developed with the assistance of ChatGPT.
+
+<!-- Migration 004 Step 6 README-only qualification probe. -->
