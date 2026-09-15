@@ -111,8 +111,6 @@ tasks:
       - 'vrf/out/plan/**'
       - 'vrf/out/README.md'
       - 'vrf/out/evidence/executions/scad-verify/**'
-      - 'vrf/out/evidence/domain/last-verification-build.json'
-      - '.cache/scad-project/verification-state/last-verification-build.json'
     options:
       cache: true
 
