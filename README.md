@@ -114,7 +114,7 @@ In parallel, the library is building up **physical dimension verification agains
 
 ## Migration 005 capability model
 
-Normal pull-request and `main` production uses the released Migration-005 lifecycle from `tool.scad-project v0.14.2`.
+Normal pull-request and `main` production uses the released Migration-005 lifecycle from `tool.scad-project v0.14.3`.
 
 HUB75 exposes three real capabilities:
 
@@ -189,13 +189,13 @@ The released foundation is locked in three complementary forms:
 
 ```text
 project.yml
-    tool.scad-project ref: v0.14.2
+    tool.scad-project ref: v0.14.3
 
 tools/tool.scad-project
-    exact source: 5712324ea9e3a7c81ba1b79013f2758f52b219cf
+    exact source: b86b2be325f64847b8d91b7f2596bfd4e4ffb7f2
 
 .github/workflows/scad.yml / release.yml
-    exact reusable workflow source: 5712324ea9e3a7c81ba1b79013f2758f52b219cf
+    exact reusable workflow source: b86b2be325f64847b8d91b7f2596bfd4e4ffb7f2
 
 tools/tool.git-project
     exact source: 7c43f37e7b07cfb57638a1d1dad2501de09ba7eb
