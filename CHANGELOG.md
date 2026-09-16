@@ -2,7 +2,7 @@
 
 Functional changes to released `lib.scad.hub75` versions.
 
-## Unreleased
+## v0.1.5
 
 ### Changed
 
