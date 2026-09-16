@@ -2,6 +2,14 @@
 
 Functional changes to released `lib.scad.hub75` versions.
 
+## v0.1.6
+
+### Changed
+
+- Align the final Migration-005 consumer baseline to released `tool.scad-project v0.14.8` with exact tool gitlink `85781a6b21a0f6a06d37be154fd9eb475ecaa2a4`.
+- Use semantic `v0.14.8` Production and thin split Release callers while retaining the focused OpenSCAD runtime and configured SCons build policy.
+- Requalify the affected PR (`35101188447`), merged main (`35101638473`) and README-only zero-runtime (`35101927430`) paths without changing HUB75 geometry, public API, physical-verification content or SCons configuration.
+
 ## v0.1.5
 
 ### Changed
