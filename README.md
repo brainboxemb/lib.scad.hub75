@@ -11,29 +11,29 @@ Reusable OpenSCAD mechanical reference geometry for HUB75 LED matrix hardware.
   </tr>
   <tr>
     <td align="center">
-      <a href="../../blob/prod/build/png/hub75-p5-64x32-panel-front-angled.png">
-        <img src="../../raw/prod/build/png/hub75-p5-64x32-panel-front-angled.png" alt="HUB75 P5 64 x 32 panel front angled view" width="100%">
+      <a href="../../blob/prod/bld/png/hub75-p5-64x32-panel-front-angled.png">
+        <img src="../../raw/prod/bld/png/hub75-p5-64x32-panel-front-angled.png" alt="HUB75 P5 64 x 32 panel front angled view" width="100%">
       </a>
     </td>
     <td align="center">
-      <a href="../../blob/prod/build/png/hub75-p5-64x32-panel-rear-angled.png">
-        <img src="../../raw/prod/build/png/hub75-p5-64x32-panel-rear-angled.png" alt="HUB75 P5 64 x 32 panel rear angled view" width="100%">
+      <a href="../../blob/prod/bld/png/hub75-p5-64x32-panel-rear-angled.png">
+        <img src="../../raw/prod/bld/png/hub75-p5-64x32-panel-rear-angled.png" alt="HUB75 P5 64 x 32 panel rear angled view" width="100%">
       </a>
     </td>
   </tr>
 </table>
 
-These angled presentation images are dedicated build outputs from the current `prod/build` branch; they are not design-documentation renders.
+These angled presentation images are dedicated build outputs from the current `prod/bld` branch; they are not design-documentation renders.
 
 ## Quick links
 
 - [HUB75 panel design source](openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md)
 - [HUB75 panel manual/reference](openscad/p5-64x32-panel/manual.md)
-- [Generated HUB75 panel design documentation](https://github.com/brainboxemb/lib.scad.hub75/blob/prod/build/design/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md)
+- [Generated HUB75 panel design documentation](https://github.com/brainboxemb/lib.scad.hub75/blob/prod/bld/design/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md)
 - [HUB75 panel OpenSCAD source](openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad)
 - [Physical verification work](vrf/README.md)
-- [Latest generated build](../../tree/prod/build)
-- [Functional verification](../../tree/prod/verification)
+- [Latest generated build](../../tree/prod/bld)
+- [Functional verification](../../tree/prod/vrf)
 - [Changelog](CHANGELOG.md)
 
 The first component is the portrait-oriented HUB75 P5 64 × 32 pixel panel model. Its nominal placement size is 160 × 320 mm (width × height), matching the library's native portrait coordinate system.
@@ -102,19 +102,19 @@ Source design documentation lives beside the supporting files for the component 
 openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md
 ```
 
-`tool.scad-project design-build` renders the readable generated copy under `bld/design`. Successful production builds publish that generated documentation to `prod/build`; generated PNGs do not belong on `main`.
+`tool.scad-project design-build` renders the readable generated copy under `bld/design`. Successful production builds publish that generated documentation to `prod/bld`; generated PNGs do not belong on `main`.
 
 The design narrative is reader-first: it explains the physical feature and geometric operation before using source snippets as supporting detail. The manual remains separate and covers usage, reference dimensions and interactive views.
 
 ## Verification
 
-`test/hub75_p5_64x32_panel_api.scad` exercises the public object API, checks derived values and builds the complete panel. Successful functional evidence is published to `prod/verification`.
+`test/hub75_p5_64x32_panel_api.scad` exercises the public object API, checks derived values and builds the complete panel. Successful functional evidence is published to `prod/vrf`.
 
 In parallel, the library is building up **physical dimension verification against real HUB75 hardware**. That work is deliberately broken into small test cases: one physical question, one repeatable procedure and one recorded result at a time. The first defined case, SQ-01, checks whether TL1 can be positioned squarely and repeatably with an SQ1 alignment helper; it does not yet prove the TL1 profile dimensions themselves. See [`vrf/README.md`](vrf/README.md) for the current approach and testcase links.
 
 ## Migration 005 capability model
 
-Normal pull-request and `main` production uses the final released Migration-005 lifecycle from `tool.scad-project v0.14.8`.
+Normal pull-request and `main` production uses the final released Migration-005 lifecycle from `tool.scad-project v0.14.9`.
 
 HUB75 exposes three real capabilities:
 
@@ -161,8 +161,8 @@ Normal successful CI publishes changed Build/Verification families and retains c
 A release reruns Build and Verify against the exact release source before publishing immutable snapshots under:
 
 ```text
-rel/vX.Y.Z/build
-rel/vX.Y.Z/verification
+rel/vX.Y.Z/bld
+rel/vX.Y.Z/vrf
 ```
 
 and creating the matching annotated source tag and GitHub Release bundles.
@@ -189,19 +189,19 @@ The released foundation is locked in three complementary forms:
 
 ```text
 project.yml
-    tool.scad-project ref: v0.14.8
+    tool.scad-project ref: v0.14.9
 
 tools/tool.scad-project
-    exact source: 85781a6b21a0f6a06d37be154fd9eb475ecaa2a4
+    exact source: a140b22858ac1899e7f2fa71b679639a70d819c3
 
 .github/workflows/scad.yml / release.yml
-    immutable semantic workflow ref: v0.14.8
+    immutable semantic workflow ref: v0.14.9
 
 tools/tool.git-project
     exact source: 7c43f37e7b07cfb57638a1d1dad2501de09ba7eb
 ```
 
-PR-preview cleanup uses released `tool.git-project v0.2.8`.
+PR-preview cleanup uses released `tool.git-project v0.2.8` and removes the canonical `bld` / `vrf` preview namespaces.
 
 Bootstrap and dependency updates remain Python-free:
 
