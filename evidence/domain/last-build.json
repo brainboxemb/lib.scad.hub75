@@ -1,0 +1,55 @@
+{
+  "backend_signature": "4f2e79ff1520564d503ed8ac85f6175d21218f084c222e146044309a6c00e7b5",
+  "engine": "scons",
+  "kind": "build",
+  "manifest_schema_version": 1,
+  "outcome_counts": {
+    "BUILT": 2,
+    "CACHE_RESTORED": 0,
+    "CURRENT": 0,
+    "ERROR": 0
+  },
+  "provenance": {
+    "cache": {
+      "exact_hit": null,
+      "matched_key": "",
+      "namespace": "scad-selective-build-v2",
+      "primary_key": "scad-selective-build-v2-Linux-1361750675-v0.5.0-85781a6b21a0f6a06d37be154fd9eb475ecaa2a4-55f0df5e8985a541c4120dbb085e38d72834369fa5c03b4300f4ded0f18490e0"
+    },
+    "source_commit_sha": "4dd285d5bced43657392d9fd6d245005f12e53eb",
+    "tool_commit_sha": "85781a6b21a0f6a06d37be154fd9eb475ecaa2a4",
+    "tool_version": "0.14.8",
+    "toolchain_image": "ghcr.io/brainboxemb/scad-toolchain-openscad:v0.5.0",
+    "toolchain_version": "v0.5.0",
+    "workflow_version": "v0.14.8"
+  },
+  "schema": "scad-project.build-decisions",
+  "schema_version": 1,
+  "target_count": 2,
+  "targets": [
+    {
+      "action_executed": true,
+      "existed_before": false,
+      "exists_after": true,
+      "outcome": "BUILT",
+      "output": "bld/png/hub75-p5-64x32-panel-front-angled.png",
+      "sources": [
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/render/hub75-p5-64x32-panel-front-angled.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"
+      ],
+      "target_spec_digest": "2d4b59bc46f53157a4753cf2f9d536e9c915c5155c94a13d2ca135d02144fd98"
+    },
+    {
+      "action_executed": true,
+      "existed_before": false,
+      "exists_after": true,
+      "outcome": "BUILT",
+      "output": "bld/png/hub75-p5-64x32-panel-rear-angled.png",
+      "sources": [
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/render/hub75-p5-64x32-panel-rear-angled.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"
+      ],
+      "target_spec_digest": "0d5df32c92ee49a443bcbcba0e9559e708887afba51b37a85362dd8b0c330550"
+    }
+  ]
+}

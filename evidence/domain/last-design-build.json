@@ -1,0 +1,395 @@
+{
+  "backend_signature": "e953e71ccacf3979bdead9a0b7a34d585587ae9208f8c8f441119dde6f8d20d2",
+  "engine": "scons",
+  "kind": "design",
+  "manifest_schema_version": 1,
+  "outcome_counts": {
+    "BUILT": 26,
+    "CACHE_RESTORED": 0,
+    "CURRENT": 0,
+    "ERROR": 0
+  },
+  "provenance": {
+    "cache": {
+      "exact_hit": null,
+      "matched_key": "",
+      "namespace": "scad-selective-build-v2",
+      "primary_key": "scad-selective-build-v2-Linux-1361750675-v0.5.0-85781a6b21a0f6a06d37be154fd9eb475ecaa2a4-55f0df5e8985a541c4120dbb085e38d72834369fa5c03b4300f4ded0f18490e0"
+    },
+    "source_commit_sha": "4dd285d5bced43657392d9fd6d245005f12e53eb",
+    "tool_commit_sha": "85781a6b21a0f6a06d37be154fd9eb475ecaa2a4",
+    "tool_version": "0.14.8",
+    "toolchain_image": "ghcr.io/brainboxemb/scad-toolchain-openscad:v0.5.0",
+    "toolchain_version": "v0.5.0",
+    "workflow_version": "v0.14.8"
+  },
+  "schema": "scad-project.build-decisions",
+  "schema_version": 1,
+  "target_count": 26,
+  "targets": [
+    {
+      "action_executed": true,
+      "existed_before": false,
+      "exists_after": true,
+      "outcome": "BUILT",
+      "output": ".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/01-front.png",
+      "sources": [
+        ".cache/scad-project/state/design-entrypoints/62e7591a1252236c.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"
+      ],
+      "target_spec_digest": "9148d339399d8554f0885cfbe925273a75396243249109f43b1dd7b8298d40bf"
+    },
+    {
+      "action_executed": true,
+      "existed_before": false,
+      "exists_after": true,
+      "outcome": "BUILT",
+      "output": ".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/02-rear.png",
+      "sources": [
+        ".cache/scad-project/state/design-entrypoints/c7894326d69fdbcc.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"
+      ],
+      "target_spec_digest": "671bd982bdb1cdec8cfd2a91d02d3ae84c6ae31a67d6d82617b1642838affa59"
+    },
+    {
+      "action_executed": true,
+      "existed_before": false,
+      "exists_after": true,
+      "outcome": "BUILT",
+      "output": ".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/03-front-mask.png",
+      "sources": [
+        ".cache/scad-project/state/design-entrypoints/172c133ef8a05e82.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"
+      ],
+      "target_spec_digest": "f35d18d347f2609dd7b8f8358230f408ae6e327a07ad3602b8467bc33f42df95"
+    },
+    {
+      "action_executed": true,
+      "existed_before": false,
+      "exists_after": true,
+      "outcome": "BUILT",
+      "output": ".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/04-front-stack.png",
+      "sources": [
+        ".cache/scad-project/state/design-entrypoints/04bca457fc18afdd.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"
+      ],
+      "target_spec_digest": "de6c07abbb8f4b36d4a35da5f836b787c8efbafc4a1044821555cbea91112b11"
+    },
+    {
+      "action_executed": true,
+      "existed_before": false,
+      "exists_after": true,
+      "outcome": "BUILT",
+      "output": ".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/05-taper-body.png",
+      "sources": [
+        ".cache/scad-project/state/design-entrypoints/2d30231092b727b9.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"
+      ],
+      "target_spec_digest": "c937d24b7e991262b30ecd35ce36ae159ac4874fde37aa4d960bb8586593fdef"
+    },
+    {
+      "action_executed": true,
+      "existed_before": false,
+      "exists_after": true,
+      "outcome": "BUILT",
+      "output": ".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/06-bay-rounded-corner.png",
+      "sources": [
+        ".cache/scad-project/state/design-entrypoints/01e2e3a44420f503.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"
+      ],
+      "target_spec_digest": "47b3064c06be4d1ca9810a8e1d2b987328363158e868df93e83567d4a51b0856"
+    },
+    {
+      "action_executed": true,
+      "existed_before": false,
+      "exists_after": true,
+      "outcome": "BUILT",
+      "output": ".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/07-narrow-end-width.png",
+      "sources": [
+        ".cache/scad-project/state/design-entrypoints/98260fdaa36d501b.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"
+      ],
+      "target_spec_digest": "dacf4fc569094a620807f330f0c498c952f1bad0039ea5f7d57483fb4a2aa7d6"
+    },
+    {
+      "action_executed": true,
+      "existed_before": false,
+      "exists_after": true,
+      "outcome": "BUILT",
+      "output": ".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/08-narrow-transition-left.png",
+      "sources": [
+        ".cache/scad-project/state/design-entrypoints/7ae89aeade1db1f5.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"
+      ],
+      "target_spec_digest": "01be2c4166f8be9b9c5e66c9b75be8a811227313a42755576b6318bde62736ac"
+    },
+    {
+      "action_executed": true,
+      "existed_before": false,
+      "exists_after": true,
+      "outcome": "BUILT",
+      "output": ".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/09-narrow-transition-right.png",
+      "sources": [
+        ".cache/scad-project/state/design-entrypoints/700d640d4f15d3b2.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"
+      ],
+      "target_spec_digest": "7eaae1f6f4d35c67adb9181aee700e92966c2052acd5163d59a517dcfb26b0df"
+    },
+    {
+      "action_executed": true,
+      "existed_before": false,
+      "exists_after": true,
+      "outcome": "BUILT",
+      "output": ".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/10-bay-bottom-relief.png",
+      "sources": [
+        ".cache/scad-project/state/design-entrypoints/37c752c34c473434.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"
+      ],
+      "target_spec_digest": "7f3e13e806e26f54062c99f322942d722b122de352ed4c75a2fb9b10552afb57"
+    },
+    {
+      "action_executed": true,
+      "existed_before": false,
+      "exists_after": true,
+      "outcome": "BUILT",
+      "output": ".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/11-bay-1.png",
+      "sources": [
+        ".cache/scad-project/state/design-entrypoints/32ed28766d6ed2c5.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"
+      ],
+      "target_spec_digest": "b1f95881ac91c57c41ead77018fc6946e57b2b0f6a471052920ef3dbb6ddeb7c"
+    },
+    {
+      "action_executed": true,
+      "existed_before": false,
+      "exists_after": true,
+      "outcome": "BUILT",
+      "output": ".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/12-rear-openings.png",
+      "sources": [
+        ".cache/scad-project/state/design-entrypoints/ff21f1d204bacb87.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"
+      ],
+      "target_spec_digest": "43ba60d7dd128d49a02134fa5241e0d442469d7599c5089dd1d2646996f86fd6"
+    },
+    {
+      "action_executed": true,
+      "existed_before": false,
+      "exists_after": true,
+      "outcome": "BUILT",
+      "output": ".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/13-rear-frame-core.png",
+      "sources": [
+        ".cache/scad-project/state/design-entrypoints/07bc060f9b54946e.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"
+      ],
+      "target_spec_digest": "e0c58bd4062ed5dc33bfcf13839c2ec9a30f34d89b1d24b988c7e54c269258ba"
+    },
+    {
+      "action_executed": true,
+      "existed_before": false,
+      "exists_after": true,
+      "outcome": "BUILT",
+      "output": ".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/14-reinforcement-solids.png",
+      "sources": [
+        ".cache/scad-project/state/design-entrypoints/ec0b16f3c6832467.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"
+      ],
+      "target_spec_digest": "61ae907c5a33cc5fe36290cf2c45b08367e07cd9f800d5c1a66c4b19214ee504"
+    },
+    {
+      "action_executed": true,
+      "existed_before": false,
+      "exists_after": true,
+      "outcome": "BUILT",
+      "output": ".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/15-recess-bottom.png",
+      "sources": [
+        ".cache/scad-project/state/design-entrypoints/3d1c3d31f0e64cf1.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"
+      ],
+      "target_spec_digest": "44d89f84451a982dc46085d42fa9e4e66da373c370fdd582865b74a7102b318a"
+    },
+    {
+      "action_executed": true,
+      "existed_before": false,
+      "exists_after": true,
+      "outcome": "BUILT",
+      "output": ".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/16-rear-recess-3d.png",
+      "sources": [
+        ".cache/scad-project/state/design-entrypoints/b2db3747b5e65c8d.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"
+      ],
+      "target_spec_digest": "0da6c3a3722f757e11d5753e2ff890cd7a86f178171455f2d216621d023354cd"
+    },
+    {
+      "action_executed": true,
+      "existed_before": false,
+      "exists_after": true,
+      "outcome": "BUILT",
+      "output": ".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/17-rear-after-recess.png",
+      "sources": [
+        ".cache/scad-project/state/design-entrypoints/02561fe86518f64a.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"
+      ],
+      "target_spec_digest": "0090b257e0b05ec277ad874985c6e8a799e3c8b8c7437bd10593a06a88a36ec1"
+    },
+    {
+      "action_executed": true,
+      "existed_before": false,
+      "exists_after": true,
+      "outcome": "BUILT",
+      "output": ".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/18-mounting-relief-single.png",
+      "sources": [
+        ".cache/scad-project/state/design-entrypoints/a90cdd47cc00fabd.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"
+      ],
+      "target_spec_digest": "1946d00f0368321e20b9ac2e1e00200a0ae249f9f95eeeaae37504a14d50a272"
+    },
+    {
+      "action_executed": true,
+      "existed_before": false,
+      "exists_after": true,
+      "outcome": "BUILT",
+      "output": ".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/19-mounting-tube-single.png",
+      "sources": [
+        ".cache/scad-project/state/design-entrypoints/fd7d786edee056ee.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"
+      ],
+      "target_spec_digest": "24e116e9e9cecfe8f93a6f7a064a64767bec33d1f21735874c190fc4cf0ee68c"
+    },
+    {
+      "action_executed": true,
+      "existed_before": false,
+      "exists_after": true,
+      "outcome": "BUILT",
+      "output": ".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/20-mounting-tubes.png",
+      "sources": [
+        ".cache/scad-project/state/design-entrypoints/2b2bc54bc2a75016.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"
+      ],
+      "target_spec_digest": "08445a92f5ec7b143afa3ec39a910bcd8d68a5dc301dc6e69dfd01f4f556c50f"
+    },
+    {
+      "action_executed": true,
+      "existed_before": false,
+      "exists_after": true,
+      "outcome": "BUILT",
+      "output": ".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/21-reinforcement-inner-recess.png",
+      "sources": [
+        ".cache/scad-project/state/design-entrypoints/d8d4904346dbf745.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"
+      ],
+      "target_spec_digest": "5b1daa89c0bf3b5cd22f38cb0cee5b8c7da4dafd4def7d04e3082a67d14f506f"
+    },
+    {
+      "action_executed": true,
+      "existed_before": false,
+      "exists_after": true,
+      "outcome": "BUILT",
+      "output": ".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/22-reinforcement-blind-hole.png",
+      "sources": [
+        ".cache/scad-project/state/design-entrypoints/3b491a7074f6160d.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"
+      ],
+      "target_spec_digest": "e37dc49143f9c52ac05a055d369b8af82c4abc7966131d1b9496f4631d0e46ab"
+    },
+    {
+      "action_executed": true,
+      "existed_before": false,
+      "exists_after": true,
+      "outcome": "BUILT",
+      "output": ".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/23-locator-upper-left.png",
+      "sources": [
+        ".cache/scad-project/state/design-entrypoints/9eb58150bf2d3116.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"
+      ],
+      "target_spec_digest": "d1fd1dd07b2973191330316621bef384ce54dad0bfa018900e2fdffd524d8c91"
+    },
+    {
+      "action_executed": true,
+      "existed_before": false,
+      "exists_after": true,
+      "outcome": "BUILT",
+      "output": ".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/24-data-connector-bottom.png",
+      "sources": [
+        ".cache/scad-project/state/design-entrypoints/2c2fc572c467e4e3.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"
+      ],
+      "target_spec_digest": "16204c2020eaa07c5af53097ca98ec7e5ee445062a71110364070b3375131446"
+    },
+    {
+      "action_executed": true,
+      "existed_before": false,
+      "exists_after": true,
+      "outcome": "BUILT",
+      "output": ".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/25-data-connectors.png",
+      "sources": [
+        ".cache/scad-project/state/design-entrypoints/46469c99191b3b00.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"
+      ],
+      "target_spec_digest": "67b797179380211899152a5d6d06230158ac8e9dbdb4dfab4078b6a9d5d0ea4e"
+    },
+    {
+      "action_executed": true,
+      "existed_before": false,
+      "exists_after": true,
+      "outcome": "BUILT",
+      "output": ".cache/scad-project/design-stage/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/img/26-power-connector.png",
+      "sources": [
+        ".cache/scad-project/state/design-entrypoints/436d423c0dd7abff.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad",
+        "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"
+      ],
+      "target_spec_digest": "0a1b5a69e1e2647aed910d67451e2ae05e875ed82fccebf1ec0a3cff04008952"
+    }
+  ]
+}
