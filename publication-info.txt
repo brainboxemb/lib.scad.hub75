@@ -1,0 +1,42 @@
+Publication context : release
+Publication kind    : verification
+Publication branch  : rel/v0.1.6/verification
+
+Source
+------
+Repository          : brainboxemb/lib.scad.hub75
+Ref type            : tag
+Ref                 : v0.1.6
+Commit              : 4dd285d5bced43657392d9fd6d245005f12e53eb
+Triggered by        : brainboxemb
+Workflow run        : https://github.com/brainboxemb/lib.scad.hub75/actions/runs/35103198893
+
+Tooling
+-------
+SCAD toolchain image: ghcr.io/brainboxemb/scad-toolchain-openscad:v0.5.0
+SCAD toolchain ver. : v0.5.0
+tool.scad-project   : v0.14.8
+
+Git submodules
+--------------
+tools/tool.git-project : 7c43f37e7b07cfb57638a1d1dad2501de09ba7eb
+tools/tool.scad-project : 85781a6b21a0f6a06d37be154fd9eb475ecaa2a4
+
+Runtime components
+------------------
+SCAD toolchain
+==============
+Profile    : openscad
+OpenSCAD   : OpenSCAD version 2026.09.12.nightly
+PythonSCAD : not installed
+Python     : Python 3.12.3
+Git        : git version 2.43.0
+SCons      : 4.11.1
+BOSL2      : v2.0.752
+pybosl2    : not installed
+Shapely    : not installed
+docsgen    : 2.0.55
+Pillow     : 12.3.0
+OPENSCADPATH: /opt/openscad-libraries
+BOSL2_ROOT  : /opt/openscad-libraries/BOSL2
+PYTHONPATH : /__w/lib.scad.hub75/lib.scad.hub75/tools/tool.scad-project/src
