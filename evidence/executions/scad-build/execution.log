@@ -1,0 +1,21 @@
+SCAD producer execution
+=======================
+
+Capability: scad.build
+Action: build
+Source revision: e0432a9533a08a1c0d9e87225c22f3f66b632531
+Owner: brainboxemb/tool.scad-project
+Owner revision: b86b2be325f64847b8d91b7f2596bfd4e4ffb7f2
+tool.scad-project version: 0.14.3
+Status: success
+
+Domain evidence: ../../domain/last-build.json
+
+Decision report kind: build
+Build engine: scons
+Targets: 2
+Outcomes: BUILT=2, CACHE_RESTORED=0, CURRENT=0, ERROR=0
+
+Target decisions:
+- BUILT: bld/png/hub75-p5-64x32-panel-front-angled.png
+- BUILT: bld/png/hub75-p5-64x32-panel-rear-angled.png
