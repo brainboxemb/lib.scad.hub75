@@ -1,0 +1,91 @@
+name: Prepare HUB75 v0.1.6 release
+
+on:
+  pull_request:
+    branches:
+      - main
+    types: [opened]
+
+permissions:
+  contents: write
+
+jobs:
+  prepare:
+    if: github.head_ref == 'feature/release-v0.1.6'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout release-prep branch
+        uses: actions/checkout@v4
+        with:
+          ref: feature/release-v0.1.6
+          fetch-depth: 1
+
+      - name: Prepare v0.1.6 changelog and README
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          changelog = Path('CHANGELOG.md')
+          text = changelog.read_text(encoding='utf-8')
+          heading = '## v0.1.5\n'
+          section = '''## v0.1.6
+
+### Changed
+
+- Align the final Migration-005 consumer baseline to released `tool.scad-project v0.14.8` with exact tool gitlink `85781a6b21a0f6a06d37be154fd9eb475ecaa2a4`.
+- Use semantic `v0.14.8` Production and thin split Release callers while retaining the focused OpenSCAD runtime and configured SCons build policy.
+- Requalify the affected PR (`35101188447`), merged main (`35101638473`) and README-only zero-runtime (`35101927430`) paths without changing HUB75 geometry, public API, physical-verification content or SCons configuration.
+
+'''
+          if '## v0.1.6\n' not in text:
+              if heading not in text:
+                  raise SystemExit('v0.1.5 changelog heading not found')
+              text = text.replace(heading, section + heading, 1)
+          changelog.write_text(text, encoding='utf-8')
+
+          readme = Path('README.md')
+          text = readme.read_text(encoding='utf-8')
+          old_lifecycle = 'Normal pull-request and `main` production uses the released Migration-005 lifecycle from `tool.scad-project v0.14.3`.'
+          new_lifecycle = 'Normal pull-request and `main` production uses the final released Migration-005 lifecycle from `tool.scad-project v0.14.8`.'
+          if old_lifecycle not in text and new_lifecycle not in text:
+              raise SystemExit('README lifecycle marker not found')
+          text = text.replace(old_lifecycle, new_lifecycle)
+
+          old_block = '''project.yml
+    tool.scad-project ref: v0.14.3
+
+tools/tool.scad-project
+    exact source: b86b2be325f64847b8d91b7f2596bfd4e4ffb7f2
+
+.github/workflows/scad.yml / release.yml
+    exact reusable workflow source: b86b2be325f64847b8d91b7f2596bfd4e4ffb7f2
+'''
+          new_block = '''project.yml
+    tool.scad-project ref: v0.14.8
+
+tools/tool.scad-project
+    exact source: 85781a6b21a0f6a06d37be154fd9eb475ecaa2a4
+
+.github/workflows/scad.yml / release.yml
+    immutable semantic workflow ref: v0.14.8
+'''
+          if old_block not in text and new_block not in text:
+              raise SystemExit('README tooling baseline block not found')
+          text = text.replace(old_block, new_block)
+          readme.write_text(text, encoding='utf-8')
+          PY
+          git diff --check
+
+      - name: Commit release preparation
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add CHANGELOG.md README.md
+          git diff --cached --check
+          git commit -m 'Prepare HUB75 v0.1.6 release'
+          git push origin HEAD:feature/release-v0.1.6
