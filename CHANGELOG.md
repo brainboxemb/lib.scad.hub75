@@ -2,6 +2,15 @@
 
 Functional changes to released `lib.scad.hub75` versions.
 
+## v0.1.7
+
+### Changed
+
+- Align the final Migration-005 namespace-correction baseline to released `tool.scad-project v0.14.9` with exact tool gitlink `a140b22858ac1899e7f2fa71b679639a70d819c3`.
+- Normalize persistent generated-output publication to the canonical technical `bld` / `vrf` namespaces: `dev/pr-N/{bld,vrf}`, `prod/{bld,vrf}` and `rel/vX.Y.Z/{bld,vrf}` while retaining human-facing Build/Verification terminology.
+- Requalify the SCons-backed OpenSCAD-only consumer on affected PR run `35126450152` and merged-main run `35126654658`: normal SCons cache restore/save stays active while command-only Verification does not require Verification-SCons cache transport.
+- Keep HUB75 geometry, public API, physical-verification procedures/fixtures and SCons configuration unchanged.
+
 ## v0.1.6
 
 ### Changed
