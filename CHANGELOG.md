@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- Adopt released `tool.scad-project v0.15.6` with exact tool gitlink `8ea81a0c3483770bedda75ccf80fb72797097c0a` for Migration 009, leaving HUB75 geometry, public API and physical-verification content unchanged while correcting production-run concurrency.
+- Requalify exact main `9ccf0d0120d4e9b49624aa0fca9dd6113bd6dc99` through production run `35729158403`; both `prod/bld` and `prod/vrf` identify the v0.15.6 stack.
+
 Functional changes to released `lib.scad.hub75` versions.
 
 ## v0.1.7
