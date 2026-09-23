@@ -2,7 +2,8 @@
 
 Start with the repository plan:
 
-- [doc/00-plan.md](doc/00-plan.md)
+- [doc/10-00-plan.md](doc/10-00-plan.md)
+- [doc/README.md](doc/README.md)
 
 It routes to the HUB75 specification, repository design, component-local
 detailed design, verification strategy and exact source/reference material.

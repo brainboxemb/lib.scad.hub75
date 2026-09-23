@@ -1,7 +1,7 @@
 # HUB75 library design
 
 This document describes the **repository-level architecture** used to realise
-the intent in [10-specification.md](10-specification.md).
+the intent in [30-00-specification.md](30-00-specification.md).
 
 ## Repository decomposition
 
@@ -76,7 +76,7 @@ live publication evidence for that state.
 
 ## Physical verification structure
 
-[30-verification.md](30-verification.md) owns the repository-level verification
+[50-00-verification.md](50-00-verification.md) owns the repository-level verification
 strategy and current physical-verification status.
 
 `vrf/` owns executable material: operator procedures, physical testcase files,

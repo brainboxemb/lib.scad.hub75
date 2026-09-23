@@ -25,10 +25,12 @@ Reusable OpenSCAD mechanical reference geometry for HUB75 LED matrix hardware.
 
 ## Start here
 
-- [Plan](doc/00-plan.md) — work context, sources, current focus and roadmap.
-- [Specification](doc/10-specification.md) — why the library exists and what the reference model is intended to mean.
-- [Design](doc/20-design.md) — repository/component architecture and responsibility split.
-- [Verification](doc/30-verification.md) — functional and physical verification strategy and current physical status.
+- [Documentation index](doc/README.md) — route to the maintained engineering documentation.
+- [Plan](doc/10-00-plan.md) — work context, sources, current focus and roadmap.
+- [Manuals](doc/20-00-manuals.md) — repository development and consumer guidance.
+- [Specification](doc/30-00-specification.md) — why the library exists and what the reference model is intended to mean.
+- [Design](doc/40-00-design.md) — repository/component architecture and responsibility split.
+- [Verification](doc/50-00-verification.md) — functional and physical verification strategy and current physical status.
 - [Panel detailed design](openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md) — visual construction of the physical panel model.
 - [Panel manual/reference](openscad/p5-64x32-panel/manual.md) — orientation, dimensions, API use and interactive views.
 - [Physical verification material](vrf/README.md) — operator procedures, testcases and fixture sources.
