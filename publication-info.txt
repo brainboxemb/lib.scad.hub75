@@ -1,0 +1,23 @@
+Publication context : production
+Publication kind    : verification
+Publication branch  : prod/vrf
+
+Source
+------
+Repository          : brainboxemb/lib.scad.hub75
+Ref type            : branch
+Ref                 : main
+Commit              : fb4bed4beb012f8cbc23b67dce025d4f93bb09fb
+Triggered by        : brainboxemb
+Workflow run        : https://github.com/brainboxemb/lib.scad.hub75/actions/runs/35905968869
+
+Tooling
+-------
+SCAD toolchain image: ghcr.io/brainboxemb/scad-toolchain-openscad:v0.6.1
+SCAD toolchain ver. : v0.6.1
+tool.scad-project   : v0.15.11
+
+Git submodules
+--------------
+tools/tool.git-project : d1ed47c7d85524cfcb2a8f7e1ea81ba106ae9c60
+tools/tool.scad-project : 8d167ad17dbfa798d68f46d871aaeed2e2e09857

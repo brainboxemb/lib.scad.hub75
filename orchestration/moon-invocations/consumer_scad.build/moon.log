@@ -1,0 +1,42 @@
+[ WARN 2026-09-23 18:57:37.826] moon_app::queries::changed_files  Detected a shallow checkout, unable to run Git commands to determine changed files. 
+[ WARN 18:57:37.826] moon_app::queries::changed_files  A full Git history is required for affected checks, falling back to an empty files list. 
+▮▮▮▮ consumer:scad.build (f45790bd)
+SCons build engine: 2 target(s), cache=/work/.cache/scad-project/scons
++ scons -Q -f /work/tools/tool.scad-project/src/scad_project/scons_driver.py SCAD_PROJECT_MANIFEST=/work/.cache/scad-project/state/build-manifest.json
+_action(["bld/png/hub75-p5-64x32-panel-front-angled.png"], ["openscad/p5-64x32-panel/hub75_p5_64x32_panel/render/hub75-p5-64x32-panel-front-angled.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
++ xvfb-run -a openscad --enable=object-function --render --autocenter --viewall --imgsize=1000,1600 -o /work/bld/png/hub75-p5-64x32-panel-front-angled.png /work/openscad/p5-64x32-panel/hub75_p5_64x32_panel/render/hub75-p5-64x32-panel-front-angled.scad
+WARNING: Viewall and autocenter disabled in favor of $vp*
+Geometries in cache: 176
+Geometry cache size in bytes: 1397984
+CGAL Polyhedrons in cache: 39
+CGAL cache size in bytes: 15404500
+Total rendering time: 0:00:00.320
+   Top level object is a 3D object (manifold):
+   Status:     NoError
+   Genus:      -3
+   Vertices:     6233
+   Facets:      12450
+SCons built: bld/png/hub75-p5-64x32-panel-front-angled.png
+_action(["bld/png/hub75-p5-64x32-panel-rear-angled.png"], ["openscad/p5-64x32-panel/hub75_p5_64x32_panel/render/hub75-p5-64x32-panel-rear-angled.scad", "openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad"])
++ xvfb-run -a openscad --enable=object-function --render --autocenter --viewall --imgsize=1000,1600 -o /work/bld/png/hub75-p5-64x32-panel-rear-angled.png /work/openscad/p5-64x32-panel/hub75_p5_64x32_panel/render/hub75-p5-64x32-panel-rear-angled.scad
+WARNING: Viewall and autocenter disabled in favor of $vp*
+Geometries in cache: 176
+Geometry cache size in bytes: 1397984
+CGAL Polyhedrons in cache: 39
+CGAL cache size in bytes: 15404500
+Total rendering time: 0:00:00.335
+   Top level object is a 3D object (manifold):
+   Status:     NoError
+   Genus:      -3
+   Vertices:     6233
+   Facets:      12450
+SCons built: bld/png/hub75-p5-64x32-panel-rear-angled.png
+SCons summary: targets=2 built=2 cache-restored=0 current=0 error=0
+  built: bld/png/hub75-p5-64x32-panel-front-angled.png
+  built: bld/png/hub75-p5-64x32-panel-rear-angled.png
+build: OK
+▮▮▮▮ consumer:scad.build (1s 218ms, f45790bd)
+
+Tasks: 1 completed
+ Time: 1s 276ms
+
