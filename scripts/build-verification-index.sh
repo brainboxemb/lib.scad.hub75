@@ -2,12 +2,12 @@
 set -euo pipefail
 
 mkdir -p vrf/out
-cp doc/30-verification.md vrf/out/30-verification.md
+cp doc/50-00-verification.md vrf/out/50-00-verification.md
 
 cat > vrf/out/README.md <<'EOF'
 # HUB75 panel verification
 
-Repository-level strategy/status: [30-verification.md](30-verification.md).
+Repository-level strategy/status: [50-00-verification.md](50-00-verification.md).
 
 This branch is intended to be usable directly at the workbench. Start with the
 first physical procedure below; do not treat the STL files as self-explanatory.

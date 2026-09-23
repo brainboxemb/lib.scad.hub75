@@ -1,7 +1,7 @@
 # HUB75 physical verification material
 
 Repository-level verification strategy and current physical status are owned by
-[../doc/30-verification.md](../doc/30-verification.md).
+[../doc/50-00-verification.md](../doc/50-00-verification.md).
 
 This directory contains the **executable/workbench material** used to perform and
 publish physical verification.
@@ -21,5 +21,5 @@ published to the configured Verification branch. They are generated evidence,
 not raw physical observations and not a replacement for an executed testcase.
 
 The current physical status is intentionally not duplicated here; read
-[doc/30-verification.md](../doc/30-verification.md) and the individual testcase
+[doc/50-00-verification.md](../doc/50-00-verification.md) and the individual testcase
 being performed.
