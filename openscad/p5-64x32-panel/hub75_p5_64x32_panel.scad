@@ -3,9 +3,9 @@
 //
 // FileSummary: Object-based HUB75 panel specification, geometry and design views.
 //
-// Design: hub75_p5_64x32_panel/design/design.md
-// Design review: hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad
-// Usage/reference: manual.md
+// - Design: hub75_p5_64x32_panel/design/design.md
+// - Design review: hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad
+// - Usage/reference: manual.md
 //
 // Geometry references recorded by the supplied source model:
 // - supplied STEP model: Hub75 P5 Matrix Panel.step
