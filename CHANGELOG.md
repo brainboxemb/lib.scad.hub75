@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## v0.1.8
+
 ### Changed
 
 - Adopt the Migration-011 repository baseline: tool.git-project v0.2.14, tool.scad-project v0.15.11, managed bootstrap/update launchers, self-scoped workflow entrypoints and the shared numbered documentation families, without changing HUB75 panel geometry, public API or physical-verification semantics.
