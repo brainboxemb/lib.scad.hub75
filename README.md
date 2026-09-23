@@ -23,202 +23,44 @@ Reusable OpenSCAD mechanical reference geometry for HUB75 LED matrix hardware.
   </tr>
 </table>
 
-These angled presentation images are dedicated build outputs from the current `prod/bld` branch; they are not design-documentation renders.
+## Start here
 
-## Quick links
+- [Plan](doc/00-plan.md) — work context, sources, current focus and roadmap.
+- [Specification](doc/10-specification.md) — why the library exists and what the reference model is intended to mean.
+- [Design](doc/20-design.md) — repository/component architecture and responsibility split.
+- [Verification](doc/30-verification.md) — functional and physical verification strategy and current physical status.
+- [Panel detailed design](openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md) — visual construction of the physical panel model.
+- [Panel manual/reference](openscad/p5-64x32-panel/manual.md) — orientation, dimensions, API use and interactive views.
+- [Physical verification material](vrf/README.md) — operator procedures, testcases and fixture sources.
 
-- [HUB75 panel design source](openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md)
-- [HUB75 panel manual/reference](openscad/p5-64x32-panel/manual.md)
-- [Generated HUB75 panel design documentation](https://github.com/brainboxemb/lib.scad.hub75/blob/prod/bld/design/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md)
-- [HUB75 panel OpenSCAD source](openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad)
-- [Physical verification work](vrf/README.md)
-- [Latest generated build](../../tree/prod/bld)
-- [Functional verification](../../tree/prod/vrf)
-- [Changelog](CHANGELOG.md)
+Generated output:
 
-The first component is the portrait-oriented HUB75 P5 64 × 32 pixel panel model. Its nominal placement size is 160 × 320 mm (width × height), matching the library's native portrait coordinate system.
+- [latest Build](../../tree/prod/bld)
+- [latest Verification](../../tree/prod/vrf)
+- [generated panel design documentation](../../blob/prod/bld/design/project/openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md)
 
-```text
-openscad/p5-64x32-panel/
-├── hub75_p5_64x32_panel.scad
-├── manual.md
-└── hub75_p5_64x32_panel/
-    ├── hub75_p5_64x32_panel_render.scad
-    ├── design/
-    │   └── design.md
-    └── render/
-        ├── render.yml
-        ├── hub75-p5-64x32-panel-front-angled.scad
-        └── hub75-p5-64x32-panel-rear-angled.scad
-```
+## Basic use
 
-## Public API
-
-The library uses the OpenSCAD `object()` model:
+The library uses OpenSCAD's object model. Create one panel object and pass it to
+the build/accessor functions instead of copying dimensions into consumers:
 
 ```scad
 use <openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad>
 
-panel = hub75_p5_64x32_panel_create();
-hub75_p5_64x32_panel_build(panel);
+panel_obj = hub75_p5_64x32_panel_create();
+
+hub75_p5_64x32_panel_build(panel_obj);
+width_mm = hub75_p5_64x32_panel_width(panel_obj);
+height_mm = hub75_p5_64x32_panel_height(panel_obj);
 ```
 
-Mechanical information belongs to the panel object. Consumers should use the object and public accessor functions instead of duplicating panel dimensions.
+The first component is the portrait-oriented P5 64 × 32 panel reference model.
+Its source hierarchy, coordinate system, construction and physical-verification
+status are documented through the links above.
 
-Representative accessors include:
+Current tooling/runtime versions are intentionally not copied into this README.
+Use `project.yml`, `project.scad.yml`, committed gitlinks, live GitHub Actions
+and the published `prod/bld` / `prod/vrf` provenance for the exact current
+state.
 
-```scad
-hub75_p5_64x32_panel_width(panel);
-hub75_p5_64x32_panel_height(panel);
-hub75_p5_64x32_panel_rear_grid_gap_x(panel);
-hub75_p5_64x32_panel_rear_side_rail_width_at_mounting_plane(panel);
-hub75_p5_64x32_panel_rear_crossbar_width_at_mounting_plane(panel);
-hub75_p5_64x32_panel_mounting_tube_outer_diameter(panel);
-```
-
-Private implementation helpers use a leading `_` consistently with the BOSL2-style naming convention. Names without a leading underscore are reserved for supported cross-file API.
-
-The implementation requires OpenSCAD's experimental object feature. Project tooling supplies:
-
-```text
---enable=object-function
-```
-
-## Geometry authority
-
-The source model records and preserves the distinction between its references:
-
-- the dimensional drawing for authoritative envelope and mounting dimensions;
-- the STEP model for rear taper/mechanical form where documented;
-- a rear-panel photograph only for secondary visual/orientation evidence.
-
-Do not silently promote a STEP/photo approximation into a drawing-derived dimension. Project-specific mating parts should consume the library accessors rather than recreating those measurements.
-
-## Design documentation
-
-Source design documentation lives beside the supporting files for the component at:
-
-```text
-openscad/p5-64x32-panel/hub75_p5_64x32_panel/design/design.md
-```
-
-`tool.scad-project design-build` renders the readable generated copy under `bld/design`. Successful production builds publish that generated documentation to `prod/bld`; generated PNGs do not belong on `main`.
-
-The design narrative is reader-first: it explains the physical feature and geometric operation before using source snippets as supporting detail. The manual remains separate and covers usage, reference dimensions and interactive views.
-
-## Verification
-
-`test/hub75_p5_64x32_panel_api.scad` exercises the public object API, checks derived values and builds the complete panel. Successful functional evidence is published to `prod/vrf`.
-
-In parallel, the library is building up **physical dimension verification against real HUB75 hardware**. That work is deliberately broken into small test cases: one physical question, one repeatable procedure and one recorded result at a time. The first defined case, SQ-01, checks whether TL1 can be positioned squarely and repeatably with an SQ1 alignment helper; it does not yet prove the TL1 profile dimensions themselves. See [`vrf/README.md`](vrf/README.md) for the current approach and testcase links.
-
-## Migration 005 capability model
-
-Normal pull-request and `main` production uses the final released Migration-005 lifecycle from `tool.scad-project v0.14.9`.
-
-HUB75 exposes three real capabilities:
-
-```text
-scad.docs
-    generated design documentation
-
-scad.build
-    standalone front/rear presentation renders
-
-scad.verify
-    API verification plus physical-verification fixtures and plan images
-```
-
-Root `moon.yml` selects these inherited capabilities through `workspace.inheritedTasks.include` and adds only HUB75-specific source-impact inputs. Shared commands, standard outputs and Moon cache policy are inherited through:
-
-```text
-.moon/tasks/scad.yml
-    -> tools/tool.scad-project/moon/tasks/scad.yml
-```
-
-Consumer-authored Migration-004 lifecycle tasks such as build-index/provenance, `scad.production-impact` and `scad.ci` are no longer part of the repository graph.
-
-One host-side Moon affected query can stop unrelated changes before acquiring a CAD runtime. When work is affected, the shared planner derives runtime/cache policy from `project.scad.yml` and materializes the required capabilities in at most one CAD process.
-
-This repository deliberately stays **OpenSCAD-only** and keeps:
-
-```yaml
-build_engine:
-  engine: scons
-```
-
-so it is the Migration-005 focused-runtime/SCons canary. The planner should select `ghcr.io/brainboxemb/scad-toolchain-openscad:v0.5.0`; applicable normal SCons cache transport remains enabled. Verification-SCons transport is only expected when configured verification render/export targets genuinely populate it—command-only verification must not create a cache transport requirement merely because the project uses SCons for normal Build/docs work.
-
-Moon and SCons therefore have distinct jobs:
-
-```text
-Moon     coarse capability impact + whole-capability reuse
-SCons    fine-grained target reuse inside executing SCons capabilities
-```
-
-Normal successful CI publishes changed Build/Verification families and retains compact orchestration evidence instead of uploading another complete copy of those output trees as Actions artifacts.
-
-A release reruns Build and Verify against the exact release source before publishing immutable snapshots under:
-
-```text
-rel/vX.Y.Z/bld
-rel/vX.Y.Z/vrf
-```
-
-and creating the matching annotated source tag and GitHub Release bundles.
-
-## Project tooling
-
-Repository-level Git/dependency policy and SCAD-domain policy remain split:
-
-```text
-project.yml
-    generic project/profile/dependency policy
-
-project.scad.yml
-    SCAD paths, OpenSCAD/build-engine, verification and publication policy
-
-moon.yml
-    visible capabilities + HUB75-specific source-impact boundaries
-
-.moon/tasks/scad.yml
-    inherited shared SCAD capability implementation
-```
-
-The released foundation is locked in three complementary forms:
-
-```text
-project.yml
-    tool.scad-project ref: v0.14.9
-
-tools/tool.scad-project
-    exact source: a140b22858ac1899e7f2fa71b679639a70d819c3
-
-.github/workflows/scad.yml / release.yml
-    immutable semantic workflow ref: v0.14.9
-
-tools/tool.git-project
-    exact source: 7c43f37e7b07cfb57638a1d1dad2501de09ba7eb
-```
-
-PR-preview cleanup uses released `tool.git-project v0.2.8` and removes the canonical `bld` / `vrf` preview namespaces.
-
-Bootstrap and dependency updates remain Python-free:
-
-```powershell
-.\bootstrap.ps1
-.\update-repo.ps1
-```
-
-or:
-
-```bash
-bash ./bootstrap.sh
-bash ./update-repo.sh
-```
-
-Normal checkout initializes direct dependencies only. When this library is consumed as a submodule, a parent project does not recursively initialize this library's own development-tooling submodule.
-
-Repository-specific agent guidance is in [`AGENTS.md`](AGENTS.md).
-
-The model, code and documentation were developed with the assistance of ChatGPT.
+See [CHANGELOG.md](CHANGELOG.md) for release history.

@@ -4,6 +4,8 @@
 
 ### Changed
 
+- Align repository documentation and agent routing with Migration 010: add numbered plan/specification/design/verification sources above the existing component-local design/manual, route shared working guidance through `brainboxemb.meta`, publish the verification strategy with `prod/vrf`, and correct active physical-verification image links from the historical `prod/verification` namespace to `prod/vrf`.
+
 - Preserve executable mode on `update-repo.sh`; the Migration 009 wrapper refresh keeps the canonical v0.15.6 content and remains directly invokable on Unix-like systems.
 
 - Refresh root `update-repo.sh` and `update-repo.ps1` to the canonical `tool.scad-project v0.15.6` consumer wrappers so future repository updates use the released Migration 009 path.
