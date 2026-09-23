@@ -1,0 +1,169 @@
+[ WARN 2026-09-23 18:57:39.291] moon_app::queries::changed_files  Detected a shallow checkout, unable to run Git commands to determine changed files. 
+[ WARN 18:57:39.291] moon_app::queries::changed_files  A full Git history is required for affected checks, falling back to an empty files list. 
+▮▮▮▮ consumer:scad.verify (4c9546d2)
++ openscad-docsgen -m -T /work/openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad
+Parsing...
+  /work/openscad/p5-64x32-panel/hub75_p5_64x32_panel/hub75_p5_64x32_panel_render.scad
+No log requests to process
++ openscad-docsgen -m -T /work/openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad
+Parsing...
+  /work/openscad/p5-64x32-panel/hub75_p5_64x32_panel.scad
+No log requests to process
++ bash scripts/run-verification.sh
+ECHO: "hub75_p5_64x32_panel_width", 159.7
+ECHO: "hub75_p5_64x32_panel_height", 319.71
+ECHO: "hub75_p5_64x32_panel_rear_grid_gap_x", 2.79531
+Geometries in cache: 176
+Geometry cache size in bytes: 980192
+CGAL Polyhedrons in cache: 39
+CGAL cache size in bytes: 13124000
+Total rendering time: 0:00:00.140
+   Top level object is a 3D object (manifold):
+   Status:     NoError
+   Genus:      -3
+   Vertices:     5365
+   Facets:      10714
+WARNING: Viewall and autocenter disabled in favor of $vp*
+Geometries in cache: 24
+Geometry cache size in bytes: 348968
+CGAL Polyhedrons in cache: 2
+CGAL cache size in bytes: 700500
+Total rendering time: 0:00:00.038
+   Top level object is a 3D object (manifold):
+   Status:     NoError
+   Genus:      2
+   Vertices:     1736
+   Facets:       3476
+WARNING: Viewall and autocenter disabled in favor of $vp*
+Geometries in cache: 24
+Geometry cache size in bytes: 348968
+CGAL Polyhedrons in cache: 2
+CGAL cache size in bytes: 700500
+Total rendering time: 0:00:00.118
+   Top level object is a 3D object (manifold):
+   Status:     NoError
+   Genus:      2
+   Vertices:     1736
+   Facets:       3476
+WARNING: Viewall and autocenter disabled in favor of $vp*
+Geometries in cache: 182
+Geometry cache size in bytes: 1309040
+CGAL Polyhedrons in cache: 41
+CGAL cache size in bytes: 16318250
+Total rendering time: 0:00:00.258
+   Top level object is a 3D object (manifold):
+   Status:     NoError
+   Genus:      -3
+   Vertices:     6057
+   Facets:      12098
+WARNING: Viewall and autocenter disabled in favor of $vp*
+Geometries in cache: 184
+Geometry cache size in bytes: 1372576
+CGAL Polyhedrons in cache: 49
+CGAL cache size in bytes: 17284750
+Total rendering time: 0:00:00.286
+   Top level object is a 3D object (manifold):
+   Status:     NoError
+   Genus:      -1
+   Vertices:     6859
+   Facets:      13710
+WARNING: Viewall and autocenter disabled in favor of $vp*
+Geometries in cache: 200
+Geometry cache size in bytes: 1652872
+CGAL Polyhedrons in cache: 44
+CGAL cache size in bytes: 18308250
+Total rendering time: 0:00:00.293
+   Top level object is a 3D object (manifold):
+   Status:     NoError
+   Genus:      -1
+   Vertices:     7769
+   Facets:      15530
+WARNING: Viewall and autocenter disabled in favor of $vp*
+Geometries in cache: 200
+Geometry cache size in bytes: 1652872
+CGAL Polyhedrons in cache: 44
+CGAL cache size in bytes: 18308250
+Total rendering time: 0:00:00.281
+   Top level object is a 3D object (manifold):
+   Status:     NoError
+   Genus:      -1
+   Vertices:     7769
+   Facets:      15530
+WARNING: Viewall and autocenter disabled in favor of $vp*
+Geometries in cache: 8
+Geometry cache size in bytes: 37760
+CGAL Polyhedrons in cache: 3
+CGAL cache size in bytes: 114000
+Total rendering time: 0:00:00.006
+   Top level object is a 3D object (manifold):
+   Status:     NoError
+   Genus:      1
+   Vertices:      216
+   Facets:        432
+WARNING: Viewall and autocenter disabled in favor of $vp*
+Geometries in cache: 8
+Geometry cache size in bytes: 37760
+CGAL Polyhedrons in cache: 3
+CGAL cache size in bytes: 114000
+Total rendering time: 0:00:00.096
+   Top level object is a 3D object (manifold):
+   Status:     NoError
+   Genus:      1
+   Vertices:      216
+   Facets:        432
+ECHO: "hub75_vrf_mounting_spacing_x_mm", 144
+WARNING: Viewall and autocenter disabled in favor of $vp*
+Geometries in cache: 6
+Geometry cache size in bytes: 97872
+CGAL Polyhedrons in cache: 3
+CGAL cache size in bytes: 290000
+Total rendering time: 0:00:00.009
+   Top level object is a 3D object (manifold):
+   Status:     NoError
+   Genus:      2
+   Vertices:      580
+   Facets:       1164
+ECHO: "hub75_vrf_mounting_spacing_x_mm", 144
+WARNING: Viewall and autocenter disabled in favor of $vp*
+Geometries in cache: 6
+Geometry cache size in bytes: 97872
+CGAL Polyhedrons in cache: 3
+CGAL cache size in bytes: 290000
+Total rendering time: 0:00:00.092
+   Top level object is a 3D object (manifold):
+   Status:     NoError
+   Genus:      2
+   Vertices:      580
+   Facets:       1164
+ECHO: "hub75_vrf_mounting_spacing_z_mm", 152
+WARNING: Viewall and autocenter disabled in favor of $vp*
+Geometries in cache: 6
+Geometry cache size in bytes: 97872
+CGAL Polyhedrons in cache: 3
+CGAL cache size in bytes: 290000
+Total rendering time: 0:00:00.009
+   Top level object is a 3D object (manifold):
+   Status:     NoError
+   Genus:      2
+   Vertices:      580
+   Facets:       1164
+ECHO: "hub75_vrf_mounting_spacing_z_mm", 152
+WARNING: Viewall and autocenter disabled in favor of $vp*
+Geometries in cache: 6
+Geometry cache size in bytes: 97872
+CGAL Polyhedrons in cache: 3
+CGAL cache size in bytes: 290000
+Total rendering time: 0:00:00.093
+   Top level object is a 3D object (manifold):
+   Status:     NoError
+   Genus:      2
+   Vertices:      580
+   Facets:       1164
+HUB75 functional verification output written to vrf/out
++ bash scripts/build-verification-index.sh
+verify: OK
+▮▮▮▮ consumer:scad.verify (4s 156ms, 4c9546d2)
+
+Tasks: 1 completed
+ Time: 4s 245ms
+

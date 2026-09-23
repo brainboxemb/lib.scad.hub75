@@ -1,0 +1,16 @@
+{
+  "base_revision": "67cf49c417cf5fd8128b3ddb89434cb4bf8796c1",
+  "event_name": "push",
+  "publication_family": "build",
+  "repository": "brainboxemb/lib.scad.hub75",
+  "run_attempt": "1",
+  "run_id": "35905968869",
+  "schema": "brainboxemb.scad-orchestration-run-context",
+  "schema_version": 1,
+  "snapshot_preparation": {
+    "duration_ms": 6,
+    "finished_at": "2026-09-23T18:57:46.257Z",
+    "started_at": "2026-09-23T18:57:46.251Z"
+  },
+  "source_revision": "fb4bed4beb012f8cbc23b67dce025d4f93bb09fb"
+}

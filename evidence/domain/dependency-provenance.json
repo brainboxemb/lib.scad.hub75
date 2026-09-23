@@ -1,0 +1,18 @@
+{
+  "build_manifest": ".cache/scad-project/state/build-manifest.json",
+  "schema": "brainboxemb.scad-build-dependency-provenance",
+  "schema_version": 1,
+  "source_revision": "fb4bed4beb012f8cbc23b67dce025d4f93bb09fb",
+  "targets": [
+    {
+      "dependencies": [],
+      "output": "bld/png/hub75-p5-64x32-panel-front-angled.png",
+      "source": "openscad/p5-64x32-panel/hub75_p5_64x32_panel/render/hub75-p5-64x32-panel-front-angled.scad"
+    },
+    {
+      "dependencies": [],
+      "output": "bld/png/hub75-p5-64x32-panel-rear-angled.png",
+      "source": "openscad/p5-64x32-panel/hub75_p5_64x32_panel/render/hub75-p5-64x32-panel-rear-angled.scad"
+    }
+  ]
+}
