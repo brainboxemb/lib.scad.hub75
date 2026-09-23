@@ -40,7 +40,7 @@ before moving across the whole panel.
 
 This is the first verification area.
 
-<img src="../../../raw/prod/verification/plan/top-left-location.png" alt="Rear view with upper-left verification area marked" width="55%">
+<img src="../../../raw/prod/vrf/plan/top-left-location.png" alt="Rear view with upper-left verification area marked" width="55%">
 
 Hold the real panel with the **rear/electronics side toward you** and the long
 320 mm direction vertical. The area outlined in the image is the upper-left
@@ -68,7 +68,7 @@ understand.
 
 ## Feature map
 
-<img src="../../../raw/prod/verification/plan/top-left-feature-map.png" alt="Upper-left rear feature map" width="72%">
+<img src="../../../raw/prod/vrf/plan/top-left-feature-map.png" alt="Upper-left rear feature map" width="72%">
 
 In the generated feature map:
 
@@ -114,7 +114,7 @@ numbers.
 The first helper is intentionally small. Its nominal envelope is about
 **20.8 × 35 × 2.0 mm** and it is used next to the upper-left mounting column.
 
-<img src="../../../raw/prod/verification/fixtures/hub75-p5-64x32-top-left-profile-comb.png" alt="TL1 v0.1 top-left profile comb" width="72%">
+<img src="../../../raw/prod/vrf/fixtures/hub75-p5-64x32-top-left-profile-comb.png" alt="TL1 v0.1 top-left profile comb" width="72%">
 
 The helper is marked **`TL1 v0.1`** on the part itself. Always record that
 identifier/version with the measurement results. If the fixture geometry changes,
@@ -153,7 +153,7 @@ warped, do not use it for the taper check.
 
 # How to place `TL1`
 
-<img src="../../../raw/prod/verification/plan/top-left-comb-use.png" alt="TL1 comb positioned on upper-left model corner" width="82%">
+<img src="../../../raw/prod/vrf/plan/top-left-comb-use.png" alt="TL1 comb positioned on upper-left model corner" width="82%">
 
 The comb is used **perpendicular to the rear face**, not laid flat over the rear
 of the panel.
@@ -169,7 +169,7 @@ of the panel.
 
 The strict side view below shows the intended relationship more clearly.
 
-<img src="../../../raw/prod/verification/plan/top-left-comb-side.png" alt="Side view of TL1 comb on panel" width="82%">
+<img src="../../../raw/prod/vrf/plan/top-left-comb-side.png" alt="Side view of TL1 comb on panel" width="82%">
 
 ---
 

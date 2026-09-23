@@ -23,7 +23,7 @@ The first development version of this test used TL1 v0.2 and SQ1 v0.2 in PR #19.
 
 Place the panel with the rear/electronics side facing you and the 320 mm direction vertical. Use the physical upper-left corner marked in the existing verification output.
 
-<img src="https://raw.githubusercontent.com/brainboxemb/lib.scad.hub75/prod/verification/plan/top-left-location.png" alt="Upper-left verification area on the rear of the panel" width="52%">
+<img src="https://raw.githubusercontent.com/brainboxemb/lib.scad.hub75/prod/vrf/plan/top-left-location.png" alt="Upper-left verification area on the rear of the panel" width="52%">
 
 | # | Action | Expected |
 | ---: | --- | --- |

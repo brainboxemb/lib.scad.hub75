@@ -2,9 +2,12 @@
 set -euo pipefail
 
 mkdir -p vrf/out
+cp doc/30-verification.md vrf/out/30-verification.md
 
 cat > vrf/out/README.md <<'EOF'
 # HUB75 panel verification
+
+Repository-level strategy/status: [30-verification.md](30-verification.md).
 
 This branch is intended to be usable directly at the workbench. Start with the
 first physical procedure below; do not treat the STL files as self-explanatory.
@@ -28,7 +31,7 @@ EOF
 # verification branches.
 sed -E \
   -e 's/^(#{1,5}) /\1# /' \
-  -e 's#../../../raw/prod/verification/##g' \
+  -e 's#../../../raw/prod/vrf/##g' \
   vrf/physical-panel-validation.md \
   >> vrf/out/README.md
 
